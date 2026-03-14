@@ -30,8 +30,8 @@ export default function Header({
           <div className="absolute -right-10 top-0 h-24 w-24 rounded-full bg-blum-yellow/10 blur-2xl" />
           <div className="absolute left-10 top-0 h-24 w-24 rounded-full bg-blum-blue/10 blur-2xl" />
 
-          <div className="relative mx-auto grid h-20 grid-cols-[auto_1fr_auto] items-center px-4 sm:px-6">
-            <div className="justify-self-start">
+          <div className="relative flex h-18 items-center justify-between px-4 sm:h-20 sm:px-6">
+            <div className="min-w-0">
               <Link href={`/${lang}`} className="group flex items-center gap-3">
                 <div className="rounded-xl bg-white/80 p-1.5 shadow-sm ring-1 ring-black/5 transition duration-300 group-hover:shadow-md">
                   <Image
@@ -40,58 +40,58 @@ export default function Header({
                     width={190}
                     height={64}
                     priority
-                    className="h-9 w-auto object-contain sm:h-10"
+                    className="h-8 w-auto object-contain sm:h-10"
                   />
                 </div>
               </Link>
             </div>
 
-            <div className="hidden justify-center md:flex">
-              <nav className="flex items-center gap-2 rounded-full border border-black/5 bg-white/80 p-1.5 shadow-sm backdrop-blur">
+            <div className="hidden flex-1 justify-center md:flex">
+              <nav className="flex max-w-full items-center gap-1 rounded-full border border-black/5 bg-white/80 p-1.5 shadow-sm backdrop-blur lg:gap-2">
                 <a
                   href="#servicios"
-                  className="rounded-full px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
                 >
                   {nav.services}
                 </a>
                 <a
                   href="#soluciones"
-                  className="rounded-full px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
                 >
                   {nav.solutions}
                 </a>
                 <a
                   href="#proceso"
-                  className="rounded-full px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
                 >
                   {nav.trust}
                 </a>
                 <a
                   href="#contacto"
-                  className="rounded-full px-4 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white"
+                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
                 >
                   {nav.contact}
                 </a>
               </nav>
             </div>
 
-            <div className="hidden items-center justify-self-end md:flex">
+            <div className="hidden items-center md:flex">
               <Link
                 href={`/${otherLang}`}
-                className="group inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/85 px-4 py-2 text-sm font-medium text-gray-700 shadow-sm backdrop-blur transition duration-300 hover:border-blum-blue hover:text-blum-blue hover:shadow-md"
+                className="group inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/85 px-3 py-2 text-sm font-medium text-gray-700 shadow-sm backdrop-blur transition duration-300 hover:border-blum-blue hover:text-blum-blue hover:shadow-md lg:px-4"
               >
                 <Globe className="h-4 w-4 transition duration-300 group-hover:rotate-12" />
                 {otherLang.toUpperCase()}
               </Link>
             </div>
 
-            <div className="justify-self-end md:hidden">
+            <div className="md:hidden">
               <button
                 onClick={() => setOpen(!open)}
                 className="rounded-xl border border-black/5 bg-white/85 p-2.5 text-gray-800 shadow-sm backdrop-blur transition duration-300 hover:shadow-md"
                 aria-label="Abrir menú"
               >
-                {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {open ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
               </button>
             </div>
           </div>

@@ -18,16 +18,16 @@ export default function Solutions({
   return (
     <section
       id="soluciones"
-      className="section-divider relative overflow-hidden bg-[linear-gradient(135deg,#0f172a_0%,#17306b_45%,#2563eb_100%)] px-4 py-24 text-white sm:px-6 lg:px-8"
+      className="section-divider relative overflow-hidden bg-[linear-gradient(135deg,#0f172a_0%,#17306b_45%,#2563eb_100%)] px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%)]" />
       <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-white/8 blur-3xl" />
       <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-blum-yellow/10 blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <SectionReveal>
           <div>
-            <span className="mb-4 inline-block rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
+            <span className="mb-4 inline-block rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold text-white backdrop-blur sm:text-sm">
               {t.badge}
             </span>
 
@@ -35,7 +35,7 @@ export default function Solutions({
               {t.title}
             </h2>
 
-            <p className="mb-8 text-lg text-white/85 sm:text-xl">
+            <p className="mb-8 text-base text-white/85 sm:text-lg lg:text-xl">
               {t.description}
             </p>
 
@@ -51,7 +51,7 @@ export default function Solutions({
                     </div>
 
                     <div>
-                      <h3 className="mb-2 text-xl font-semibold text-white">
+                      <h3 className="mb-2 text-lg font-semibold text-white sm:text-xl">
                         {item.title}
                       </h3>
                       <p className="leading-7 text-white/80">
@@ -73,7 +73,7 @@ export default function Solutions({
               alt="BlumCode working team"
               width={1200}
               height={900}
-              className="relative w-full rounded-[30px] border border-white/10 object-cover shadow-[0_24px_70px_rgba(0,0,0,0.25)]"
+              className="relative w-full rounded-[24px] border border-white/10 object-cover shadow-[0_24px_70px_rgba(0,0,0,0.25)] sm:rounded-[30px]"
             />
           </div>
         </SectionReveal>

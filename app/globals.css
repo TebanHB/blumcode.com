@@ -147,3 +147,15 @@ body {
 .text-balance {
   text-wrap: balance;
 }
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  overflow-x: hidden;
+}

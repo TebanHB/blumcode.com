@@ -15,16 +15,16 @@ export default function Hero({
   };
 }) {
   return (
-    <section className="section-divider relative overflow-hidden bg-[linear-gradient(180deg,#f8fbff_0%,#eef4ff_52%,#ffffff_100%)] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <section className="section-divider relative overflow-hidden bg-[linear-gradient(180deg,#f8fbff_0%,#eef4ff_52%,#ffffff_100%)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-32">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(90,137,255,0.10),transparent_22%)]" />
       <div className="absolute right-[-70px] top-8 h-72 w-72 rounded-full bg-blum-yellow/10 blur-3xl" />
       <div className="absolute left-[-60px] top-20 h-64 w-64 rounded-full bg-blum-blue/10 blur-3xl" />
       <div className="absolute bottom-0 left-1/2 h-48 w-[44rem] -translate-x-1/2 rounded-full bg-blum-blue/8 blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         <SectionReveal>
           <div className="text-center lg:text-left">
-            <div className="mb-6 inline-flex rounded-full border border-blum-blue/12 bg-white/80 px-4 py-2 text-sm font-semibold text-blum-blue shadow-sm backdrop-blur">
+            <div className="mb-5 inline-flex rounded-full border border-blum-blue/12 bg-white/80 px-4 py-2 text-xs font-semibold text-blum-blue shadow-sm backdrop-blur sm:text-sm">
               {t.badge}
             </div>
 
@@ -39,20 +39,20 @@ export default function Hero({
               {t.title3}
             </h1>
 
-            <p className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-gray-600 lg:mx-0 lg:text-xl">
+            <p className="mx-auto mb-8 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg sm:leading-8 lg:mx-0 lg:text-xl">
               {t.description}
             </p>
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
               <a
                 href="#contacto"
-                className="rounded-2xl bg-blum-blue px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_45px_rgba(90,137,255,0.28)] transition duration-300 hover:-translate-y-1 hover:bg-blue-600"
+                className="rounded-2xl bg-blum-blue px-6 py-4 text-base font-semibold text-white shadow-[0_18px_45px_rgba(90,137,255,0.28)] transition duration-300 hover:-translate-y-1 hover:bg-blue-600 sm:px-8 sm:text-lg"
               >
                 {t.primary}
               </a>
               <a
                 href="#servicios"
-                className="rounded-2xl border border-blum-blue/15 bg-white/90 px-8 py-4 text-lg font-semibold text-blum-blue shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-blum-blue hover:bg-white"
+                className="rounded-2xl border border-blum-blue/15 bg-white/90 px-6 py-4 text-base font-semibold text-blum-blue shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-blum-blue hover:bg-white sm:px-8 sm:text-lg"
               >
                 {t.secondary}
               </a>
@@ -60,15 +60,15 @@ export default function Hero({
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
-                <p className="text-2xl font-bold text-gray-950">Web</p>
+                <p className="text-xl font-bold text-gray-950 sm:text-2xl">Web</p>
                 <p className="mt-1 text-sm text-gray-500">Aplicaciones modernas y profesionales</p>
               </div>
               <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
-                <p className="text-2xl font-bold text-gray-950">Mobile</p>
+                <p className="text-xl font-bold text-gray-950 sm:text-2xl">Mobile</p>
                 <p className="mt-1 text-sm text-gray-500">Experiencias limpias y responsivas</p>
               </div>
               <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
-                <p className="text-2xl font-bold text-gray-950">Soporte</p>
+                <p className="text-xl font-bold text-gray-950 sm:text-2xl">Soporte</p>
                 <p className="mt-1 text-sm text-gray-500">Continuidad, mejoras y evolución</p>
               </div>
             </div>
@@ -79,27 +79,22 @@ export default function Hero({
           <div className="relative">
             <div className="absolute -inset-5 rounded-[36px] bg-gradient-to-r from-blum-blue/12 via-transparent to-blum-yellow/12 blur-2xl" />
 
-            <div className="relative overflow-hidden rounded-[34px] border border-white/80 bg-white/40 shadow-[0_24px_70px_rgba(15,23,42,0.16)] backdrop-blur">
+            <div className="relative overflow-hidden rounded-[28px] border border-white/80 bg-white/40 shadow-[0_24px_70px_rgba(15,23,42,0.16)] backdrop-blur sm:rounded-[34px]">
               <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(90,137,255,0.08),transparent_45%,rgba(255,210,0,0.08))]" />
 
-              <div className="relative p-3">
+              <div className="relative p-2.5 sm:p-3">
                 <Image
                   src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/hero/hero-main-291336271c124133b163823b16698d6b.png"
                   alt="BlumCode team"
                   width={1200}
                   height={900}
                   priority
-                  className="w-full rounded-[28px] object-cover shadow-[0_20px_55px_rgba(15,23,42,0.12)]"
+                  className="w-full rounded-[22px] object-cover shadow-[0_20px_55px_rgba(15,23,42,0.12)] sm:rounded-[28px]"
                 />
               </div>
             </div>
 
-            <div className="absolute -left-4 top-8 hidden rounded-2xl border border-white/70 bg-white/85 px-4 py-3 shadow-lg backdrop-blur lg:block">
-              <p className="text-sm font-semibold text-gray-950">Desarrollo profesional</p>
-              <p className="text-sm text-gray-500">Diseño, estructura y rendimiento</p>
-            </div>
-
-            <div className="absolute -bottom-6 left-6 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-xl backdrop-blur">
+            <div className="absolute -bottom-5 left-4 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-xl backdrop-blur sm:-bottom-6 sm:left-6">
               <p className="text-sm font-semibold text-gray-950">Software a medida</p>
               <p className="text-sm text-gray-500">Elegante, escalable y profesional</p>
             </div>
