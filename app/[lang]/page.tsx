@@ -351,14 +351,15 @@ const dictionary: Record<Locale, Dictionary> = {
 export default async function HomePage({
   params,
 }: {
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const t = dictionary[lang] ?? dictionary.es;
+  const safeLang: Locale = lang === "en" ? "en" : "es";
+  const t = dictionary[safeLang];
 
   return (
     <>
-      <Header lang={lang} nav={t.nav} />
+      <Header lang={safeLang} nav={t.nav} />
       <main>
         <Hero t={t.hero} />
         <Services t={t.services} />

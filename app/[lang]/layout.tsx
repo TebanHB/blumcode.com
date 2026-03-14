@@ -1,4 +1,4 @@
-import { Locale, locales } from "@/i18n";
+import { locales } from "@/i18n";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -9,7 +9,7 @@ export default async function LangLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Locale }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
 
