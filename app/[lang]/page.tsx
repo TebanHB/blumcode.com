@@ -21,6 +21,18 @@ type Dictionary = {
     description: string;
     primary: string;
     secondary: string;
+    cards: {
+      webTitle: string;
+      webDescription: string;
+      mobileTitle: string;
+      mobileDescription: string;
+      supportTitle: string;
+      supportDescription: string;
+    };
+    floatingCard: {
+      title: string;
+      description: string;
+    };
   };
   services: {
     badge: string;
@@ -79,6 +91,18 @@ const dictionary: Record<Locale, Dictionary> = {
         "En BlumCode transformamos tus ideas en soluciones tecnológicas innovadoras. Desarrollamos software personalizado, optimizamos sistemas existentes y brindamos soporte continuo para impulsar tu negocio.",
       primary: "Solicitar Cotización",
       secondary: "Ver Nuestros Servicios",
+      cards: {
+        webTitle: "Web",
+        webDescription: "Aplicaciones modernas y profesionales",
+        mobileTitle: "Mobile",
+        mobileDescription: "Experiencias limpias y responsivas",
+        supportTitle: "Soporte",
+        supportDescription: "Continuidad, mejoras y evolución",
+      },
+      floatingCard: {
+        title: "Software a medida",
+        description: "Elegante, escalable y profesional",
+      },
     },
     services: {
       badge: "Servicios",
@@ -221,6 +245,18 @@ const dictionary: Record<Locale, Dictionary> = {
         "At BlumCode, we transform your ideas into innovative technology solutions. We build custom software, optimize existing systems, and provide ongoing support to boost your business.",
       primary: "Request a Quote",
       secondary: "View Our Services",
+      cards: {
+        webTitle: "Web",
+        webDescription: "Modern and professional applications",
+        mobileTitle: "Mobile",
+        mobileDescription: "Clean and responsive experiences",
+        supportTitle: "Support",
+        supportDescription: "Continuity, improvements and evolution",
+      },
+      floatingCard: {
+        title: "Custom software",
+        description: "Elegant, scalable and professional",
+      },
     },
     services: {
       badge: "Services",

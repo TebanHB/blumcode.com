@@ -12,6 +12,18 @@ export default function Hero({
     description: string;
     primary: string;
     secondary: string;
+    cards: {
+      webTitle: string;
+      webDescription: string;
+      mobileTitle: string;
+      mobileDescription: string;
+      supportTitle: string;
+      supportDescription: string;
+    };
+    floatingCard: {
+      title: string;
+      description: string;
+    };
   };
 }) {
   return (
@@ -31,7 +43,9 @@ export default function Hero({
             <h1 className="text-balance mb-6 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl lg:text-[4.35rem] lg:leading-[0.98]">
               {t.title1}
               <br />
-              <span className="text-gray-950">{t.title2 === "a Medida" ? "Software " : ""}</span>
+              <span className="text-gray-950">
+                {t.title2 === "a Medida" ? "Software " : ""}
+              </span>
               <span className="text-blum-blue">
                 {t.title2 === "a Medida" ? "a Medida" : t.title2}
               </span>
@@ -60,16 +74,28 @@ export default function Hero({
 
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
-                <p className="text-xl font-bold text-gray-950 sm:text-2xl">Web</p>
-                <p className="mt-1 text-sm text-gray-500">Aplicaciones modernas y profesionales</p>
+                <p className="text-xl font-bold text-gray-950 sm:text-2xl">
+                  {t.cards.webTitle}
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  {t.cards.webDescription}
+                </p>
               </div>
               <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
-                <p className="text-xl font-bold text-gray-950 sm:text-2xl">Mobile</p>
-                <p className="mt-1 text-sm text-gray-500">Experiencias limpias y responsivas</p>
+                <p className="text-xl font-bold text-gray-950 sm:text-2xl">
+                  {t.cards.mobileTitle}
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  {t.cards.mobileDescription}
+                </p>
               </div>
               <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
-                <p className="text-xl font-bold text-gray-950 sm:text-2xl">Soporte</p>
-                <p className="mt-1 text-sm text-gray-500">Continuidad, mejoras y evolución</p>
+                <p className="text-xl font-bold text-gray-950 sm:text-2xl">
+                  {t.cards.supportTitle}
+                </p>
+                <p className="mt-1 text-sm text-gray-500">
+                  {t.cards.supportDescription}
+                </p>
               </div>
             </div>
           </div>
@@ -95,8 +121,12 @@ export default function Hero({
             </div>
 
             <div className="absolute -bottom-5 left-4 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-xl backdrop-blur sm:-bottom-6 sm:left-6">
-              <p className="text-sm font-semibold text-gray-950">Software a medida</p>
-              <p className="text-sm text-gray-500">Elegante, escalable y profesional</p>
+              <p className="text-sm font-semibold text-gray-950">
+                {t.floatingCard.title}
+              </p>
+              <p className="text-sm text-gray-500">
+                {t.floatingCard.description}
+              </p>
             </div>
           </div>
         </SectionReveal>
