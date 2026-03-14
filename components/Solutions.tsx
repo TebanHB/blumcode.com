@@ -16,33 +16,48 @@ export default function Solutions({
   };
 }) {
   return (
-    <section id="soluciones" className="relative overflow-hidden bg-gradient-to-br from-blum-blue to-blue-700 px-4 py-20 text-white sm:px-6 lg:px-8">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_28%)]" />
+    <section
+      id="soluciones"
+      className="section-divider relative overflow-hidden bg-[linear-gradient(135deg,#0f172a_0%,#17306b_45%,#2563eb_100%)] px-4 py-24 text-white sm:px-6 lg:px-8"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.14),transparent_24%)]" />
+      <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-white/8 blur-3xl" />
+      <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-blum-yellow/10 blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
         <SectionReveal>
           <div>
-            <span className="mb-4 inline-block rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white">
+            <span className="mb-4 inline-block rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
               {t.badge}
             </span>
 
-            <h2 className="mb-6 text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="mb-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {t.title}
             </h2>
 
-            <p className="mb-8 text-lg text-blue-100 sm:text-xl">
+            <p className="mb-8 text-lg text-white/85 sm:text-xl">
               {t.description}
             </p>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               {t.items.map((item) => (
-                <div key={item.title} className="flex items-start gap-4">
-                  <div className="mt-1 flex-shrink-0 rounded-xl bg-blum-yellow p-2 text-black shadow-lg">
-                    <CheckCircle2 className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-                    <p className="leading-7 text-blue-100">{item.description}</p>
+                <div
+                  key={item.title}
+                  className="rounded-2xl border border-white/10 bg-white/12 p-5 shadow-[0_12px_30px_rgba(0,0,0,0.16)] backdrop-blur-sm transition duration-300 hover:-translate-y-0.5 hover:bg-white/15"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="mt-1 flex-shrink-0 rounded-xl bg-blum-yellow p-2 text-black shadow-lg">
+                      <CheckCircle2 className="h-5 w-5" />
+                    </div>
+
+                    <div>
+                      <h3 className="mb-2 text-xl font-semibold text-white">
+                        {item.title}
+                      </h3>
+                      <p className="leading-7 text-white/80">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -51,13 +66,16 @@ export default function Solutions({
         </SectionReveal>
 
         <SectionReveal delay={0.15}>
-          <Image
-            src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/benefits/benefits-main-b30932b7881e43adac5e1add3ae0c413.png"
-            alt="BlumCode working team"
-            width={1200}
-            height={900}
-            className="w-full rounded-[28px] border border-white/10 object-cover shadow-2xl"
-          />
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[36px] bg-white/10 blur-2xl" />
+            <Image
+              src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/benefits/benefits-main-b30932b7881e43adac5e1add3ae0c413.png"
+              alt="BlumCode working team"
+              width={1200}
+              height={900}
+              className="relative w-full rounded-[30px] border border-white/10 object-cover shadow-[0_24px_70px_rgba(0,0,0,0.25)]"
+            />
+          </div>
         </SectionReveal>
       </div>
     </section>

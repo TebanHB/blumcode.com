@@ -15,19 +15,28 @@ export default function Hero({
   };
 }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-white px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="absolute left-[-80px] top-16 h-56 w-56 rounded-full bg-blum-blue/10 blur-3xl" />
-      <div className="absolute bottom-0 right-[-80px] h-64 w-64 rounded-full bg-blum-yellow/20 blur-3xl" />
+    <section className="section-divider relative overflow-hidden bg-[linear-gradient(180deg,#f8fbff_0%,#eef4ff_52%,#ffffff_100%)] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(90,137,255,0.10),transparent_22%)]" />
+      <div className="absolute right-[-70px] top-8 h-72 w-72 rounded-full bg-blum-yellow/10 blur-3xl" />
+      <div className="absolute left-[-60px] top-20 h-64 w-64 rounded-full bg-blum-blue/10 blur-3xl" />
+      <div className="absolute bottom-0 left-1/2 h-48 w-[44rem] -translate-x-1/2 rounded-full bg-blum-blue/8 blur-3xl" />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         <SectionReveal>
           <div className="text-center lg:text-left">
-            <div className="mb-6 inline-flex rounded-full border border-blum-blue/15 bg-white px-4 py-2 text-sm font-medium text-blum-blue shadow-sm">
+            <div className="mb-6 inline-flex rounded-full border border-blum-blue/12 bg-white/80 px-4 py-2 text-sm font-semibold text-blum-blue shadow-sm backdrop-blur">
               {t.badge}
             </div>
 
-            <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl lg:text-6xl lg:leading-[1.08]">
-              {t.title1} <span className="text-blum-blue">{t.title2}</span> {t.title3}
+            <h1 className="text-balance mb-6 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl lg:text-[4.35rem] lg:leading-[0.98]">
+              {t.title1}
+              <br />
+              <span className="text-gray-950">{t.title2 === "a Medida" ? "Software " : ""}</span>
+              <span className="text-blum-blue">
+                {t.title2 === "a Medida" ? "a Medida" : t.title2}
+              </span>
+              <br />
+              {t.title3}
             </h1>
 
             <p className="mx-auto mb-8 max-w-2xl text-lg leading-8 text-gray-600 lg:mx-0 lg:text-xl">
@@ -35,27 +44,64 @@ export default function Hero({
             </p>
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
-              <a href="#contacto" className="rounded-2xl bg-blum-blue px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-600">
+              <a
+                href="#contacto"
+                className="rounded-2xl bg-blum-blue px-8 py-4 text-lg font-semibold text-white shadow-[0_18px_45px_rgba(90,137,255,0.28)] transition duration-300 hover:-translate-y-1 hover:bg-blue-600"
+              >
                 {t.primary}
               </a>
-              <a href="#servicios" className="rounded-2xl border-2 border-blum-blue px-8 py-4 text-lg font-semibold text-blum-blue transition hover:bg-blum-blue hover:text-white">
+              <a
+                href="#servicios"
+                className="rounded-2xl border border-blum-blue/15 bg-white/90 px-8 py-4 text-lg font-semibold text-blum-blue shadow-sm backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-blum-blue hover:bg-white"
+              >
                 {t.secondary}
               </a>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
+                <p className="text-2xl font-bold text-gray-950">Web</p>
+                <p className="mt-1 text-sm text-gray-500">Aplicaciones modernas y profesionales</p>
+              </div>
+              <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
+                <p className="text-2xl font-bold text-gray-950">Mobile</p>
+                <p className="mt-1 text-sm text-gray-500">Experiencias limpias y responsivas</p>
+              </div>
+              <div className="rounded-2xl border border-white/70 bg-white/70 px-4 py-4 shadow-sm backdrop-blur">
+                <p className="text-2xl font-bold text-gray-950">Soporte</p>
+                <p className="mt-1 text-sm text-gray-500">Continuidad, mejoras y evolución</p>
+              </div>
             </div>
           </div>
         </SectionReveal>
 
         <SectionReveal delay={0.15}>
           <div className="relative">
-            <div className="animate-float-soft">
-              <Image
-                src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/hero/hero-main-291336271c124133b163823b16698d6b.png"
-                alt="BlumCode team"
-                width={1200}
-                height={900}
-                priority
-                className="w-full rounded-[28px] border border-white/60 object-cover shadow-2xl"
-              />
+            <div className="absolute -inset-5 rounded-[36px] bg-gradient-to-r from-blum-blue/12 via-transparent to-blum-yellow/12 blur-2xl" />
+
+            <div className="relative overflow-hidden rounded-[34px] border border-white/80 bg-white/40 shadow-[0_24px_70px_rgba(15,23,42,0.16)] backdrop-blur">
+              <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(90,137,255,0.08),transparent_45%,rgba(255,210,0,0.08))]" />
+
+              <div className="relative p-3">
+                <Image
+                  src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/hero/hero-main-291336271c124133b163823b16698d6b.png"
+                  alt="BlumCode team"
+                  width={1200}
+                  height={900}
+                  priority
+                  className="w-full rounded-[28px] object-cover shadow-[0_20px_55px_rgba(15,23,42,0.12)]"
+                />
+              </div>
+            </div>
+
+            <div className="absolute -left-4 top-8 hidden rounded-2xl border border-white/70 bg-white/85 px-4 py-3 shadow-lg backdrop-blur lg:block">
+              <p className="text-sm font-semibold text-gray-950">Desarrollo profesional</p>
+              <p className="text-sm text-gray-500">Diseño, estructura y rendimiento</p>
+            </div>
+
+            <div className="absolute -bottom-6 left-6 rounded-2xl border border-white/70 bg-white/90 px-4 py-3 shadow-xl backdrop-blur">
+              <p className="text-sm font-semibold text-gray-950">Software a medida</p>
+              <p className="text-sm text-gray-500">Elegante, escalable y profesional</p>
             </div>
           </div>
         </SectionReveal>
