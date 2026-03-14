@@ -25,13 +25,11 @@ export default function Header({
   return (
     <header className="sticky top-0 z-50 px-3 pt-3 sm:px-5 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/85 shadow-[0_8px_24px_rgba(15,23,42,0.06)] backdrop-blur-md">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(90,137,255,0.08),transparent_22%)]" />
-
+        <div className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/92 shadow-[0_6px_18px_rgba(15,23,42,0.05)] md:bg-white/85 md:shadow-[0_8px_24px_rgba(15,23,42,0.06)] md:backdrop-blur-md">
           <div className="relative flex h-18 items-center justify-between px-4 sm:h-20 sm:px-6">
             <div className="min-w-0">
               <Link href={`/${lang}`} className="group flex items-center">
-                <div className="flex h-11 w-[118px] items-center overflow-hidden rounded-xl bg-white/90 px-2 shadow-sm ring-1 ring-black/5 transition duration-300 group-hover:shadow-md sm:h-12 sm:w-[132px]">
+                <div className="flex h-11 w-[118px] items-center overflow-hidden rounded-xl bg-white px-2 shadow-sm ring-1 ring-black/5 transition duration-300 group-hover:shadow-md sm:h-12 sm:w-[132px]">
                   <Image
                     src="/logo.svg"
                     alt="BlumCode Logo"
@@ -46,28 +44,16 @@ export default function Header({
 
             <div className="hidden flex-1 justify-center md:flex">
               <nav className="flex max-w-full items-center gap-1 rounded-full border border-black/5 bg-white/90 p-1.5 shadow-sm lg:gap-2">
-                <a
-                  href="#servicios"
-                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
-                >
+                <a href="#servicios" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4">
                   {nav.services}
                 </a>
-                <a
-                  href="#soluciones"
-                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
-                >
+                <a href="#soluciones" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4">
                   {nav.solutions}
                 </a>
-                <a
-                  href="#proceso"
-                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
-                >
+                <a href="#proceso" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4">
                   {nav.trust}
                 </a>
-                <a
-                  href="#contacto"
-                  className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4"
-                >
+                <a href="#contacto" className="rounded-full px-3 py-2 text-sm font-medium text-gray-700 transition duration-300 hover:bg-blum-blue hover:text-white lg:px-4">
                   {nav.contact}
                 </a>
               </nav>
@@ -86,7 +72,7 @@ export default function Header({
             <div className="md:hidden">
               <button
                 onClick={() => setOpen(!open)}
-                className="rounded-xl border border-black/5 bg-white/90 p-2.5 text-gray-800 shadow-sm transition duration-300 hover:shadow-md"
+                className="rounded-xl border border-black/5 bg-white p-2.5 text-gray-800 shadow-sm transition duration-300"
                 aria-label="Abrir menú"
               >
                 {open ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <Menu className="h-5 w-5 sm:h-6 sm:w-6" />}
@@ -97,39 +83,23 @@ export default function Header({
           <AnimatePresence>
             {open && (
               <motion.div
-                initial={{ opacity: 0, y: -8, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto" }}
-                exit={{ opacity: 0, y: -8, height: 0 }}
-                transition={{ duration: 0.24 }}
-                className="overflow-hidden border-t border-black/5 bg-white/95 md:hidden"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.18 }}
+                className="overflow-hidden border-t border-black/5 bg-white md:hidden"
               >
                 <div className="space-y-3 px-4 py-4">
-                  <a
-                    href="#servicios"
-                    onClick={() => setOpen(false)}
-                    className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white"
-                  >
+                  <a href="#servicios" onClick={() => setOpen(false)} className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white">
                     {nav.services}
                   </a>
-                  <a
-                    href="#soluciones"
-                    onClick={() => setOpen(false)}
-                    className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white"
-                  >
+                  <a href="#soluciones" onClick={() => setOpen(false)} className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white">
                     {nav.solutions}
                   </a>
-                  <a
-                    href="#proceso"
-                    onClick={() => setOpen(false)}
-                    className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white"
-                  >
+                  <a href="#proceso" onClick={() => setOpen(false)} className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white">
                     {nav.trust}
                   </a>
-                  <a
-                    href="#contacto"
-                    onClick={() => setOpen(false)}
-                    className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white"
-                  >
+                  <a href="#contacto" onClick={() => setOpen(false)} className="block rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-gray-700 shadow-sm transition hover:bg-blum-blue hover:text-white">
                     {nav.contact}
                   </a>
 

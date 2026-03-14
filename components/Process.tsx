@@ -39,9 +39,9 @@ export default function Process({
       id="proceso"
       className="section-divider relative overflow-hidden bg-[linear-gradient(to_bottom,#ffffff,#f4f8ff)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(90,137,255,0.06),transparent_22%)]" />
-      <div className="absolute left-0 top-0 h-56 w-56 rounded-full bg-blum-blue/6 blur-2xl" />
-      <div className="absolute bottom-0 right-0 h-56 w-56 rounded-full bg-blum-yellow/6 blur-2xl" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(90,137,255,0.05),transparent_22%)]" />
+      <div className="absolute left-0 top-0 h-44 w-44 rounded-full bg-blum-blue/5 blur-xl md:h-56 md:w-56 md:blur-2xl" />
+      <div className="absolute bottom-0 right-0 h-44 w-44 rounded-full bg-blum-yellow/5 blur-xl md:h-56 md:w-56 md:blur-2xl" />
 
       <div className="relative mx-auto max-w-7xl">
         <SectionReveal className="mb-12 text-center sm:mb-16">
@@ -64,8 +64,8 @@ export default function Process({
 
             return (
               <SectionReveal key={item.title} delay={index * 0.08}>
-                <article className="group relative h-full overflow-hidden rounded-[26px] border border-black/5 bg-white/88 p-6 shadow-[0_10px_28px_rgba(15,23,42,0.05)] transition duration-500 hover:-translate-y-2 hover:shadow-[0_16px_40px_rgba(15,23,42,0.09)] sm:rounded-[30px] sm:p-8">
-                  <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(90,137,255,0.30),transparent)]" />
+                <article className="group relative h-full overflow-hidden rounded-[26px] border border-black/5 bg-white/90 p-6 shadow-[0_8px_20px_rgba(15,23,42,0.05)] transition duration-500 hover:-translate-y-1 hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)] sm:rounded-[30px] sm:p-8">
+                  <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(90,137,255,0.28),transparent)]" />
 
                   <div className="relative">
                     <div className="mb-6 inline-flex rounded-2xl border border-blum-blue/10 bg-[linear-gradient(135deg,rgba(90,137,255,0.14),rgba(90,137,255,0.05))] p-4 text-blum-blue shadow-sm transition duration-500 group-hover:scale-105">
@@ -85,14 +85,14 @@ export default function Process({
         </div>
 
         <SectionReveal className="mt-12 sm:mt-14">
-          <div className="overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#0f172a_0%,#183b86_45%,#2563eb_100%)] px-6 py-8 text-white shadow-[0_16px_40px_rgba(15,23,42,0.16)] sm:rounded-[34px] sm:px-8 sm:py-10">
+          <div className="overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#0f172a_0%,#183b86_45%,#2563eb_100%)] px-6 py-8 text-white shadow-[0_12px_28px_rgba(15,23,42,0.14)] sm:rounded-[34px] sm:px-8 sm:py-10">
             <div className="grid gap-6 sm:gap-8 md:grid-cols-3">
               {t.bottom.map((item, index) => (
                 <div
                   key={item.title}
-                  className={`rounded-2xl border p-5 transition duration-300 hover:-translate-y-1 sm:p-6 ${
+                  className={`rounded-2xl border p-5 transition duration-300 sm:p-6 ${
                     index === 1
-                      ? "border-white/18 bg-white/12 shadow-[0_10px_24px_rgba(0,0,0,0.14)]"
+                      ? "border-white/18 bg-white/12 shadow-[0_8px_18px_rgba(0,0,0,0.12)]"
                       : "border-white/10 bg-white/6"
                   }`}
                 >
