@@ -16,13 +16,13 @@ export default function SectionReveal({
 }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 34, scale: 0.985 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.18 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{
-        duration: 0.7,
+        duration: 0.5,
         delay,
-        ease: [0.22, 1, 0.36, 1],
+        ease: "easeOut",
       }}
       className={className}
     >

@@ -16,11 +16,11 @@ export default function Footer({
       id="contacto"
       className="relative overflow-hidden bg-[linear-gradient(to_bottom,#020617,#000000)] px-4 py-14 text-white sm:px-6 sm:py-16 lg:px-8 lg:py-18"
     >
-      <div className="absolute left-0 top-0 h-48 w-48 rounded-full bg-blum-blue/12 blur-3xl" />
-      <div className="absolute bottom-0 right-0 h-56 w-56 rounded-full bg-blum-yellow/8 blur-3xl" />
+      <div className="absolute left-0 top-0 h-40 w-40 rounded-full bg-blum-blue/10 blur-2xl" />
+      <div className="absolute bottom-0 right-0 h-44 w-44 rounded-full bg-blum-yellow/6 blur-2xl" />
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.20)] backdrop-blur-sm sm:rounded-[30px] sm:p-8">
+        <div className="rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_14px_36px_rgba(0,0,0,0.18)] sm:rounded-[30px] sm:p-8">
           <div className="grid gap-8 md:grid-cols-2 md:items-center md:gap-10">
             <div className="text-center md:text-left">
               <div className="mx-auto flex h-10 w-[120px] items-center justify-center overflow-hidden md:mx-0 sm:h-11 sm:w-[135px]">
