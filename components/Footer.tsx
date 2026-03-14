@@ -8,6 +8,7 @@ export default function Footer({
     contact: string;
     city: string;
     rights: string;
+    email: string;
   };
 }) {
   return (
@@ -29,7 +30,7 @@ export default function Footer({
 
           <div className="md:text-right">
             <h4 className="mb-4 text-lg font-semibold">{t.contact}</h4>
-            <p className="text-gray-300">ventas@blumcode.com</p>
+            <p className="text-gray-300">{t.email}</p>
             <p className="text-gray-300">{t.city}</p>
           </div>
         </div>

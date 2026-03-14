@@ -58,6 +58,7 @@ type Dictionary = {
     contact: string;
     city: string;
     rights: string;
+    email: string;
   };
 };
 
@@ -201,6 +202,7 @@ const dictionary: Record<Locale, Dictionary> = {
       contact: "Contacto",
       city: "Santa Cruz, Bolivia",
       rights: "Todos los derechos reservados.",
+      email: "ventas@blumcode.com",
     },
   },
   en: {
@@ -341,6 +343,7 @@ const dictionary: Record<Locale, Dictionary> = {
       contact: "Contact",
       city: "Santa Cruz, Bolivia",
       rights: "All rights reserved.",
+      email: "sales@blumcode.com",
     },
   },
 };
