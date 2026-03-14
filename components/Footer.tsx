@@ -23,13 +23,16 @@ export default function Footer({
         <div className="rounded-[24px] border border-white/10 bg-white/5 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.20)] backdrop-blur-sm sm:rounded-[30px] sm:p-8">
           <div className="grid gap-8 md:grid-cols-2 md:items-center md:gap-10">
             <div className="text-center md:text-left">
-              <Image
-                src="/logo-blanco.svg"
-                alt="BlumCode Logo"
-                width={180}
-                height={60}
-                className="mx-auto h-10 w-auto object-contain sm:h-11 md:mx-0"
-              />
+              <div className="mx-auto flex h-10 w-[120px] items-center justify-center overflow-hidden md:mx-0 sm:h-11 sm:w-[135px]">
+                <Image
+                  src="/logo-blanco.svg"
+                  alt="BlumCode Logo"
+                  width={220}
+                  height={60}
+                  className="h-8 w-auto max-w-none object-contain object-left sm:h-9"
+                />
+              </div>
+
               <p className="mt-4 max-w-md leading-7 text-gray-300 md:max-w-none">
                 {t.description}
               </p>
@@ -37,7 +40,7 @@ export default function Footer({
 
             <div className="text-center md:text-right">
               <h4 className="mb-4 text-lg font-semibold">{t.contact}</h4>
-              <p className="text-gray-300 break-words">{t.email}</p>
+              <p className="break-words text-gray-300">{t.email}</p>
               <p className="text-gray-300">{t.city}</p>
             </div>
           </div>

@@ -32,15 +32,15 @@ export default function Header({
 
           <div className="relative flex h-18 items-center justify-between px-4 sm:h-20 sm:px-6">
             <div className="min-w-0">
-              <Link href={`/${lang}`} className="group flex items-center gap-3">
-                <div className="rounded-xl bg-white/80 p-1.5 shadow-sm ring-1 ring-black/5 transition duration-300 group-hover:shadow-md">
+              <Link href={`/${lang}`} className="group flex items-center">
+                <div className="flex h-11 w-[118px] items-center overflow-hidden rounded-xl bg-white/80 px-2 shadow-sm ring-1 ring-black/5 transition duration-300 group-hover:shadow-md sm:h-12 sm:w-[132px]">
                   <Image
                     src="/logo.svg"
                     alt="BlumCode Logo"
-                    width={190}
-                    height={64}
+                    width={220}
+                    height={60}
                     priority
-                    className="h-8 w-auto object-contain sm:h-10"
+                    className="h-7 w-auto max-w-none object-contain object-left sm:h-8"
                   />
                 </div>
               </Link>
