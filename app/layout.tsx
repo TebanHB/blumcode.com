@@ -1,31 +1,37 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: "BlumCode - Desarrollo de Software a Medida",
+export const metadata: Metadata = {
+  title: "BlumCode - Desarrollo de Software a Medida | Soluciones Tecnológicas Personalizadas",
   description:
-    "Desarrollo de software a medida, optimización e integración de sistemas.",
-}
+    "BlumCode ofrece desarrollo de software a medida, mantenimiento, optimización, desarrollo móvil y web, e integración entre sistemas. Soluciones tecnológicas modernas y personalizadas.",
+  alternates: {
+    canonical: "https://blumcode.com",
+  },
+  openGraph: {
+    title: "BlumCode - Desarrollo de Software a Medida | Soluciones Tecnológicas Personalizadas",
+    description:
+      "BlumCode ofrece desarrollo de software a medida, mantenimiento, optimización, desarrollo móvil y web, e integración entre sistemas.",
+    url: "https://blumcode.com",
+    siteName: "BlumCode",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "BlumCode - Desarrollo de Software a Medida",
+    description:
+      "Soluciones tecnológicas personalizadas: desarrollo, mantenimiento, optimización e integración de software.",
+  },
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="es">
       <body>{children}</body>
     </html>
-  )
+  );
 }
