@@ -5,7 +5,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
 
           <div className="text-2xl font-bold text-blum-blue">
-            Blum
+            Blum123
           </div>
 
           <nav className="hidden md:flex space-x-8">
