@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 
 export default function Hero({
@@ -68,6 +68,7 @@ export default function Hero({
           alt="Background working space"
           fill
           priority
+          quality={70}
           sizes="100vw"
           className={`object-cover ${isLight ? "opacity-[0.34] brightness-[0.95] saturate-[0.95] contrast-[1.05]" : "opacity-35 brightness-[0.45]"}`}
         />
@@ -90,7 +91,7 @@ export default function Hero({
       <div className="relative z-10 mx-auto flex max-w-7xl items-start px-4 pb-14 pt-[96px] sm:px-6 sm:pb-20 sm:pt-[132px] lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-28 lg:pt-[160px]">
         <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
           <div className="max-w-4xl">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
@@ -102,9 +103,9 @@ export default function Hero({
             >
               <BadgeCheck className="h-4 w-4 text-blum-blue" />
               {t.badge}
-            </motion.div>
+            </m.div>
 
-            <motion.h1
+            <m.h1
               className={`mt-5 max-w-5xl text-[2.85rem] font-light leading-[0.94] tracking-[-0.04em] sm:mt-6 sm:text-6xl lg:text-[5.3rem] ${
                 isLight ? "text-slate-950" : "text-white"
               }`}
@@ -124,9 +125,9 @@ export default function Hero({
                 {t.title2}
               </span>
               <span> {t.title3}</span>
-            </motion.h1>
+            </m.h1>
 
-            <motion.p
+            <m.p
               className={`mt-5 max-w-2xl text-base leading-7 sm:mt-7 sm:text-xl sm:leading-8 lg:text-2xl ${
                 isLight ? "text-slate-700" : "text-slate-200"
               }`}
@@ -135,9 +136,9 @@ export default function Hero({
               transition={{ duration: 0.65, delay: 0.18 }}
             >
               {t.description}
-            </motion.p>
+            </m.p>
 
-            <motion.div
+            <m.div
               className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:gap-4 sm:flex-row sm:items-center"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -157,10 +158,10 @@ export default function Hero({
               >
                 {t.secondary}
               </a>
-            </motion.div>
+            </m.div>
           </div>
 
-          <motion.div
+          <m.div
             className={`relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:rounded-[32px] sm:p-6 lg:max-w-none ${
               isLight
                 ? "m-1 border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(148,163,184,0.2)]"
@@ -261,7 +262,7 @@ export default function Hero({
 
             <div className="relative mt-4 grid gap-2.5 sm:gap-3">
               {focusAreas.map(({ title, description, Icon, accentLight, accentDark }, index) => (
-                <motion.div
+                <m.div
                   key={title}
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -309,10 +310,10 @@ export default function Hero({
                       <p className={`mt-2 text-[13px] leading-5 sm:text-sm sm:leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

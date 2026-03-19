@@ -1,11 +1,14 @@
+import dynamic from "next/dynamic";
+
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import Solutions from "@/components/Solutions";
-import Process from "@/components/Process";
-import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
 import { Locale } from "@/i18n";
+
+const Services = dynamic(() => import("@/components/Services"));
+const Solutions = dynamic(() => import("@/components/Solutions"));
+const Process = dynamic(() => import("@/components/Process"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 type Dictionary = {
   nav: {

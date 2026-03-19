@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 
 export default function Solutions({
@@ -22,7 +22,7 @@ export default function Solutions({
   return (
     <section
       id="soluciones"
-      className={`section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight ? "bg-slate-100 text-slate-950" : "bg-slate-900 text-white"
       }`}
     >
@@ -39,7 +39,7 @@ export default function Solutions({
 
       <div className="relative mx-auto max-w-7xl">
         <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
-          <motion.span
+          <m.span
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -50,9 +50,9 @@ export default function Solutions({
             }`}
           >
             {t.badge}
-          </motion.span>
+          </m.span>
 
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -62,9 +62,9 @@ export default function Solutions({
             }`}
           >
             {t.title}
-          </motion.h2>
+          </m.h2>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -72,10 +72,10 @@ export default function Solutions({
             className={`text-sm leading-6 sm:text-xl sm:leading-8 ${isLight ? "text-slate-600" : "text-slate-300"}`}
           >
             {t.description}
-          </motion.p>
+          </m.p>
         </div>
 
-        <motion.div
+        <m.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
@@ -89,7 +89,7 @@ export default function Solutions({
           className="mx-auto grid max-w-5xl gap-4 sm:gap-5 md:grid-cols-2"
         >
           {t.items.map((item) => (
-            <motion.article
+            <m.article
               key={item.title}
               variants={{
                 hidden: { opacity: 0, y: 24 },
@@ -123,9 +123,9 @@ export default function Solutions({
                   </p>
                 </div>
               </div>
-            </motion.article>
+            </m.article>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

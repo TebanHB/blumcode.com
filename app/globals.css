@@ -234,6 +234,13 @@ html[data-theme="light"] .ui-btn-icon:hover {
   scrollbar-width: none;  /* Firefox */
 }
 
+@supports (content-visibility: auto) {
+  .content-auto-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 900px;
+  }
+}
+
 /* Optimización para móviles y accesibilidad */
 @media (max-width: 767px) {
   html {

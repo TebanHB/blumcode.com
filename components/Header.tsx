@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Globe, MoonStar, SunMedium } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { Locale } from "@/i18n";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 
 const NAV_ITEMS = [
@@ -56,7 +56,12 @@ export default function Header({
   );
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 80);
+    const handleScroll = () => {
+      const nextScrolled = window.scrollY > 80;
+      setScrolled((current) => (current === nextScrolled ? current : nextScrolled));
+    };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -85,7 +90,7 @@ export default function Header({
   return (
     <header className="fixed top-0 z-50 w-full">
       {/* Navbar container — always transparent initially, dark glassmorphism pill on scroll */}
-      <motion.div
+      <m.div
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
@@ -145,7 +150,7 @@ export default function Header({
                 >
                   {getNavLabel(item.key)}
                   {isActive && !isContact && (
-                    <motion.span
+                    <m.span
                       layoutId="navDot"
                       className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-blum-blue"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -231,7 +236,7 @@ export default function Header({
         {/* Mobile Menu Dropdown */}
         <AnimatePresence>
           {open && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -10, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
@@ -265,10 +270,10 @@ export default function Header({
                   );
                 })}
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </m.div>
     </header>
   );
 }

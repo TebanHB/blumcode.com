@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 import { useTheme } from "./ThemeProvider";
 
@@ -21,7 +21,7 @@ export default function Footer({
   return (
     <footer
       id="contacto"
-      className={`relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`content-auto-section relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight
           ? "bg-[linear-gradient(to_bottom,#f8fafc,#e2e8f0)] text-slate-950"
           : "bg-[linear-gradient(to_bottom,#020617,#000000)] text-white"
@@ -39,7 +39,7 @@ export default function Footer({
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -87,7 +87,7 @@ export default function Footer({
               {t.email}
             </a>
           </div>
-        </motion.div>
+        </m.div>
 
         <div
           className={`rounded-[24px] p-6 backdrop-blur-sm sm:rounded-[34px] sm:p-10 ${

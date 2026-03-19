@@ -1,8 +1,8 @@
 "use client";
 
 import { BarChart, Cloud, Code2, Layers, Smartphone, Sparkles, Workflow, Wrench } from "lucide-react";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { m, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useState, type PointerEvent } from "react";
 
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
@@ -25,9 +25,16 @@ export default function Services({
   const { isLight } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
   const [manualSelection, setManualSelection] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isGridHovered, setIsGridHovered] = useState(false);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const glowX = useSpring(pointerX, { stiffness: 280, damping: 32, mass: 0.25 });
+  const glowY = useSpring(pointerY, { stiffness: 280, damping: 32, mass: 0.25 });
+  const displayedActiveIndex = hoveredIndex ?? activeIndex;
 
   useEffect(() => {
-    if (manualSelection || t.items.length <= 1) {
+    if (manualSelection || isGridHovered || hoveredIndex !== null || t.items.length <= 1) {
       return;
     }
 
@@ -36,7 +43,7 @@ export default function Services({
     }, 2000);
 
     return () => window.clearInterval(intervalId);
-  }, [manualSelection, t.items.length]);
+  }, [hoveredIndex, isGridHovered, manualSelection, t.items.length]);
 
   useEffect(() => {
     const handleFocusRequest = (event: Event) => {
@@ -57,10 +64,16 @@ export default function Services({
     return () => window.removeEventListener("hero-service-focus", handleFocusRequest);
   }, [t.items.length]);
 
+  const updatePointerPosition = (event: PointerEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    pointerX.set(event.clientX - bounds.left);
+    pointerY.set(event.clientY - bounds.top);
+  };
+
   return (
     <section
       id="servicios"
-      className={`section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight ? "bg-slate-50" : "bg-slate-950"
       }`}
     >
@@ -99,7 +112,7 @@ export default function Services({
           </div>
         </SectionReveal>
 
-        <motion.div
+        <m.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
@@ -110,11 +123,33 @@ export default function Services({
               transition: { staggerChildren: 0.08 },
             },
           }}
-          className="mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-4"
+          onPointerEnter={(event) => {
+            setIsGridHovered(true);
+            updatePointerPosition(event);
+          }}
+          onPointerMove={updatePointerPosition}
+          onPointerLeave={() => {
+            setHoveredIndex(null);
+            setIsGridHovered(false);
+          }}
+          className="relative mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-4"
         >
+          <m.div
+            aria-hidden="true"
+            className={`pointer-events-none absolute left-0 top-0 z-0 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[68px] sm:h-44 sm:w-44 ${
+              isLight ? "bg-blue-400/20" : "bg-blue-400/25"
+            }`}
+            style={{ x: glowX, y: glowY }}
+            animate={{
+              opacity: isGridHovered ? 1 : 0,
+              scale: isGridHovered ? 1 : 0.75,
+            }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          />
+
           {t.items.map((service, index) => {
             const Icon = icons[index % icons.length];
-            const isActive = index === activeIndex;
+            const isActive = index === displayedActiveIndex;
 
             const handleSelect = () => {
               setActiveIndex(index);
@@ -122,7 +157,7 @@ export default function Services({
             };
 
             return (
-              <motion.button
+              <m.button
                 key={service.title}
                 type="button"
                 variants={{
@@ -136,6 +171,9 @@ export default function Services({
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.2 }}
                 onClick={handleSelect}
+                onPointerEnter={() => setHoveredIndex(index)}
+                onFocus={() => setHoveredIndex(index)}
+                onBlur={() => setHoveredIndex(null)}
                 className={`group relative h-full min-h-[184px] rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 sm:min-h-[220px] sm:rounded-[24px] sm:p-6 ${
                   isActive
                     ? isLight
@@ -205,10 +243,10 @@ export default function Services({
                 }`}>
                   {service.description}
                 </p>
-              </motion.button>
+              </m.button>
             );
           })}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

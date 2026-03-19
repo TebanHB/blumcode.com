@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
@@ -14,21 +14,26 @@ export default function SectionReveal({
   className = "",
   delay = 0,
 }: Props) {
-  const [isMobile, setIsMobile] = useState(false);
+  const [disableReveal, setDisableReveal] = useState(false);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const mediaQuery = window.matchMedia(
+      "(max-width: 767px), (prefers-reduced-motion: reduce)"
+    );
+    const update = () => setDisableReveal(mediaQuery.matches);
+
+    update();
+    mediaQuery.addEventListener("change", update);
+
+    return () => mediaQuery.removeEventListener("change", update);
   }, []);
 
-  if (isMobile) {
+  if (disableReveal) {
     return <div className={className}>{children}</div>;
   }
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12 }}
@@ -40,6 +45,6 @@ export default function SectionReveal({
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
