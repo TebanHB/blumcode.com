@@ -1,14 +1,13 @@
-import {
-  Code2,
-  Wrench,
-  Gauge,
-  Smartphone,
-  Workflow,
-  Sparkles,
-} from "lucide-react";
-import SectionReveal from "./SectionReveal";
+"use client";
 
-const icons = [Code2, Wrench, Gauge, Smartphone, Workflow];
+import { BarChart, Cloud, Code2, Layers, Smartphone, Sparkles, Workflow, Wrench } from "lucide-react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+
+import SectionReveal from "./SectionReveal";
+import { useTheme } from "./ThemeProvider";
+
+const icons = [Code2, Wrench, Layers, Smartphone, Workflow, Wrench, BarChart, Cloud];
 
 export default function Services({
   t,
@@ -23,76 +22,193 @@ export default function Services({
     }[];
   };
 }) {
+  const { isLight } = useTheme();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [manualSelection, setManualSelection] = useState(false);
+
+  useEffect(() => {
+    if (manualSelection || t.items.length <= 1) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % t.items.length);
+    }, 2000);
+
+    return () => window.clearInterval(intervalId);
+  }, [manualSelection, t.items.length]);
+
+  useEffect(() => {
+    const handleFocusRequest = (event: Event) => {
+      const customEvent = event as CustomEvent<{ index?: number }>;
+      const requestedIndex = customEvent.detail?.index;
+
+      if (typeof requestedIndex !== "number") {
+        return;
+      }
+
+      const boundedIndex = Math.max(0, Math.min(requestedIndex, t.items.length - 1));
+      setActiveIndex(boundedIndex);
+      setManualSelection(true);
+    };
+
+    window.addEventListener("hero-service-focus", handleFocusRequest);
+
+    return () => window.removeEventListener("hero-service-focus", handleFocusRequest);
+  }, [t.items.length]);
+
   return (
     <section
       id="servicios"
-      className="section-divider relative overflow-hidden bg-[linear-gradient(to_bottom,#f7fbff,#edf4ff)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
+      className={`section-divider relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+        isLight ? "bg-slate-50" : "bg-slate-950"
+      }`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(90,137,255,0.08),transparent_22%)]" />
-      <div className="absolute right-0 top-0 h-60 w-60 rounded-full bg-blum-blue/8 blur-2xl" />
-      <div className="absolute bottom-0 left-0 h-56 w-56 rounded-full bg-blum-yellow/8 blur-2xl" />
+      <div
+        className={`absolute inset-0 ${
+          isLight
+            ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.75),rgba(241,245,249,0.95))]"
+            : "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.16),transparent_30%),linear-gradient(180deg,rgba(15,23,42,0.18),rgba(2,6,23,0.72))]"
+        }`}
+      />
+      <div className={`absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent ${isLight ? "via-blue-500/10" : "via-blue-300/15"} to-transparent`} />
 
-      <div className="relative mx-auto max-w-7xl">
-        <SectionReveal className="mb-12 text-center sm:mb-16">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blum-blue/10 bg-white/75 px-4 py-2 text-xs font-semibold text-blum-blue shadow-sm sm:text-sm">
-            <Sparkles className="h-4 w-4" />
-            {t.badge}
-          </span>
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <SectionReveal>
+          <div className="max-w-3xl">
+            <span className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold backdrop-blur-sm ${
+              isLight
+                ? "border border-blue-200 bg-white/80 text-blue-700"
+                : "border border-blue-400/20 bg-blue-500/10 text-blue-200"
+            }`}>
+              <Sparkles className="h-4 w-4" />
+              {t.badge}
+            </span>
 
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-gray-950 sm:text-4xl">
-            {t.title}
-          </h2>
+            <h2 className={`mt-5 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-[3.6rem] ${
+              isLight ? "text-slate-950" : "text-white"
+            }`}>
+              {t.title}
+            </h2>
 
-          <p className="mx-auto max-w-3xl text-base text-gray-600 sm:text-lg lg:text-xl">
-            {t.description}
-          </p>
+            <p className={`mt-4 max-w-2xl text-base leading-7 sm:text-lg lg:text-xl ${
+              isLight ? "text-slate-600" : "text-slate-300"
+            }`}>
+              {t.description}
+            </p>
+          </div>
         </SectionReveal>
 
-        <div className="grid gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: { staggerChildren: 0.08 },
+            },
+          }}
+          className="mt-12 grid gap-5 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4"
+        >
           {t.items.map((service, index) => {
-            const Icon = icons[index];
-            const featured = index === 0;
+            const Icon = icons[index % icons.length];
+            const isActive = index === activeIndex;
+
+            const handleSelect = () => {
+              setActiveIndex(index);
+              setManualSelection(true);
+            };
 
             return (
-              <SectionReveal key={service.title} delay={index * 0.08}>
-                <article
-                  className={`group relative h-full overflow-hidden rounded-[26px] border p-6 transition duration-500 hover:-translate-y-2 sm:rounded-[30px] sm:p-8 ${
-                    featured
-                      ? "border-blum-blue/15 bg-[linear-gradient(135deg,rgba(90,137,255,0.12),rgba(255,255,255,0.94)_45%,rgba(255,210,0,0.08))] shadow-[0_12px_30px_rgba(90,137,255,0.10)]"
-                      : "border-white/70 bg-white/85 shadow-[0_10px_28px_rgba(15,23,42,0.05)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.09)]"
+              <motion.button
+                key={service.title}
+                type="button"
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.35, ease: "easeOut" },
+                  },
+                }}
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.2 }}
+                onClick={handleSelect}
+                className={`group relative h-full min-h-[220px] rounded-[24px] border p-6 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 ${
+                  isActive
+                    ? isLight
+                      ? "m-1 border-blue-300 bg-white shadow-[0_22px_40px_rgba(59,130,246,0.18)] ring-1 ring-blue-100"
+                      : "border-blue-400/40 bg-[linear-gradient(180deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92))] shadow-[0_20px_42px_rgba(59,130,246,0.18)]"
+                    : isLight
+                      ? "m-1 border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
+                      : "border-white/10 bg-white/[0.05]"
+                } focus:outline-hidden focus:ring-2 focus:ring-blum-blue/50`}
+                aria-pressed={isActive}
+              >
+                <div
+                  className={`pointer-events-none absolute inset-0 rounded-[24px] opacity-0 transition-opacity duration-500 ${
+                    isActive
+                      ? "opacity-100"
+                      : ""
+                  } ${
+                    isLight
+                      ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.10),transparent_55%)]"
+                      : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_50%)]"
+                  }`}
+                />
+
+                <div
+                  className={`relative flex h-12 w-12 items-center justify-center rounded-2xl ${
+                    isActive
+                      ? "bg-blue-500 text-white"
+                      : isLight
+                        ? "bg-slate-100 text-blue-600"
+                        : "bg-white/10 text-blue-200"
                   }`}
                 >
-                  <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(90,137,255,0.35),transparent)]" />
+                  <Icon className="h-6 w-6" />
+                </div>
 
-                  <div className="relative">
-                    {featured && (
-                      <div className="mb-5 inline-flex rounded-full border border-blum-blue/10 bg-white/75 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-blum-blue shadow-sm sm:text-xs">
-                        Principal
-                      </div>
-                    )}
+                <div className="relative mt-5 flex items-start justify-between gap-3">
+                  <h3 className={`text-xl font-semibold leading-snug ${
+                    isLight
+                      ? "text-slate-950"
+                      : isActive
+                        ? "text-white"
+                        : "text-white"
+                  }`}>
+                    {service.title}
+                  </h3>
+                  <span className={`shrink-0 text-xs font-semibold uppercase tracking-[0.22em] ${
+                    isLight
+                      ? isActive
+                        ? "text-blue-600"
+                        : "text-slate-400"
+                      : isActive
+                        ? "text-blue-200"
+                        : "text-white/35"
+                  }`}>
+                    0{index + 1}
+                  </span>
+                </div>
 
-                    <div className="mb-7 flex items-start justify-between gap-4">
-                      <div className="relative inline-flex">
-                        <div className="absolute inset-0 rounded-2xl bg-blum-blue/14 blur-md transition duration-500 group-hover:bg-blum-blue/20" />
-                        <div className="relative rounded-2xl border border-blum-blue/10 bg-[linear-gradient(135deg,rgba(90,137,255,0.16),rgba(90,137,255,0.05))] p-4 text-blum-blue shadow-sm transition duration-500 group-hover:scale-105 group-hover:-rotate-2">
-                          <Icon className="h-7 w-7 sm:h-8 sm:w-8" />
-                        </div>
-                      </div>
-                    </div>
-
-                    <h3 className="mb-3 text-lg font-semibold text-gray-950 transition duration-300 group-hover:text-blum-blue sm:text-xl">
-                      {service.title}
-                    </h3>
-
-                    <p className="leading-7 text-gray-600">
-                      {service.description}
-                    </p>
-                  </div>
-                </article>
-              </SectionReveal>
+                <p className={`relative mt-3 text-sm leading-6 sm:text-[15px] ${
+                  isLight
+                    ? isActive
+                      ? "text-slate-700"
+                      : "text-slate-600"
+                    : isActive
+                      ? "text-slate-100"
+                      : "text-slate-300"
+                }`}>
+                  {service.description}
+                </p>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

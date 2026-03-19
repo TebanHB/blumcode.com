@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import SectionReveal from "./SectionReveal";
+import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
+import { motion } from "framer-motion";
+import { useTheme } from "./ThemeProvider";
 
 export default function Hero({
   t,
@@ -26,92 +30,290 @@ export default function Hero({
     };
   };
 }) {
+  const { isLight } = useTheme();
+  const focusAreas = [
+    {
+      title: t.cards.webTitle,
+      description: t.cards.webDescription,
+      Icon: Code2,
+      accentLight: "bg-[linear-gradient(135deg,rgba(59,130,246,0.20),rgba(34,211,238,0.12),transparent_72%)]",
+      accentDark: "bg-[linear-gradient(135deg,rgba(59,130,246,0.24),rgba(34,211,238,0.12),transparent_72%)]",
+    },
+    {
+      title: t.cards.mobileTitle,
+      description: t.cards.mobileDescription,
+      Icon: Smartphone,
+      accentLight: "bg-[linear-gradient(135deg,rgba(14,165,233,0.18),rgba(99,102,241,0.10),transparent_72%)]",
+      accentDark: "bg-[linear-gradient(135deg,rgba(14,165,233,0.22),rgba(99,102,241,0.12),transparent_72%)]",
+    },
+    {
+      title: t.cards.supportTitle,
+      description: t.cards.supportDescription,
+      Icon: Wrench,
+      accentLight: "bg-[linear-gradient(135deg,rgba(250,204,21,0.20),rgba(59,130,246,0.10),transparent_72%)]",
+      accentDark: "bg-[linear-gradient(135deg,rgba(250,204,21,0.18),rgba(59,130,246,0.10),transparent_72%)]",
+    },
+  ];
+
+  const handleFocusService = (index: number) => {
+    window.dispatchEvent(new CustomEvent("hero-service-focus", { detail: { index } }));
+    document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <section className="section-divider relative overflow-hidden bg-[linear-gradient(180deg,#f8fbff_0%,#eef4ff_52%,#ffffff_100%)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-32">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(90,137,255,0.06),transparent_22%)]" />
-      <div className="absolute right-[-70px] top-8 h-44 w-44 rounded-full bg-blum-yellow/6 blur-xl md:h-60 md:w-60 md:blur-2xl" />
-      <div className="absolute left-[-60px] top-20 h-40 w-40 rounded-full bg-blum-blue/6 blur-xl md:h-56 md:w-56 md:blur-2xl" />
+    <section className={`relative overflow-hidden ${isLight ? "bg-slate-50" : "bg-slate-900"}`}>
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/hero/hero-main-291336271c124133b163823b16698d6b.png"
+          alt="Background working space"
+          fill
+          priority
+          sizes="100vw"
+          className={`object-cover ${isLight ? "opacity-[0.34] brightness-[0.95] saturate-[0.95] contrast-[1.05]" : "opacity-35 brightness-[0.45]"}`}
+        />
+        <div
+          className={`absolute inset-0 ${
+            isLight
+              ? "bg-[linear-gradient(120deg,rgba(248,250,252,0.74),rgba(241,245,249,0.66),rgba(226,232,240,0.52))]"
+              : "bg-[linear-gradient(120deg,rgba(2,6,23,0.94),rgba(15,23,42,0.76),rgba(15,23,42,0.88))]"
+          }`}
+        />
+        <div
+          className={`absolute inset-0 ${
+            isLight
+              ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.10),transparent_24%)]"
+              : "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.2),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.14),transparent_25%)]"
+          }`}
+        />
+      </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-        <SectionReveal>
-          <div className="text-center lg:text-left">
-            <div className="mb-5 inline-flex rounded-full border border-blum-blue/12 bg-white/85 px-4 py-2 text-xs font-semibold text-blum-blue shadow-sm sm:text-sm">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl items-center px-4 pb-20 pt-[120px] sm:px-6 sm:pb-24 sm:pt-[160px] lg:px-8 lg:pb-28">
+        <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55 }}
+              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-[0_0_30px_rgba(59,130,246,0.14)] backdrop-blur-md ${
+                isLight
+                  ? "border border-blue-200/70 bg-white/80 text-slate-800"
+                  : "border border-white/15 bg-white/10 text-slate-100"
+              }`}
+            >
+              <BadgeCheck className="h-4 w-4 text-blum-blue" />
               {t.badge}
-            </div>
+            </motion.div>
 
-            <h1 className="text-balance mb-6 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl lg:text-[4.35rem] lg:leading-[0.98]">
-              {t.title1}
-              <br />
-              <span className="text-gray-950">
-                {t.title2 === "a Medida" ? "Software " : ""}
+            <motion.h1
+              className={`mt-6 max-w-5xl text-5xl font-light leading-[0.92] tracking-[-0.04em] sm:text-6xl lg:text-[5.3rem] ${
+                isLight ? "text-slate-950" : "text-white"
+              }`}
+              initial={{ opacity: 0, y: 34 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.05 }}
+            >
+              <span>{t.title1} </span>
+              <span
+                className={`bg-[length:220%_auto] bg-clip-text font-semibold text-transparent ${
+                  isLight
+                    ? "bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-500 drop-shadow-[0_10px_24px_rgba(59,130,246,0.22)]"
+                    : "bg-gradient-to-r from-white via-blue-200 to-blum-blue"
+                }`}
+                style={{ animation: "shimmer 4s ease-in-out infinite" }}
+              >
+                {t.title2}
               </span>
-              <span className="text-blum-blue">
-                {t.title2 === "a Medida" ? "a Medida" : t.title2}
-              </span>
-              <br />
-              {t.title3}
-            </h1>
+              <span> {t.title3}</span>
+            </motion.h1>
 
-            <p className="mx-auto mb-8 max-w-2xl text-base leading-7 text-gray-600 sm:text-lg sm:leading-8 lg:mx-0 lg:text-xl">
+            <motion.p
+              className={`mt-7 max-w-2xl text-lg leading-8 sm:text-xl lg:text-2xl ${
+                isLight ? "text-slate-700" : "text-slate-200"
+              }`}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, delay: 0.18 }}
+            >
               {t.description}
-            </p>
+            </motion.p>
 
-            <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
+            <motion.div
+              className="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.32 }}
+            >
               <a
                 href="#contacto"
-                className="rounded-2xl bg-blum-blue px-6 py-4 text-base font-semibold text-white shadow-[0_10px_22px_rgba(90,137,255,0.20)] transition duration-300 hover:bg-blue-600 sm:px-8 sm:text-lg"
+                className="ui-btn ui-btn-primary ui-btn-lg group px-8 py-4 text-white"
               >
                 {t.primary}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
+
               <a
                 href="#servicios"
-                className="rounded-2xl border border-blum-blue/15 bg-white/92 px-6 py-4 text-base font-semibold text-blum-blue shadow-sm transition duration-300 hover:border-blum-blue hover:bg-white sm:px-8 sm:text-lg"
+                className="ui-btn ui-btn-secondary ui-btn-lg px-8 py-4"
               >
                 {t.secondary}
               </a>
-            </div>
-
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/70 bg-white/88 px-4 py-4 shadow-sm">
-                <p className="text-xl font-bold text-gray-950 sm:text-2xl">{t.cards.webTitle}</p>
-                <p className="mt-1 text-sm text-gray-500">{t.cards.webDescription}</p>
-              </div>
-              <div className="rounded-2xl border border-white/70 bg-white/88 px-4 py-4 shadow-sm">
-                <p className="text-xl font-bold text-gray-950 sm:text-2xl">{t.cards.mobileTitle}</p>
-                <p className="mt-1 text-sm text-gray-500">{t.cards.mobileDescription}</p>
-              </div>
-              <div className="rounded-2xl border border-white/70 bg-white/88 px-4 py-4 shadow-sm">
-                <p className="text-xl font-bold text-gray-950 sm:text-2xl">{t.cards.supportTitle}</p>
-                <p className="mt-1 text-sm text-gray-500">{t.cards.supportDescription}</p>
-              </div>
-            </div>
+            </motion.div>
           </div>
-        </SectionReveal>
 
-        <SectionReveal delay={0.12}>
-          <div className="relative">
-            <div className="absolute -inset-2 rounded-[36px] bg-gradient-to-r from-blum-blue/8 via-transparent to-blum-yellow/8 blur-lg md:-inset-3 md:blur-xl" />
+          <motion.div
+            className={`relative overflow-hidden rounded-[32px] p-5 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:p-6 ${
+              isLight
+                ? "m-1 border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(148,163,184,0.2)]"
+                : "border border-white/10 bg-slate-950/60"
+            }`}
+            initial={{ opacity: 0, x: 28 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.65, delay: 0.28 }}
+          >
+            <div
+              className={`absolute inset-0 ${
+                isLight
+                  ? "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.38),transparent_62%)]"
+                  : "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.24),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.08),transparent_62%)]"
+              }`}
+            />
+            <div
+              className={`absolute inset-0 opacity-70 ${
+                isLight
+                  ? "bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:26px_26px]"
+                  : "bg-[linear-gradient(rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.08)_1px,transparent_1px)] bg-[size:26px_26px]"
+              }`}
+            />
 
-            <div className="relative overflow-hidden rounded-[28px] border border-white/80 bg-white/50 shadow-[0_10px_24px_rgba(15,23,42,0.10)] sm:rounded-[34px]">
-              <div className="relative p-2.5 sm:p-3">
-                <Image
-                  src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/hero/hero-main-291336271c124133b163823b16698d6b.png"
-                  alt="BlumCode team"
-                  width={1200}
-                  height={900}
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  className="w-full rounded-[22px] object-cover shadow-[0_8px_18px_rgba(15,23,42,0.10)] sm:rounded-[28px]"
+            <div className="relative">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2">
+                  {[0, 1, 2].map((dot) => (
+                    <span
+                      key={dot}
+                      className={`h-2.5 w-2.5 rounded-full ${
+                        isLight
+                          ? dot === 0
+                            ? "bg-rose-300"
+                            : dot === 1
+                              ? "bg-amber-300"
+                              : "bg-emerald-300"
+                          : dot === 0
+                            ? "bg-rose-400/90"
+                            : dot === 1
+                              ? "bg-amber-400/90"
+                              : "bg-emerald-400/90"
+                      }`}
+                    />
+                  ))}
+                  <p className={`ml-1 text-[11px] font-semibold uppercase tracking-[0.26em] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                    BlumCode
+                  </p>
+                </div>
+
+                <div
+                  className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                    isLight ? "border border-blue-100 bg-blue-50 text-blue-700" : "border border-white/10 bg-white/5 text-blue-200"
+                  }`}
+                >
+                  <BadgeCheck className="h-5 w-5" />
+                </div>
+              </div>
+
+              <div
+                className={`relative mt-5 overflow-hidden rounded-[26px] p-5 ${
+                  isLight
+                    ? "border border-slate-200/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(239,246,255,0.86))] shadow-[0_18px_35px_rgba(148,163,184,0.18)]"
+                    : "border border-white/10 bg-[linear-gradient(160deg,rgba(15,23,42,0.92),rgba(30,41,59,0.88))]"
+                }`}
+              >
+                <div
+                  className={`absolute -right-10 -top-10 h-28 w-28 rounded-full blur-3xl ${
+                    isLight ? "bg-blue-200/60" : "bg-blue-500/25"
+                  }`}
                 />
+                <div className="relative">
+                  <p className={`text-xs font-semibold uppercase tracking-[0.26em] ${isLight ? "text-blue-700/85" : "text-blue-200/85"}`}>
+                    {t.floatingCard.title}
+                  </p>
+                  <h2 className={`mt-3 max-w-xs text-2xl font-semibold leading-tight sm:text-[2rem] ${isLight ? "text-slate-950" : "text-white"}`}>
+                    {t.floatingCard.description}
+                  </h2>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {focusAreas.map((item, index) => (
+                      <span
+                        key={item.title}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] ${
+                          isLight
+                            ? "border border-slate-200/80 bg-white/90 text-slate-700"
+                            : "border border-white/10 bg-white/5 text-slate-200"
+                        }`}
+                      >
+                        <span className={`${isLight ? "text-blue-700" : "text-blue-200"}`}>0{index + 1}</span>
+                        {item.title}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="absolute -bottom-5 left-4 rounded-2xl border border-white/70 bg-white/95 px-4 py-3 shadow-md sm:-bottom-6 sm:left-6">
-              <p className="text-sm font-semibold text-gray-950">{t.floatingCard.title}</p>
-              <p className="text-sm text-gray-500">{t.floatingCard.description}</p>
+            <div className="relative mt-4 grid gap-3">
+              {focusAreas.map(({ title, description, Icon, accentLight, accentDark }, index) => (
+                <motion.div
+                  key={title}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.34 + index * 0.08 }}
+                  whileHover={{ y: -2 }}
+                  className={`group relative overflow-hidden rounded-[24px] p-[1px] ${
+                    isLight ? "m-1 shadow-[0_14px_28px_rgba(148,163,184,0.16)]" : ""
+                  }`}
+                >
+                  <div className={`absolute inset-0 ${isLight ? accentLight : accentDark}`} />
+                  <div
+                    className={`relative flex items-start gap-4 rounded-[23px] px-4 py-4 ${
+                      isLight
+                        ? "border border-slate-200/80 bg-white/92"
+                        : "border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(15,23,42,0.82))]"
+                    }`}
+                  >
+                    <div
+                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[18px] text-blum-blue ${
+                        isLight ? "bg-blue-50 ring-1 ring-blue-100" : "bg-white/10"
+                      }`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                            0{index + 1}
+                          </p>
+                          <h3 className={`mt-1 text-base font-semibold sm:text-lg ${isLight ? "text-slate-950" : "text-white"}`}>{title}</h3>
+                        </div>
+
+                        <button
+                          type="button"
+                          aria-label={`Ir a ${title}`}
+                          onClick={() => handleFocusService(index)}
+                          className="ui-btn ui-btn-icon h-9 w-9 transition-transform group-hover:translate-x-1"
+                        >
+                          <ArrowRight className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      <p className={`mt-2 text-sm leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          </div>
-        </SectionReveal>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
-import Image from "next/image";
+"use client";
+
 import { CheckCircle2 } from "lucide-react";
-import SectionReveal from "./SectionReveal";
+import { motion } from "framer-motion";
+import { useTheme } from "./ThemeProvider";
 
 export default function Solutions({
   t,
@@ -15,69 +17,115 @@ export default function Solutions({
     }[];
   };
 }) {
+  const { isLight } = useTheme();
+
   return (
     <section
       id="soluciones"
-      className="section-divider relative overflow-hidden bg-[linear-gradient(135deg,#0f172a_0%,#17306b_45%,#2563eb_100%)] px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8 lg:py-24"
+      className={`section-divider relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+        isLight ? "bg-slate-100 text-slate-950" : "bg-slate-900 text-white"
+      }`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.10),transparent_24%)]" />
-      <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-white/6 blur-xl md:h-60 md:w-60 md:blur-2xl" />
-      <div className="absolute bottom-0 left-0 h-44 w-44 rounded-full bg-blum-yellow/6 blur-xl md:h-56 md:w-56 md:blur-2xl" />
+      <div className={`absolute inset-0 ${isLight ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(239,246,255,0.9),rgba(241,245,249,0.94))]" : "bg-linear-to-br from-slate-900 via-[#17306b] to-blum-blue opacity-50 mix-blend-overlay"}`} />
+      <div className={`absolute inset-0 ${isLight ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.14),transparent_40%)]" : "bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.05),transparent_40%)]"}`} />
+      <div
+        className={`absolute right-[-10%] top-[-5%] h-80 w-80 rounded-full blur-[100px] animate-pulse-glow ${isLight ? "bg-blum-blue/10" : "bg-blum-blue/20"}`}
+        style={{ animationDuration: "8s" }}
+      />
+      <div
+        className={`absolute bottom-[-10%] left-[-5%] h-72 w-72 rounded-full blur-[100px] animate-pulse-glow ${isLight ? "bg-blum-purple/10" : "bg-blum-purple/20"}`}
+        style={{ animationDuration: "12s" }}
+      />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <SectionReveal>
-          <div>
-            <span className="mb-4 inline-block rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold text-white sm:text-sm">
-              {t.badge}
-            </span>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mx-auto mb-14 max-w-3xl text-center sm:mb-16">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className={`mb-6 inline-block rounded-full px-5 py-2 text-sm font-semibold shadow-sm backdrop-blur-md ${
+              isLight
+                ? "border border-blue-200 bg-white/80 text-blue-700"
+                : "border border-white/20 bg-white/10 text-white"
+            }`}
+          >
+            {t.badge}
+          </motion.span>
 
-            <h2 className="mb-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {t.title}
-            </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className={`mb-6 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl ${
+              isLight ? "text-slate-950" : "text-white"
+            }`}
+          >
+            {t.title}
+          </motion.h2>
 
-            <p className="mb-8 text-base text-white/85 sm:text-lg lg:text-xl">
-              {t.description}
-            </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className={`text-lg leading-8 sm:text-xl ${isLight ? "text-slate-600" : "text-slate-300"}`}
+          >
+            {t.description}
+          </motion.p>
+        </div>
 
-            <div className="space-y-5">
-              {t.items.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-2xl border border-white/10 bg-white/12 p-5 shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition duration-300 hover:bg-white/14"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="mt-1 flex-shrink-0 rounded-xl bg-blum-yellow p-2 text-black shadow-md">
-                      <CheckCircle2 className="h-5 w-5" />
-                    </div>
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: { staggerChildren: 0.15 },
+            },
+          }}
+          className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2"
+        >
+          {t.items.map((item) => (
+            <motion.article
+              key={item.title}
+              variants={{
+                hidden: { opacity: 0, y: 24 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.35, ease: "easeOut" },
+                },
+              }}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.2 }}
+              className={`group relative min-h-[220px] overflow-hidden rounded-[28px] p-7 backdrop-blur-md transition-colors duration-300 ${
+                isLight
+                  ? "m-1 border border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.15)] hover:border-blum-blue/30 hover:bg-white"
+                  : "border border-white/10 bg-white/5 shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:border-blum-blue/40 hover:bg-white/10"
+              }`}
+            >
+              <div className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none ${isLight ? "bg-linear-to-r from-blue-50/0 via-blue-50 to-transparent" : "bg-linear-to-r from-blum-blue/0 via-blum-blue/10 to-transparent"}`} />
 
-                    <div>
-                      <h3 className="mb-2 text-lg font-semibold text-white sm:text-xl">
-                        {item.title}
-                      </h3>
-                      <p className="leading-7 text-white/80">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
+              <div className="relative flex items-start gap-5">
+                <div className="mt-1 shrink-0 rounded-2xl bg-linear-to-br from-yellow-300 to-amber-500 p-3 text-slate-950 shadow-lg shadow-amber-500/30">
+                  <CheckCircle2 className="h-6 w-6" />
                 </div>
-              ))}
-            </div>
-          </div>
-        </SectionReveal>
 
-        <SectionReveal delay={0.12}>
-          <div className="relative">
-            <div className="absolute -inset-2 rounded-[36px] bg-white/6 blur-lg md:-inset-3 md:blur-xl" />
-            <Image
-              src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/benefits/benefits-main-b30932b7881e43adac5e1add3ae0c413.png"
-              alt="BlumCode working team"
-              width={1200}
-              height={900}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-              className="relative w-full rounded-[24px] border border-white/10 object-cover shadow-[0_10px_24px_rgba(0,0,0,0.16)] sm:rounded-[30px]"
-            />
-          </div>
-        </SectionReveal>
+                <div>
+                  <h3 className={`text-2xl font-bold tracking-wide sm:text-[1.75rem] ${isLight ? "text-slate-950" : "text-white"}`}>
+                    {item.title}
+                  </h3>
+                  <p className={`mt-3 text-base leading-7 sm:text-lg ${isLight ? "text-slate-600" : "text-slate-300"}`}>
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

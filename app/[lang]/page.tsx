@@ -4,6 +4,7 @@ import Services from "@/components/Services";
 import Solutions from "@/components/Solutions";
 import Process from "@/components/Process";
 import Footer from "@/components/Footer";
+import SectionDivider from "@/components/SectionDivider";
 import { Locale } from "@/i18n";
 
 type Dictionary = {
@@ -121,20 +122,35 @@ const dictionary: Record<Locale, Dictionary> = {
             "Brindamos soporte continuo y mantenimiento preventivo para garantizar el óptimo funcionamiento de tus sistemas.",
         },
         {
-          title: "Optimización",
+          title: "Optimización UX/UI",
           description:
-            "Mejoramos el rendimiento de tus aplicaciones existentes, optimizando velocidad, seguridad y funcionalidad.",
+            "Mejoramos la experiencia de usuario y diseño de interfaces logrando productos digitales intuitivos y atractivos.",
         },
         {
-          title: "Desarrollo Mobile y Web",
+          title: "Desarrollo Mobile",
           description:
-            "Desarrollamos aplicaciones web y móviles modernas, responsivas y optimizadas para todos los dispositivos.",
+            "Desarrollamos aplicaciones móviles modernas, responsivas y nativas para iOS y Android.",
         },
         {
           title: "Integración de Sistemas",
           description:
-            "Conectamos y sincronizamos diferentes sistemas y aplicaciones para crear un ecosistema tecnológico unificado.",
+            "Conectamos y sincronizamos diferentes plataformas, APIs y sistemas para unificar tu tecnología.",
         },
+        {
+          title: "Consultoría IT",
+          description:
+            "Asesoramiento técnico especializado para transformar digitalmente tu negocio de manera inteligente.",
+        },
+        {
+          title: "Data Analytics",
+          description:
+            "Implementamos paneles y recolección de métricas para ayudar a tomar decisiones basadas en datos reales.",
+        },
+        {
+          title: "Cloud Services",
+          description:
+            "Migración, administración y despliegue de infraestructura en la nube (AWS, Google Cloud).",
+        }
       ],
     },
     solutions: {
@@ -275,20 +291,35 @@ const dictionary: Record<Locale, Dictionary> = {
             "We provide ongoing support and preventive maintenance to ensure optimal system performance.",
         },
         {
-          title: "Optimization",
+          title: "UX/UI Optimization",
           description:
-            "We improve performance, security, and functionality of your existing applications.",
+            "We improve user experience and interface design creating intuitive and attractive digital products.",
         },
         {
-          title: "Mobile and Web Development",
+          title: "Mobile Development",
           description:
-            "We build modern, responsive web and mobile applications for all devices.",
+            "We build modern, responsive native mobile applications for iOS and Android.",
         },
         {
           title: "Systems Integration",
           description:
-            "We connect different systems and applications into one unified ecosystem.",
+            "We connect different platforms, APIs, and systems into one unified ecosystem.",
         },
+        {
+          title: "IT Consulting",
+          description:
+            "Specialized technical advice to intelligently transform your business digitally.",
+        },
+        {
+          title: "Data Analytics",
+          description:
+            "We build dashboards and metrics collection to help you make data-driven decisions.",
+        },
+        {
+          title: "Cloud Services",
+          description:
+            "Migration, management, and deployment of cloud infrastructure (AWS, Google Cloud).",
+        }
       ],
     },
     solutions: {
@@ -398,9 +429,13 @@ export default async function HomePage({
       <Header lang={safeLang} nav={t.nav} />
       <main>
         <Hero t={t.hero} />
+        <SectionDivider variant="hero-to-services" />
         <Services t={t.services} />
+        <SectionDivider variant="services-to-solutions" />
         <Solutions t={t.solutions} />
+        <SectionDivider variant="solutions-to-process" />
         <Process t={t.process} />
+        <SectionDivider variant="process-to-footer" />
       </main>
       <Footer t={t.footer} />
     </>
