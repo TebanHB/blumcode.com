@@ -60,7 +60,7 @@ export default function Services({
   return (
     <section
       id="servicios"
-      className={`section-divider relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight ? "bg-slate-50" : "bg-slate-950"
       }`}
     >
@@ -76,7 +76,7 @@ export default function Services({
       <div className="relative z-10 mx-auto max-w-7xl">
         <SectionReveal>
           <div className="max-w-3xl">
-            <span className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold backdrop-blur-sm ${
+            <span className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm ${
               isLight
                 ? "border border-blue-200 bg-white/80 text-blue-700"
                 : "border border-blue-400/20 bg-blue-500/10 text-blue-200"
@@ -85,13 +85,13 @@ export default function Services({
               {t.badge}
             </span>
 
-            <h2 className={`mt-5 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-[3.6rem] ${
+            <h2 className={`mt-4 text-3xl font-semibold tracking-[-0.04em] sm:mt-5 sm:text-5xl lg:text-[3.6rem] ${
               isLight ? "text-slate-950" : "text-white"
             }`}>
               {t.title}
             </h2>
 
-            <p className={`mt-4 max-w-2xl text-base leading-7 sm:text-lg lg:text-xl ${
+            <p className={`mt-3 max-w-2xl text-sm leading-6 sm:mt-4 sm:text-lg sm:leading-7 lg:text-xl ${
               isLight ? "text-slate-600" : "text-slate-300"
             }`}>
               {t.description}
@@ -110,7 +110,7 @@ export default function Services({
               transition: { staggerChildren: 0.08 },
             },
           }}
-          className="mt-12 grid gap-5 sm:grid-cols-2 lg:gap-6 xl:grid-cols-4"
+          className="mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-4"
         >
           {t.items.map((service, index) => {
             const Icon = icons[index % icons.length];
@@ -136,7 +136,7 @@ export default function Services({
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.2 }}
                 onClick={handleSelect}
-                className={`group relative h-full min-h-[220px] rounded-[24px] border p-6 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 ${
+                className={`group relative h-full min-h-[184px] rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 sm:min-h-[220px] sm:rounded-[24px] sm:p-6 ${
                   isActive
                     ? isLight
                       ? "m-1 border-blue-300 bg-white shadow-[0_22px_40px_rgba(59,130,246,0.18)] ring-1 ring-blue-100"
@@ -160,7 +160,7 @@ export default function Services({
                 />
 
                 <div
-                  className={`relative flex h-12 w-12 items-center justify-center rounded-2xl ${
+                  className={`relative flex h-11 w-11 items-center justify-center rounded-2xl sm:h-12 sm:w-12 ${
                     isActive
                       ? "bg-blue-500 text-white"
                       : isLight
@@ -172,7 +172,7 @@ export default function Services({
                 </div>
 
                 <div className="relative mt-5 flex items-start justify-between gap-3">
-                  <h3 className={`text-xl font-semibold leading-snug ${
+                  <h3 className={`text-lg font-semibold leading-snug sm:text-xl ${
                     isLight
                       ? "text-slate-950"
                       : isActive
@@ -194,7 +194,7 @@ export default function Services({
                   </span>
                 </div>
 
-                <p className={`relative mt-3 text-sm leading-6 sm:text-[15px] ${
+                <p className={`relative mt-3 text-[13px] leading-5 sm:text-[15px] sm:leading-6 ${
                   isLight
                     ? isActive
                       ? "text-slate-700"

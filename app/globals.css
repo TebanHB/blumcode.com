@@ -47,7 +47,9 @@ html[data-theme="light"] body {
   border-radius: 9999px;
   border: 1px solid transparent;
   font-weight: 700;
+  line-height: 1.15;
   letter-spacing: 0.14em;
+  text-align: center;
   text-transform: uppercase;
   transform: translateY(0);
   transition:
@@ -239,6 +241,31 @@ html[data-theme="light"] .ui-btn-icon:hover {
   }
   * {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .ui-btn {
+    gap: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+
+  .ui-btn-chip {
+    padding: 0.5rem 0.82rem;
+    font-size: 0.66rem;
+  }
+
+  .ui-btn-md,
+  .ui-btn-lg {
+    padding: 0.9rem 1.15rem;
+    font-size: 0.72rem;
+  }
+
+  .ui-btn-icon {
+    height: 2.3rem;
+    width: 2.3rem;
+  }
+
+  .ui-btn-readable {
+    letter-spacing: 0.01em;
   }
 }
 

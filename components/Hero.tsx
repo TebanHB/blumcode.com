@@ -87,14 +87,14 @@ export default function Hero({
         />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl items-center px-4 pb-20 pt-[120px] sm:px-6 sm:pb-24 sm:pt-[160px] lg:px-8 lg:pb-28">
-        <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
+      <div className="relative z-10 mx-auto flex max-w-7xl items-start px-4 pb-14 pt-[96px] sm:px-6 sm:pb-20 sm:pt-[132px] lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-28 lg:pt-[160px]">
+        <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55 }}
-              className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-[0_0_30px_rgba(59,130,246,0.14)] backdrop-blur-md ${
+              className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-[0_0_30px_rgba(59,130,246,0.14)] backdrop-blur-md sm:px-4 sm:py-2 sm:text-sm ${
                 isLight
                   ? "border border-blue-200/70 bg-white/80 text-slate-800"
                   : "border border-white/15 bg-white/10 text-slate-100"
@@ -105,7 +105,7 @@ export default function Hero({
             </motion.div>
 
             <motion.h1
-              className={`mt-6 max-w-5xl text-5xl font-light leading-[0.92] tracking-[-0.04em] sm:text-6xl lg:text-[5.3rem] ${
+              className={`mt-5 max-w-5xl text-[2.85rem] font-light leading-[0.94] tracking-[-0.04em] sm:mt-6 sm:text-6xl lg:text-[5.3rem] ${
                 isLight ? "text-slate-950" : "text-white"
               }`}
               initial={{ opacity: 0, y: 34 }}
@@ -127,7 +127,7 @@ export default function Hero({
             </motion.h1>
 
             <motion.p
-              className={`mt-7 max-w-2xl text-lg leading-8 sm:text-xl lg:text-2xl ${
+              className={`mt-5 max-w-2xl text-base leading-7 sm:mt-7 sm:text-xl sm:leading-8 lg:text-2xl ${
                 isLight ? "text-slate-700" : "text-slate-200"
               }`}
               initial={{ opacity: 0, y: 24 }}
@@ -138,14 +138,14 @@ export default function Hero({
             </motion.p>
 
             <motion.div
-              className="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center"
+              className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:gap-4 sm:flex-row sm:items-center"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 0.32 }}
             >
               <a
                 href="#contacto"
-                className="ui-btn ui-btn-primary ui-btn-lg group px-8 py-4 text-white"
+                className="ui-btn ui-btn-primary ui-btn-lg group w-full px-6 py-3.5 text-white sm:w-auto sm:px-8 sm:py-4"
               >
                 {t.primary}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -153,7 +153,7 @@ export default function Hero({
 
               <a
                 href="#servicios"
-                className="ui-btn ui-btn-secondary ui-btn-lg px-8 py-4"
+                className="ui-btn ui-btn-secondary ui-btn-lg w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4"
               >
                 {t.secondary}
               </a>
@@ -161,7 +161,7 @@ export default function Hero({
           </div>
 
           <motion.div
-            className={`relative overflow-hidden rounded-[32px] p-5 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:p-6 ${
+            className={`relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:rounded-[32px] sm:p-6 lg:max-w-none ${
               isLight
                 ? "m-1 border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(148,163,184,0.2)]"
                 : "border border-white/10 bg-slate-950/60"
@@ -212,7 +212,7 @@ export default function Hero({
                 </div>
 
                 <div
-                  className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                  className={`flex h-10 w-10 items-center justify-center rounded-2xl sm:h-11 sm:w-11 ${
                     isLight ? "border border-blue-100 bg-blue-50 text-blue-700" : "border border-white/10 bg-white/5 text-blue-200"
                   }`}
                 >
@@ -221,7 +221,7 @@ export default function Hero({
               </div>
 
               <div
-                className={`relative mt-5 overflow-hidden rounded-[26px] p-5 ${
+                className={`relative mt-4 overflow-hidden rounded-[24px] p-4 sm:mt-5 sm:rounded-[26px] sm:p-5 ${
                   isLight
                     ? "border border-slate-200/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(239,246,255,0.86))] shadow-[0_18px_35px_rgba(148,163,184,0.18)]"
                     : "border border-white/10 bg-[linear-gradient(160deg,rgba(15,23,42,0.92),rgba(30,41,59,0.88))]"
@@ -236,15 +236,15 @@ export default function Hero({
                   <p className={`text-xs font-semibold uppercase tracking-[0.26em] ${isLight ? "text-blue-700/85" : "text-blue-200/85"}`}>
                     {t.floatingCard.title}
                   </p>
-                  <h2 className={`mt-3 max-w-xs text-2xl font-semibold leading-tight sm:text-[2rem] ${isLight ? "text-slate-950" : "text-white"}`}>
+                  <h2 className={`mt-3 max-w-sm text-xl font-semibold leading-tight sm:text-[2rem] ${isLight ? "text-slate-950" : "text-white"}`}>
                     {t.floatingCard.description}
                   </h2>
 
-                  <div className="mt-5 flex flex-wrap gap-2">
+                  <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
                     {focusAreas.map((item, index) => (
                       <span
                         key={item.title}
-                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] ${
+                        className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs sm:tracking-[0.18em] ${
                           isLight
                             ? "border border-slate-200/80 bg-white/90 text-slate-700"
                             : "border border-white/10 bg-white/5 text-slate-200"
@@ -259,7 +259,7 @@ export default function Hero({
               </div>
             </div>
 
-            <div className="relative mt-4 grid gap-3">
+            <div className="relative mt-4 grid gap-2.5 sm:gap-3">
               {focusAreas.map(({ title, description, Icon, accentLight, accentDark }, index) => (
                 <motion.div
                   key={title}
@@ -267,24 +267,24 @@ export default function Hero({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: 0.34 + index * 0.08 }}
                   whileHover={{ y: -2 }}
-                  className={`group relative overflow-hidden rounded-[24px] p-[1px] ${
+                  className={`group relative overflow-hidden rounded-[22px] p-[1px] sm:rounded-[24px] ${
                     isLight ? "m-1 shadow-[0_14px_28px_rgba(148,163,184,0.16)]" : ""
                   }`}
                 >
                   <div className={`absolute inset-0 ${isLight ? accentLight : accentDark}`} />
                   <div
-                    className={`relative flex items-start gap-4 rounded-[23px] px-4 py-4 ${
+                    className={`relative flex items-start gap-3 rounded-[21px] px-3.5 py-3.5 sm:gap-4 sm:rounded-[23px] sm:px-4 sm:py-4 ${
                       isLight
                         ? "border border-slate-200/80 bg-white/92"
                         : "border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(15,23,42,0.82))]"
                     }`}
                   >
                     <div
-                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[18px] text-blum-blue ${
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px] text-blum-blue sm:h-12 sm:w-12 sm:rounded-[18px] ${
                         isLight ? "bg-blue-50 ring-1 ring-blue-100" : "bg-white/10"
                       }`}
                     >
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
                     </div>
 
                     <div className="min-w-0 flex-1">
@@ -293,20 +293,20 @@ export default function Hero({
                           <p className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
                             0{index + 1}
                           </p>
-                          <h3 className={`mt-1 text-base font-semibold sm:text-lg ${isLight ? "text-slate-950" : "text-white"}`}>{title}</h3>
+                          <h3 className={`mt-1 text-[15px] font-semibold leading-snug sm:text-lg ${isLight ? "text-slate-950" : "text-white"}`}>{title}</h3>
                         </div>
 
                         <button
                           type="button"
                           aria-label={`Ir a ${title}`}
                           onClick={() => handleFocusService(index)}
-                          className="ui-btn ui-btn-icon h-9 w-9 transition-transform group-hover:translate-x-1"
+                          className="ui-btn ui-btn-icon h-[2.125rem] w-[2.125rem] shrink-0 transition-transform group-hover:translate-x-1 sm:h-9 sm:w-9"
                         >
                           <ArrowRight className="h-4 w-4" />
                         </button>
                       </div>
 
-                      <p className={`mt-2 text-sm leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
+                      <p className={`mt-2 text-[13px] leading-5 sm:text-sm sm:leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
                     </div>
                   </div>
                 </motion.div>

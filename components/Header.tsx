@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Globe, Menu, MoonStar, SunMedium, X } from "lucide-react";
+import { Globe, MoonStar, SunMedium } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { Locale } from "@/i18n";
 import { motion, AnimatePresence } from "framer-motion";
@@ -89,17 +89,17 @@ export default function Header({
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
-        className="px-4 pt-4 md:px-6 md:pt-5"
+        className="px-3 pt-3 sm:px-4 sm:pt-4 md:px-6 md:pt-5"
       >
         <div
-          className={`mx-auto flex items-center justify-between rounded-full px-5 transition-all duration-500 ease-in-out lg:px-7 ${
+          className={`mx-auto flex items-center justify-between rounded-full px-3.5 transition-all duration-500 ease-in-out sm:px-5 lg:px-7 ${
             scrolled
               ? isLight
-                ? "max-w-5xl h-14 border border-slate-200/80 bg-white/80 shadow-[0_10px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl"
-                : "max-w-5xl h-14 bg-slate-950/75 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl border border-white/10"
+                ? "h-[3.35rem] max-w-5xl border border-slate-200/80 bg-white/80 shadow-[0_10px_30px_rgba(15,23,42,0.12)] backdrop-blur-xl sm:h-14"
+                : "h-[3.35rem] max-w-5xl border border-white/10 bg-slate-950/75 shadow-[0_8px_32px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:h-14"
               : isLight
-                ? "max-w-7xl h-16 border border-transparent bg-white/15 backdrop-blur-sm"
-                : "max-w-7xl h-16 bg-transparent"
+                ? "h-[3.5rem] max-w-7xl border border-transparent bg-white/15 backdrop-blur-sm sm:h-16"
+                : "h-[3.5rem] max-w-7xl bg-transparent sm:h-16"
           }`}
         >
           {/* Logo */}
@@ -116,7 +116,7 @@ export default function Header({
                 height={36}
                 priority
                 className={`w-auto object-contain transition-all duration-500 ${
-                  scrolled ? "h-6 sm:h-7" : "h-7 sm:h-9"
+                  scrolled ? "h-[1.375rem] sm:h-7" : "h-6 sm:h-9"
                 }`}
               />
             </button>
@@ -178,23 +178,54 @@ export default function Header({
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleTheme}
-              className="ui-btn ui-btn-icon mr-1"
+              className="ui-btn ui-btn-icon mr-1 h-9 w-9 sm:h-10 sm:w-10"
               aria-label={nextThemeAria}
             >
-              {isLight ? <MoonStar className="h-5 w-5" /> : <SunMedium className="h-5 w-5" />}
+              {isLight ? <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" /> : <SunMedium className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />}
             </button>
             <Link
               href={`/${otherLang}`}
-              className="ui-btn ui-btn-icon mr-2"
+              className="ui-btn ui-btn-icon mr-1.5 h-9 w-9 sm:mr-2 sm:h-10 sm:w-10"
             >
-              <Globe className="h-5 w-5" />
+              <Globe className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
             </Link>
             <button
               onClick={() => setOpen(!open)}
-              className="ui-btn ui-btn-icon focus:outline-hidden"
+              className={`relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full p-0 transition-all focus:outline-hidden sm:h-10 sm:w-10 ${
+                isLight
+                  ? "border border-slate-200/80 bg-white/92 text-slate-800 shadow-[0_10px_22px_rgba(148,163,184,0.16)]"
+                  : "border border-white/10 bg-white/5 text-white/80 shadow-[0_10px_22px_rgba(2,6,23,0.24)]"
+              }`}
+              aria-expanded={open}
+              aria-label={open ? "Close main menu" : "Open main menu"}
             >
-              <span className="sr-only">Open main menu</span>
-              {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <span className="sr-only">{open ? "Close main menu" : "Open main menu"}</span>
+              <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                {open ? (
+                  <svg
+                    viewBox="0 0 20 20"
+                    className="h-[1.05rem] w-[1.05rem] text-current sm:h-[1.15rem] sm:w-[1.15rem]"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 5L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg
+                    viewBox="0 0 20 20"
+                    className="h-[1.05rem] w-[1.05rem] text-current sm:h-[1.15rem] sm:w-[1.15rem]"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path d="M4.25 5.5H15.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M4.25 10H15.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M4.25 14.5H15.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                )}
+              </span>
             </button>
           </div>
         </div>
@@ -207,7 +238,7 @@ export default function Header({
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.98 }}
               transition={{ duration: 0.2 }}
-              className={`mx-auto mt-2 max-w-5xl overflow-hidden rounded-2xl backdrop-blur-xl shadow-2xl md:hidden ${
+              className={`mx-auto mt-2 max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl backdrop-blur-xl shadow-2xl md:hidden sm:max-w-5xl ${
                 isLight
                   ? "border border-slate-200/80 bg-white/90"
                   : "border border-white/10 bg-slate-950/90"

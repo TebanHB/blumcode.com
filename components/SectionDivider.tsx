@@ -24,7 +24,7 @@ const DARK_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#020617",
     accent: "rgba(59,130,246,0.12)",
     glow: "rgba(59,130,246,0.12)",
-    heightClass: "h-10 sm:h-12 lg:h-14",
+    heightClass: "h-8 sm:h-12 lg:h-14",
   },
   "services-to-solutions": {
     top: "#020617",
@@ -32,7 +32,7 @@ const DARK_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#0f172a",
     accent: "rgba(37,99,235,0.11)",
     glow: "rgba(59,130,246,0.1)",
-    heightClass: "h-10 sm:h-12 lg:h-14",
+    heightClass: "h-8 sm:h-12 lg:h-14",
   },
   "solutions-to-process": {
     top: "#0f172a",
@@ -40,7 +40,7 @@ const DARK_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#0f172a",
     accent: "rgba(148,163,184,0.12)",
     glow: "rgba(148,163,184,0.08)",
-    heightClass: "h-12 sm:h-14 lg:h-16",
+    heightClass: "h-10 sm:h-14 lg:h-16",
   },
   "process-to-footer": {
     top: "#020617",
@@ -48,7 +48,7 @@ const DARK_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#020617",
     accent: "rgba(59,130,246,0.10)",
     glow: "rgba(59,130,246,0.08)",
-    heightClass: "h-12 sm:h-14 lg:h-16",
+    heightClass: "h-10 sm:h-14 lg:h-16",
   },
 };
 
@@ -59,7 +59,7 @@ const LIGHT_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#f8fafc",
     accent: "rgba(59,130,246,0.08)",
     glow: "rgba(59,130,246,0.1)",
-    heightClass: "h-8 sm:h-10 lg:h-12",
+    heightClass: "h-6 sm:h-10 lg:h-12",
   },
   "services-to-solutions": {
     top: "#f8fafc",
@@ -67,7 +67,7 @@ const LIGHT_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#f1f5f9",
     accent: "rgba(59,130,246,0.08)",
     glow: "rgba(14,165,233,0.08)",
-    heightClass: "h-8 sm:h-10 lg:h-12",
+    heightClass: "h-6 sm:h-10 lg:h-12",
   },
   "solutions-to-process": {
     top: "#f1f5f9",
@@ -75,7 +75,7 @@ const LIGHT_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#dbeafe",
     accent: "rgba(59,130,246,0.08)",
     glow: "rgba(59,130,246,0.08)",
-    heightClass: "h-10 sm:h-12 lg:h-14",
+    heightClass: "h-8 sm:h-12 lg:h-14",
   },
   "process-to-footer": {
     top: "#ffffff",
@@ -83,7 +83,7 @@ const LIGHT_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     bottom: "#f8fafc",
     accent: "rgba(148,163,184,0.16)",
     glow: "rgba(255,255,255,0.22)",
-    heightClass: "h-12 sm:h-14 lg:h-16",
+    heightClass: "h-9 sm:h-14 lg:h-16",
   },
 };
 
