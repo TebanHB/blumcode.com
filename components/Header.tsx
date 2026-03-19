@@ -191,7 +191,7 @@ export default function Header({
             </Link>
             <button
               onClick={() => setOpen(!open)}
-              className={`relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full p-0 transition-all focus:outline-hidden sm:h-10 sm:w-10 ${
+              className={`relative inline-grid h-9 w-9 shrink-0 place-items-center rounded-full p-0 leading-none transition-all focus:outline-hidden sm:h-10 sm:w-10 ${
                 isLight
                   ? "border border-slate-200/80 bg-white/92 text-slate-800 shadow-[0_10px_22px_rgba(148,163,184,0.16)]"
                   : "border border-white/10 bg-white/5 text-white/80 shadow-[0_10px_22px_rgba(2,6,23,0.24)]"
@@ -200,32 +200,30 @@ export default function Header({
               aria-label={open ? "Close main menu" : "Open main menu"}
             >
               <span className="sr-only">{open ? "Close main menu" : "Open main menu"}</span>
-              <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                {open ? (
-                  <svg
-                    viewBox="0 0 20 20"
-                    className="h-[1.05rem] w-[1.05rem] text-current sm:h-[1.15rem] sm:w-[1.15rem]"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 5L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : (
-                  <svg
-                    viewBox="0 0 20 20"
-                    className="h-[1.05rem] w-[1.05rem] text-current sm:h-[1.15rem] sm:w-[1.15rem]"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path d="M4.25 5.5H15.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M4.25 10H15.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    <path d="M4.25 14.5H15.75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                )}
-              </span>
+              {open ? (
+                <svg
+                  viewBox="0 0 20 20"
+                  className="block h-[1.05rem] w-[1.05rem] -translate-x-[0.5px] text-current sm:h-[1.15rem] sm:w-[1.15rem]"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path d="M5 5L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M15 5L5 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 20 20"
+                  className="block h-[1.05rem] w-[1.05rem] -translate-x-[0.5px] text-current sm:h-[1.15rem] sm:w-[1.15rem]"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path d="M4.5 5.5H15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M4.5 10H15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M4.5 14.5H15.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
