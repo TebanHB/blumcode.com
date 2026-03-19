@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { key: "services", sectionId: "servicios" },
   { key: "solutions", sectionId: "soluciones" },
   { key: "process", sectionId: "proceso" },
+  { key: "team", sectionId: "nosotros" },
   { key: "contact", sectionId: "contacto" },
 ] as const;
 
@@ -24,6 +25,7 @@ export default function Header({
     services: string;
     solutions: string;
     trust: string;
+    team: string;
     contact: string;
   };
 }) {
@@ -48,6 +50,7 @@ export default function Header({
         services: nav.services,
         solutions: nav.solutions,
         process: nav.trust,
+        team: nav.team,
         contact: nav.contact,
       };
       return map[key] ?? key;
@@ -128,7 +131,7 @@ export default function Header({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex md:items-center md:gap-1">
+          <nav className="hidden md:flex md:items-center md:gap-0.5">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.sectionId;
               const isContact = item.key === "contact";
@@ -136,9 +139,9 @@ export default function Header({
                 <a
                   key={item.sectionId}
                   href={`#${item.sectionId}`}
-                  className={`relative rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
+                  className={`relative rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
                     isContact
-                      ? "ui-btn ui-btn-primary ui-btn-chip ml-2 px-5 py-2.5 text-white"
+                      ? "ui-btn ui-btn-primary ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
                       : isActive
                         ? isLight
                           ? "bg-blue-500/10 text-slate-950 font-semibold"
@@ -160,7 +163,7 @@ export default function Header({
               );
             })}
 
-            <div className={`ml-3 pl-3 ${isLight ? "border-l border-slate-200/80" : "border-l border-white/15"}`}>
+            <div className={`ml-2 pl-2 ${isLight ? "border-l border-slate-200/80" : "border-l border-white/15"}`}>
               <button
                 onClick={toggleTheme}
                 className="ui-btn ui-btn-soft ui-btn-chip mr-2 px-3.5 py-2"

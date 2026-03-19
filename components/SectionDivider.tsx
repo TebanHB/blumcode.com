@@ -6,6 +6,8 @@ type Variant =
   | "hero-to-services"
   | "services-to-solutions"
   | "solutions-to-process"
+  | "process-to-team"
+  | "team-to-footer"
   | "process-to-footer";
 
 type DividerConfig = {
@@ -42,6 +44,22 @@ const DARK_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     glow: "rgba(148,163,184,0.08)",
     heightClass: "h-10 sm:h-14 lg:h-16",
   },
+  "process-to-team": {
+    top: "#020617",
+    middle: "#071224",
+    bottom: "#081225",
+    accent: "rgba(59,130,246,0.11)",
+    glow: "rgba(56,189,248,0.08)",
+    heightClass: "h-9 sm:h-14 lg:h-16",
+  },
+  "team-to-footer": {
+    top: "#0f172a",
+    middle: "#091120",
+    bottom: "#020617",
+    accent: "rgba(59,130,246,0.1)",
+    glow: "rgba(59,130,246,0.08)",
+    heightClass: "h-10 sm:h-14 lg:h-16",
+  },
   "process-to-footer": {
     top: "#020617",
     middle: "#0f172a",
@@ -76,6 +94,22 @@ const LIGHT_DIVIDER_CONFIG: Record<Variant, DividerConfig> = {
     accent: "rgba(59,130,246,0.08)",
     glow: "rgba(59,130,246,0.08)",
     heightClass: "h-8 sm:h-12 lg:h-14",
+  },
+  "process-to-team": {
+    top: "#ffffff",
+    middle: "#f8fafc",
+    bottom: "#eef4ff",
+    accent: "rgba(59,130,246,0.08)",
+    glow: "rgba(14,165,233,0.08)",
+    heightClass: "h-8 sm:h-12 lg:h-14",
+  },
+  "team-to-footer": {
+    top: "#eef4ff",
+    middle: "#e2e8f0",
+    bottom: "#f8fafc",
+    accent: "rgba(148,163,184,0.14)",
+    glow: "rgba(255,255,255,0.24)",
+    heightClass: "h-9 sm:h-14 lg:h-16",
   },
   "process-to-footer": {
     top: "#ffffff",

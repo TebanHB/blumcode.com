@@ -8,6 +8,7 @@ import { Locale } from "@/i18n";
 const Services = dynamic(() => import("@/components/Services"));
 const Solutions = dynamic(() => import("@/components/Solutions"));
 const Process = dynamic(() => import("@/components/Process"));
+const About = dynamic(() => import("@/components/About"));
 const Footer = dynamic(() => import("@/components/Footer"));
 
 type Dictionary = {
@@ -15,6 +16,7 @@ type Dictionary = {
     services: string;
     solutions: string;
     trust: string;
+    team: string;
     contact: string;
   };
   hero: {
@@ -69,6 +71,21 @@ type Dictionary = {
       description: string;
     }[];
   };
+  about: {
+    badge: string;
+    title: string;
+    description: string;
+    summaryTitle: string;
+    summaryDescription: string;
+    pillars: string[];
+    members: {
+      name: string;
+      role: string;
+      description: string;
+      tag: string;
+      focus: string;
+    }[];
+  };
   footer: {
     description: string;
     contact: string;
@@ -84,16 +101,17 @@ const dictionary: Record<Locale, Dictionary> = {
       services: "Servicios",
       solutions: "Soluciones",
       trust: "Confianza",
+      team: "Nosotros",
       contact: "Contacto",
     },
     hero: {
-      badge: "Soluciones tecnológicas personalizadas",
+      badge: "Soluciones tecnol\u00f3gicas personalizadas",
       title1: "Desarrollo de Software",
       title2: "a Medida",
       title3: "para tu Empresa",
       description:
-        "En BlumCode transformamos tus ideas en soluciones tecnológicas innovadoras. Desarrollamos software personalizado, optimizamos sistemas existentes y brindamos soporte continuo para impulsar tu negocio.",
-      primary: "Solicitar Cotización",
+        "En BlumCode transformamos tus ideas en soluciones tecnol\u00f3gicas innovadoras. Desarrollamos software personalizado, optimizamos sistemas existentes y brindamos soporte continuo para impulsar tu negocio.",
+      primary: "Solicitar Cotizaci\u00f3n",
       secondary: "Ver Nuestros Servicios",
       cards: {
         webTitle: "Web",
@@ -101,7 +119,7 @@ const dictionary: Record<Locale, Dictionary> = {
         mobileTitle: "Mobile",
         mobileDescription: "Experiencias limpias y responsivas",
         supportTitle: "Soporte",
-        supportDescription: "Continuidad, mejoras y evolución",
+        supportDescription: "Continuidad, mejoras y evoluci\u00f3n",
       },
       floatingCard: {
         title: "Software a medida",
@@ -112,70 +130,70 @@ const dictionary: Record<Locale, Dictionary> = {
       badge: "Servicios",
       title: "Nuestros Servicios",
       description:
-        "Ofrecemos soluciones tecnológicas completas para impulsar tu negocio al siguiente nivel.",
+        "Ofrecemos soluciones tecnol\u00f3gicas completas para impulsar tu negocio al siguiente nivel.",
       items: [
         {
           title: "Desarrollo a Medida",
           description:
-            "Creamos software personalizado que se adapta perfectamente a las necesidades específicas de tu empresa y procesos de negocio.",
+            "Creamos software personalizado que se adapta perfectamente a las necesidades espec\u00edficas de tu empresa y procesos de negocio.",
         },
         {
           title: "Mantenimiento",
           description:
-            "Brindamos soporte continuo y mantenimiento preventivo para garantizar el óptimo funcionamiento de tus sistemas.",
+            "Brindamos soporte continuo y mantenimiento preventivo para garantizar el \u00f3ptimo funcionamiento de tus sistemas.",
         },
         {
-          title: "Optimización UX/UI",
+          title: "Optimizaci\u00f3n UX/UI",
           description:
-            "Mejoramos la experiencia de usuario y diseño de interfaces logrando productos digitales intuitivos y atractivos.",
+            "Mejoramos la experiencia de usuario y dise\u00f1o de interfaces logrando productos digitales intuitivos y atractivos.",
         },
         {
           title: "Desarrollo Mobile",
           description:
-            "Desarrollamos aplicaciones móviles modernas, responsivas y nativas para iOS y Android.",
+            "Desarrollamos aplicaciones m\u00f3viles modernas, responsivas y nativas para iOS y Android.",
         },
         {
-          title: "Integración de Sistemas",
+          title: "Integraci\u00f3n de Sistemas",
           description:
-            "Conectamos y sincronizamos diferentes plataformas, APIs y sistemas para unificar tu tecnología.",
+            "Conectamos y sincronizamos diferentes plataformas, APIs y sistemas para unificar tu tecnolog\u00eda.",
         },
         {
-          title: "Consultoría IT",
+          title: "Consultor\u00eda IT",
           description:
-            "Asesoramiento técnico especializado para transformar digitalmente tu negocio de manera inteligente.",
+            "Asesoramiento t\u00e9cnico especializado para transformar digitalmente tu negocio de manera inteligente.",
         },
         {
           title: "Data Analytics",
           description:
-            "Implementamos paneles y recolección de métricas para ayudar a tomar decisiones basadas en datos reales.",
+            "Implementamos paneles y recolecci\u00f3n de m\u00e9tricas para ayudar a tomar decisiones basadas en datos reales.",
         },
         {
           title: "Cloud Services",
           description:
-            "Migración, administración y despliegue de infraestructura en la nube (AWS, Google Cloud).",
-        }
+            "Migraci\u00f3n, administraci\u00f3n y despliegue de infraestructura en la nube (AWS, Google Cloud).",
+        },
       ],
     },
     solutions: {
       badge: "Soluciones",
-      title: "¿Por qué elegir BlumCode?",
+      title: "\u00bfPor qu\u00e9 elegir BlumCode?",
       description:
-        "Somos tu socio tecnológico ideal para llevar tu empresa al siguiente nivel.",
+        "Somos tu socio tecnol\u00f3gico ideal para llevar tu empresa al siguiente nivel.",
       items: [
         {
           title: "Experiencia Comprobada",
           description:
-            "Desarrollamos soluciones tecnológicas enfocadas en resultados reales para distintos negocios.",
+            "Desarrollamos soluciones tecnol\u00f3gicas enfocadas en resultados reales para distintos negocios.",
         },
         {
-          title: "Tecnología Moderna",
+          title: "Tecnolog\u00eda Moderna",
           description:
-            "Utilizamos herramientas actuales y buenas prácticas para crear soluciones escalables y eficientes.",
+            "Utilizamos herramientas actuales y buenas pr\u00e1cticas para crear soluciones escalables y eficientes.",
         },
         {
           title: "Soporte Continuo",
           description:
-            "Te acompañamos desde el desarrollo hasta el mantenimiento y evolución de tus sistemas.",
+            "Te acompa\u00f1amos desde el desarrollo hasta el mantenimiento y evoluci\u00f3n de tus sistemas.",
         },
         {
           title: "Resultados Medibles",
@@ -188,7 +206,7 @@ const dictionary: Record<Locale, Dictionary> = {
       badge: "Confianza",
       title: "Lo que puedes esperar al trabajar con BlumCode",
       description:
-        "Más que desarrollar software, buscamos darte seguridad, claridad y una solución realmente útil para tu negocio.",
+        "M\u00e1s que desarrollar software, buscamos darte seguridad, claridad y una soluci\u00f3n realmente \u00fatil para tu negocio.",
       cards: [
         {
           title: "Desarrollo confiable y profesional",
@@ -196,14 +214,14 @@ const dictionary: Record<Locale, Dictionary> = {
             "Construimos soluciones estables, escalables y pensadas para durar.",
         },
         {
-          title: "Comunicación clara",
+          title: "Comunicaci\u00f3n clara",
           description:
-            "Siempre sabrás qué se está desarrollando, en qué etapa va y qué sigue.",
+            "Siempre sabr\u00e1s qu\u00e9 se est\u00e1 desarrollando, en qu\u00e9 etapa va y qu\u00e9 sigue.",
         },
         {
           title: "Alcance y entregables definidos",
           description:
-            "Desde el inicio dejamos claro qué incluye el proyecto y qué recibirás.",
+            "Desde el inicio dejamos claro qu\u00e9 incluye el proyecto y qu\u00e9 recibir\u00e1s.",
         },
         {
           title: "Enfoque en resultados",
@@ -213,12 +231,12 @@ const dictionary: Record<Locale, Dictionary> = {
         {
           title: "Soporte y continuidad",
           description:
-            "Podemos seguir acompañando tu sistema con mantenimiento y mejoras.",
+            "Podemos seguir acompa\u00f1ando tu sistema con mantenimiento y mejoras.",
         },
         {
           title: "Calidad y experiencia",
           description:
-            "Trabajamos con foco en rendimiento, experiencia de usuario y orden técnico.",
+            "Trabajamos con foco en rendimiento, experiencia de usuario y orden t\u00e9cnico.",
         },
       ],
       bottom: [
@@ -235,13 +253,53 @@ const dictionary: Record<Locale, Dictionary> = {
         {
           title: "Impacto real en tu negocio",
           description:
-            "Buscamos que tu software te ayude a vender mejor y trabajar más rápido.",
+            "Buscamos que tu software te ayude a vender mejor y trabajar m\u00e1s r\u00e1pido.",
+        },
+      ],
+    },
+    about: {
+      badge: "Nosotros",
+      title: "Equipo detr\u00e1s de BlumCode",
+      description:
+        "Un equipo compacto y complementario que une estrategia, desarrollo y crecimiento comercial para convertir ideas en soluciones digitales claras, eficientes y bien ejecutadas.",
+      summaryTitle: "Tres frentes, un solo objetivo",
+      summaryDescription:
+        "Acompa\u00f1amos cada proyecto desde la visi\u00f3n de negocio hasta la entrega final, con decisiones t\u00e9cnicas s\u00f3lidas, comunicaci\u00f3n cercana y foco real en resultados.",
+      pillars: [
+        "Direcci\u00f3n estrat\u00e9gica",
+        "Desarrollo full stack",
+        "\u00c1rea comercial",
+      ],
+      members: [
+        {
+          name: "Esteban",
+          role: "CEO, fundador y desarrollador web Full Stack.",
+          description:
+            "Encabeza la direcci\u00f3n estrat\u00e9gica de la empresa y lidera el desarrollo de soluciones digitales innovadoras y eficientes.",
+          tag: "Liderazgo",
+          focus: "Visi\u00f3n estrat\u00e9gica, producto y ejecuci\u00f3n t\u00e9cnica.",
+        },
+        {
+          name: "Jefferson",
+          role: "Senior Full Stack Developer.",
+          description:
+            "Especialista en el desarrollo integral de plataformas web, con enfoque en calidad, escalabilidad y rendimiento.",
+          tag: "Desarrollo",
+          focus: "Arquitectura s\u00f3lida, calidad de c\u00f3digo y rendimiento.",
+        },
+        {
+          name: "Favio y Pablo",
+          role: "\u00c1rea comercial y ventas.",
+          description:
+            "Responsables de fortalecer la relaci\u00f3n con los clientes, identificar nuevas oportunidades y potenciar el crecimiento comercial de la empresa.",
+          tag: "Comercial",
+          focus: "Relaci\u00f3n cercana con clientes y crecimiento comercial.",
         },
       ],
     },
     footer: {
       description:
-        "Soluciones tecnológicas modernas y personalizadas para empresas que quieren crecer.",
+        "Soluciones tecnol\u00f3gicas modernas y personalizadas para empresas que quieren crecer.",
       contact: "Contacto",
       city: "Santa Cruz, Bolivia",
       rights: "Todos los derechos reservados.",
@@ -253,6 +311,7 @@ const dictionary: Record<Locale, Dictionary> = {
       services: "Services",
       solutions: "Solutions",
       trust: "Trust",
+      team: "Team",
       contact: "Contact",
     },
     hero: {
@@ -322,7 +381,7 @@ const dictionary: Record<Locale, Dictionary> = {
           title: "Cloud Services",
           description:
             "Migration, management, and deployment of cloud infrastructure (AWS, Google Cloud).",
-        }
+        },
       ],
     },
     solutions: {
@@ -407,6 +466,46 @@ const dictionary: Record<Locale, Dictionary> = {
         },
       ],
     },
+    about: {
+      badge: "About us",
+      title: "The team behind BlumCode",
+      description:
+        "A compact and complementary team that combines strategy, development, and commercial growth to turn ideas into clear, efficient, and well-executed digital solutions.",
+      summaryTitle: "Three strengths, one direction",
+      summaryDescription:
+        "We support each project from business vision to final delivery, with strong technical decisions, close communication, and a sharp focus on outcomes.",
+      pillars: [
+        "Strategic direction",
+        "Full stack development",
+        "Commercial growth",
+      ],
+      members: [
+        {
+          name: "Esteban",
+          role: "CEO, founder, and Full Stack web developer.",
+          description:
+            "He leads the strategic direction of the company and drives the development of innovative and efficient digital solutions.",
+          tag: "Leadership",
+          focus: "Strategic vision, product direction, and technical execution.",
+        },
+        {
+          name: "Jefferson",
+          role: "Senior Full Stack Developer.",
+          description:
+            "Specialist in end-to-end web platform development, with a strong focus on quality, scalability, and performance.",
+          tag: "Development",
+          focus: "Strong architecture, code quality, and performance.",
+        },
+        {
+          name: "Favio and Pablo",
+          role: "Commercial and sales area.",
+          description:
+            "They strengthen client relationships, identify new opportunities, and help drive the company's commercial growth.",
+          tag: "Commercial",
+          focus: "Client relationships, opportunity discovery, and growth.",
+        },
+      ],
+    },
     footer: {
       description:
         "Modern and custom technology solutions for businesses that want to grow.",
@@ -438,7 +537,9 @@ export default async function HomePage({
         <Solutions t={t.solutions} />
         <SectionDivider variant="solutions-to-process" />
         <Process t={t.process} />
-        <SectionDivider variant="process-to-footer" />
+        <SectionDivider variant="process-to-team" />
+        <About t={t.about} />
+        <SectionDivider variant="team-to-footer" />
       </main>
       <Footer t={t.footer} />
     </>
