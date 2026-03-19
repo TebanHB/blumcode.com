@@ -96,8 +96,8 @@ export default function Footer({
               : "border border-white/10 bg-white/5 shadow-[0_12px_28px_rgba(0,0,0,0.2)]"
           }`}
         >
-          <div className="grid gap-8 sm:gap-10 md:grid-cols-2 md:items-center md:gap-12">
-            <div className="text-center md:text-left">
+          <div className="grid gap-8 sm:gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] md:items-start md:gap-12 lg:gap-16">
+            <div className="flex h-full flex-col justify-center text-center md:text-left">
               <div className="mx-auto flex h-12 w-[140px] items-center justify-center overflow-hidden md:mx-0 sm:h-14 sm:w-[160px]">
                 <Image
                   src={isLight ? "/logo.svg" : "/logo-blanco.svg"}
@@ -116,7 +116,7 @@ export default function Footer({
                 {t.description}
               </p>
 
-              <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
+              {/* <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
                 {[
                   "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
                   "M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z",
@@ -129,10 +129,16 @@ export default function Footer({
                     </svg>
                   </a>
                 ))}
-              </div>
+              </div> */}
             </div>
 
-            <div className="flex flex-col items-center text-center md:items-end md:text-right">
+            <div
+              className={`flex flex-col items-center rounded-[22px] border px-5 py-6 text-center sm:px-6 sm:py-7 md:items-end md:text-right ${
+                isLight
+                  ? "border-slate-200 bg-slate-50/85"
+                  : "border-white/10 bg-black/10"
+              }`}
+            >
               <h4 className="mb-4 text-lg font-bold sm:mb-5 sm:text-xl">{t.contact}</h4>
               <div className="flex flex-col gap-3">
                 <a
