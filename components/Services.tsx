@@ -174,19 +174,19 @@ export default function Services({
                 onPointerEnter={() => setHoveredIndex(index)}
                 onFocus={() => setHoveredIndex(index)}
                 onBlur={() => setHoveredIndex(null)}
-                className={`group relative h-full min-h-[184px] rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 sm:min-h-[220px] sm:rounded-[24px] sm:p-6 ${
+                className={`group relative h-full min-h-46 rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 sm:min-h-55 sm:rounded-3xl sm:p-6 ${
                   isActive
                     ? isLight
                       ? "m-1 border-blue-300 bg-white shadow-[0_22px_40px_rgba(59,130,246,0.18)] ring-1 ring-blue-100"
                       : "border-blue-400/40 bg-[linear-gradient(180deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92))] shadow-[0_20px_42px_rgba(59,130,246,0.18)]"
                     : isLight
                       ? "m-1 border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
-                      : "border-white/10 bg-white/[0.05]"
+                      : "border-white/10 bg-white/5"
                 } focus:outline-hidden focus:ring-2 focus:ring-blum-blue/50`}
                 aria-pressed={isActive}
               >
                 <div
-                  className={`pointer-events-none absolute inset-0 rounded-[24px] opacity-0 transition-opacity duration-500 ${
+                  className={`pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 ${
                     isActive
                       ? "opacity-100"
                       : ""

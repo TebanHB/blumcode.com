@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Globe, MoonStar, SunMedium } from "lucide-react";
+import { Globe, MoonStar } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { Locale } from "@/i18n";
 import { AnimatePresence, m } from "framer-motion";
@@ -34,15 +34,7 @@ export default function Header({
   const [activeSection, setActiveSection] = useState<string>("");
   const otherLang = lang === "es" ? "en" : "es";
   const { isLight, toggleTheme } = useTheme();
-  const nextThemeLabel = lang === "es" ? (isLight ? "Oscuro" : "Claro") : isLight ? "Dark" : "Light";
-  const nextThemeAria =
-    lang === "es"
-      ? isLight
-        ? "Cambiar a tema oscuro"
-        : "Cambiar a tema claro"
-      : isLight
-        ? "Switch to dark theme"
-        : "Switch to light theme";
+  const themeButtonLabel = lang === "es" ? "Cambiar tema" : "Toggle theme";
 
   const getNavLabel = useCallback(
     (key: string) => {
@@ -163,17 +155,17 @@ export default function Header({
               );
             })}
 
-            <div className={`ml-2 pl-2 ${isLight ? "border-l border-slate-200/80" : "border-l border-white/15"}`}>
+            <div className={`ml-3 flex items-center gap-2.5 pl-3 ${isLight ? "border-l border-slate-200/80" : "border-l border-white/15"}`}>
               <button
                 onClick={toggleTheme}
-                className="ui-btn ui-btn-soft ui-btn-chip mr-2 px-3.5 py-2"
-                aria-label={nextThemeAria}
+                className="ui-btn ui-btn-icon h-10 w-10"
+                aria-label={themeButtonLabel}
               >
-                {isLight ? <MoonStar className="h-3.5 w-3.5" /> : <SunMedium className="h-3.5 w-3.5" />}
-                {nextThemeLabel}
+                <MoonStar className="h-4 w-4" />
               </button>
               <Link
                 href={`/${otherLang}`}
+                scroll={false}
                 className="ui-btn ui-btn-soft ui-btn-chip gap-2 px-3 py-2 text-[0.68rem]"
               >
                 <Globe className="h-3.5 w-3.5" />
@@ -187,12 +179,13 @@ export default function Header({
             <button
               onClick={toggleTheme}
               className="ui-btn ui-btn-icon mr-1 h-9 w-9 sm:h-10 sm:w-10"
-              aria-label={nextThemeAria}
+              aria-label={themeButtonLabel}
             >
-              {isLight ? <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" /> : <SunMedium className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />}
+              <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
             </button>
             <Link
               href={`/${otherLang}`}
+              scroll={false}
               className="ui-btn ui-btn-icon mr-1.5 h-9 w-9 sm:mr-2 sm:h-10 sm:w-10"
             >
               <Globe className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
