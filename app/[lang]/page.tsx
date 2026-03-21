@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SectionDivider from "@/components/SectionDivider";
 import { Locale } from "@/i18n";
+import {
+  buildPageMetadata,
+  buildStructuredData,
+  getSafeLocale,
+} from "@/lib/seo";
 
 const Services = dynamic(() => import("@/components/Services"));
 const Solutions = dynamic(() => import("@/components/Solutions"));
@@ -272,7 +278,7 @@ const dictionary: Record<Locale, Dictionary> = {
       ],
       members: [
         {
-          name: "Esteban",
+          name: "Esteban Hurtado",
           role: "CEO, fundador y desarrollador web Full Stack.",
           description:
             "Encabeza la direcci\u00f3n estrat\u00e9gica de la empresa y lidera el desarrollo de soluciones digitales innovadoras y eficientes.",
@@ -280,7 +286,7 @@ const dictionary: Record<Locale, Dictionary> = {
           focus: "Visi\u00f3n estrat\u00e9gica, producto y ejecuci\u00f3n t\u00e9cnica.",
         },
         {
-          name: "Jefferson",
+          name: "Jefferson Antelo",
           role: "Senior Full Stack Developer.",
           description:
             "Especialista en el desarrollo integral de plataformas web, con enfoque en calidad, escalabilidad y rendimiento.",
@@ -288,7 +294,7 @@ const dictionary: Record<Locale, Dictionary> = {
           focus: "Arquitectura s\u00f3lida, calidad de c\u00f3digo y rendimiento.",
         },
         {
-          name: "Favio y Pablo",
+          name: "Favio Cuentas y Pablo Coppa",
           role: "\u00c1rea comercial y ventas.",
           description:
             "Responsables de fortalecer la relaci\u00f3n con los clientes, identificar nuevas oportunidades y potenciar el crecimiento comercial de la empresa.",
@@ -481,7 +487,7 @@ const dictionary: Record<Locale, Dictionary> = {
       ],
       members: [
         {
-          name: "Esteban",
+          name: "Esteban Hurtado",
           role: "CEO, founder, and Full Stack web developer.",
           description:
             "He leads the strategic direction of the company and drives the development of innovative and efficient digital solutions.",
@@ -489,7 +495,7 @@ const dictionary: Record<Locale, Dictionary> = {
           focus: "Strategic vision, product direction, and technical execution.",
         },
         {
-          name: "Jefferson",
+          name: "Jefferson Antelo",
           role: "Senior Full Stack Developer.",
           description:
             "Specialist in end-to-end web platform development, with a strong focus on quality, scalability, and performance.",
@@ -497,7 +503,7 @@ const dictionary: Record<Locale, Dictionary> = {
           focus: "Strong architecture, code quality, and performance.",
         },
         {
-          name: "Favio and Pablo",
+          name: "Favio Cuentas and Pablo Coppa",
           role: "Commercial and sales area.",
           description:
             "They strengthen client relationships, identify new opportunities, and help drive the company's commercial growth.",
@@ -517,17 +523,38 @@ const dictionary: Record<Locale, Dictionary> = {
   },
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+
+  return buildPageMetadata(getSafeLocale(lang));
+}
+
 export default async function HomePage({
   params,
 }: {
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const safeLang: Locale = lang === "en" ? "en" : "es";
+  const safeLang = getSafeLocale(lang);
   const t = dictionary[safeLang];
+  const structuredData = buildStructuredData(
+    safeLang,
+    t.services.items,
+    `${t.hero.title1} ${t.hero.title2} ${t.hero.title3} | BlumCode`
+  );
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
       <Header lang={safeLang} nav={t.nav} />
       <main>
         <Hero t={t.hero} />
