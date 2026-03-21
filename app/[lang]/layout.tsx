@@ -1,4 +1,3 @@
-import { MotionProvider } from "@/components/MotionProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { locales } from "@/i18n";
 
@@ -33,9 +32,7 @@ export default async function LangLayout({
     <html lang={lang} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-        <ThemeProvider>
-          <MotionProvider>{children}</MotionProvider>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

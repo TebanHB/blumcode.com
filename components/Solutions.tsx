@@ -1,7 +1,8 @@
 "use client";
 
 import { CheckCircle2 } from "lucide-react";
-import { m } from "framer-motion";
+
+import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
 
 export default function Solutions({
@@ -38,11 +39,8 @@ export default function Solutions({
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
-          <m.span
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+        <SectionReveal className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
+          <span
             className={`mb-5 inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-md sm:mb-6 sm:px-5 sm:py-2 sm:text-sm ${
               isLight
                 ? "border border-blue-200 bg-white/80 text-blue-700"
@@ -50,63 +48,33 @@ export default function Solutions({
             }`}
           >
             {t.badge}
-          </m.span>
+          </span>
 
-          <m.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+          <h2
             className={`mb-4 text-3xl font-extrabold leading-tight tracking-tight sm:mb-6 sm:text-5xl lg:text-6xl ${
               isLight ? "text-slate-950" : "text-white"
             }`}
           >
             {t.title}
-          </m.h2>
+          </h2>
 
-          <m.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <p
             className={`text-sm leading-6 sm:text-xl sm:leading-8 ${isLight ? "text-slate-600" : "text-slate-300"}`}
           >
             {t.description}
-          </m.p>
-        </div>
+          </p>
+        </SectionReveal>
 
-        <m.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.15 },
-            },
-          }}
-          className="mx-auto grid max-w-5xl gap-4 sm:gap-5 md:grid-cols-2"
-        >
-          {t.items.map((item) => (
-            <m.article
-              key={item.title}
-              variants={{
-                hidden: { opacity: 0, y: 24 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { duration: 0.35, ease: "easeOut" },
-                },
-              }}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.2 }}
-              className={`group relative min-h-[188px] overflow-hidden rounded-[24px] p-5 backdrop-blur-md transition-colors duration-300 sm:min-h-[220px] sm:rounded-[28px] sm:p-7 ${
-                isLight
-                  ? "m-1 border border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.15)] hover:border-blum-blue/30 hover:bg-white"
-                  : "border border-white/10 bg-white/5 shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:border-blum-blue/40 hover:bg-white/10"
-              }`}
-            >
+        <div className="mx-auto grid max-w-5xl gap-4 sm:gap-5 md:grid-cols-2">
+          {t.items.map((item, index) => (
+            <SectionReveal key={item.title} delay={0.06 * (index + 1)}>
+              <article
+                className={`group relative min-h-[188px] overflow-hidden rounded-[24px] p-5 backdrop-blur-md transition-[transform,border-color,background-color,box-shadow] duration-300 hover:-translate-y-1.5 sm:min-h-[220px] sm:rounded-[28px] sm:p-7 ${
+                  isLight
+                    ? "m-1 border border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.15)] hover:border-blum-blue/30 hover:bg-white"
+                    : "border border-white/10 bg-white/5 shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:border-blum-blue/40 hover:bg-white/10"
+                }`}
+              >
               <div className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none ${isLight ? "bg-linear-to-r from-blue-50/0 via-blue-50 to-transparent" : "bg-linear-to-r from-blum-blue/0 via-blum-blue/10 to-transparent"}`} />
 
               <div className="relative flex items-start gap-4 sm:gap-5">
@@ -123,9 +91,10 @@ export default function Solutions({
                   </p>
                 </div>
               </div>
-            </m.article>
+              </article>
+            </SectionReveal>
           ))}
-        </m.div>
+        </div>
       </div>
     </section>
   );

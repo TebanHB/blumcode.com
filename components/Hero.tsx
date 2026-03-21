@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
-import { m } from "framer-motion";
+import type { CSSProperties } from "react";
 import { useTheme } from "./ThemeProvider";
 
 export default function Hero({
@@ -59,6 +59,9 @@ export default function Hero({
     window.dispatchEvent(new CustomEvent("hero-service-focus", { detail: { index } }));
     document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  const enter = (delayMs: number): CSSProperties => ({
+    animationDelay: `${delayMs}ms`,
+  });
 
   return (
     <section className={`relative overflow-hidden ${isLight ? "bg-slate-50" : "bg-slate-900"}`}>
@@ -91,27 +94,24 @@ export default function Hero({
       <div className="relative z-10 mx-auto flex max-w-7xl items-start px-4 pb-14 pt-[96px] sm:px-6 sm:pb-20 sm:pt-[132px] lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-28 lg:pt-[160px]">
         <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
           <div className="max-w-4xl">
-            <m.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55 }}
-              className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-[0_0_30px_rgba(59,130,246,0.14)] backdrop-blur-md sm:px-4 sm:py-2 sm:text-sm ${
-                isLight
-                  ? "border border-blue-200/70 bg-white/80 text-slate-800"
-                  : "border border-white/15 bg-white/10 text-slate-100"
-              }`}
-            >
-              <BadgeCheck className="h-4 w-4 text-blum-blue" />
-              {t.badge}
-            </m.div>
+            <div className="animate-enter-up" style={enter(0)}>
+              <div
+                className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-[0_0_30px_rgba(59,130,246,0.14)] backdrop-blur-md sm:px-4 sm:py-2 sm:text-sm ${
+                  isLight
+                    ? "border border-blue-200/70 bg-white/80 text-slate-800"
+                    : "border border-white/15 bg-white/10 text-slate-100"
+                }`}
+              >
+                <BadgeCheck className="h-4 w-4 text-blum-blue" />
+                {t.badge}
+              </div>
+            </div>
 
-            <m.h1
-              className={`mt-5 max-w-5xl text-[2.85rem] font-light leading-[0.94] tracking-[-0.04em] sm:mt-6 sm:text-6xl lg:text-[5.3rem] ${
+            <h1
+              className={`animate-enter-up mt-5 max-w-5xl text-[2.85rem] font-light leading-[0.94] tracking-[-0.04em] sm:mt-6 sm:text-6xl lg:text-[5.3rem] ${
                 isLight ? "text-slate-950" : "text-white"
               }`}
-              initial={{ opacity: 0, y: 34 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.05 }}
+              style={enter(50)}
             >
               <span>{t.title1} </span>
               <span
@@ -125,24 +125,20 @@ export default function Hero({
                 {t.title2}
               </span>
               <span> {t.title3}</span>
-            </m.h1>
+            </h1>
 
-            <m.p
-              className={`mt-5 max-w-2xl text-base leading-7 sm:mt-7 sm:text-xl sm:leading-8 lg:text-2xl ${
+            <p
+              className={`animate-enter-up mt-5 max-w-2xl text-base leading-7 sm:mt-7 sm:text-xl sm:leading-8 lg:text-2xl ${
                 isLight ? "text-slate-700" : "text-slate-200"
               }`}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.18 }}
+              style={enter(180)}
             >
               {t.description}
-            </m.p>
+            </p>
 
-            <m.div
-              className="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:gap-4 sm:flex-row sm:items-center"
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.32 }}
+            <div
+              className="animate-enter-up mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
+              style={enter(320)}
             >
               <a
                 href="#contacto"
@@ -158,18 +154,16 @@ export default function Hero({
               >
                 {t.secondary}
               </a>
-            </m.div>
+            </div>
           </div>
 
-          <m.div
-            className={`relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:rounded-[32px] sm:p-6 lg:max-w-none ${
+          <div
+            className={`animate-enter-right relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:rounded-[32px] sm:p-6 lg:max-w-none ${
               isLight
                 ? "m-1 border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(148,163,184,0.2)]"
                 : "border border-white/10 bg-slate-950/60"
             }`}
-            initial={{ opacity: 0, x: 28 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.65, delay: 0.28 }}
+            style={enter(280)}
           >
             <div
               className={`absolute inset-0 ${
@@ -262,13 +256,10 @@ export default function Hero({
 
             <div className="relative mt-4 grid gap-2.5 sm:gap-3">
               {focusAreas.map(({ title, description, Icon, accentLight, accentDark }, index) => (
-                <m.div
+                <div
                   key={title}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: 0.34 + index * 0.08 }}
-                  whileHover={{ y: -2 }}
-                  className={`group relative overflow-hidden rounded-[22px] p-[1px] sm:rounded-[24px] ${
+                  style={enter(340 + index * 80)}
+                  className={`animate-enter-up group relative overflow-hidden rounded-[22px] p-[1px] transition-transform duration-200 hover:-translate-y-0.5 sm:rounded-[24px] ${
                     isLight ? "m-1 shadow-[0_14px_28px_rgba(148,163,184,0.16)]" : ""
                   }`}
                 >
@@ -310,10 +301,10 @@ export default function Hero({
                       <p className={`mt-2 text-[13px] leading-5 sm:text-sm sm:leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
                     </div>
                   </div>
-                </m.div>
+                </div>
               ))}
             </div>
-          </m.div>
+          </div>
         </div>
       </div>
     </section>

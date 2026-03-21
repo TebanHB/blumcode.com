@@ -288,8 +288,66 @@ html[data-theme="light"] .ui-btn-icon:hover {
   }
 }
 
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes enter-right {
+  from {
+    opacity: 0;
+    transform: translate3d(28px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes enter-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 @keyframes shimmer {
   0% { background-position: 0% center; }
   50% { background-position: 100% center; }
   100% { background-position: 0% center; }
+}
+
+.animate-enter-up {
+  animation: enter-up 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-enter-right {
+  animation: enter-right 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-enter-down {
+  animation: enter-down 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }

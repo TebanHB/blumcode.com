@@ -1,8 +1,14 @@
 "use client";
 
 import { BarChart, Cloud, Code2, Layers, Smartphone, Sparkles, Workflow, Wrench } from "lucide-react";
-import { m, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useState, type PointerEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+  type PointerEvent,
+} from "react";
 
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
@@ -27,11 +33,17 @@ export default function Services({
   const [manualSelection, setManualSelection] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isGridHovered, setIsGridHovered] = useState(false);
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const glowX = useSpring(pointerX, { stiffness: 280, damping: 32, mass: 0.25 });
-  const glowY = useSpring(pointerY, { stiffness: 280, damping: 32, mass: 0.25 });
+  const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const gridBoundsRef = useRef<DOMRect | null>(null);
   const displayedActiveIndex = hoveredIndex ?? activeIndex;
+  const glowStyle = useMemo(
+    () =>
+      ({
+        transform: `translate(${pointer.x}px, ${pointer.y}px) translate(-50%, -50%) scale(${isGridHovered ? 1 : 0.75})`,
+        opacity: isGridHovered ? 1 : 0,
+      }) satisfies CSSProperties,
+    [isGridHovered, pointer.x, pointer.y]
+  );
 
   useEffect(() => {
     if (manualSelection || isGridHovered || hoveredIndex !== null || t.items.length <= 1) {
@@ -64,10 +76,21 @@ export default function Services({
     return () => window.removeEventListener("hero-service-focus", handleFocusRequest);
   }, [t.items.length]);
 
+  const updateGridBounds = (element: HTMLDivElement) => {
+    gridBoundsRef.current = element.getBoundingClientRect();
+  };
+
   const updatePointerPosition = (event: PointerEvent<HTMLDivElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    pointerX.set(event.clientX - bounds.left);
-    pointerY.set(event.clientY - bounds.top);
+    const bounds = gridBoundsRef.current;
+
+    if (!bounds) {
+      return;
+    }
+
+    setPointer({
+      x: event.clientX - bounds.left,
+      y: event.clientY - bounds.top,
+    });
   };
 
   return (
@@ -112,19 +135,10 @@ export default function Services({
           </div>
         </SectionReveal>
 
-        <m.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.08 },
-            },
-          }}
+        <div
           onPointerEnter={(event) => {
             setIsGridHovered(true);
+            updateGridBounds(event.currentTarget);
             updatePointerPosition(event);
           }}
           onPointerMove={updatePointerPosition}
@@ -132,19 +146,15 @@ export default function Services({
             setHoveredIndex(null);
             setIsGridHovered(false);
           }}
+          onPointerDown={(event) => updateGridBounds(event.currentTarget)}
           className="relative mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-4"
         >
-          <m.div
+          <div
             aria-hidden="true"
             className={`pointer-events-none absolute left-0 top-0 z-0 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[68px] sm:h-44 sm:w-44 ${
               isLight ? "bg-blue-400/20" : "bg-blue-400/25"
             }`}
-            style={{ x: glowX, y: glowY }}
-            animate={{
-              opacity: isGridHovered ? 1 : 0,
-              scale: isGridHovered ? 1 : 0.75,
-            }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={glowStyle}
           />
 
           {t.items.map((service, index) => {
@@ -157,96 +167,85 @@ export default function Services({
             };
 
             return (
-              <m.button
-                key={service.title}
-                type="button"
-                variants={{
-                  hidden: { opacity: 0, y: 24 },
-                  show: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.35, ease: "easeOut" },
-                  },
-                }}
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.2 }}
-                onClick={handleSelect}
-                onPointerEnter={() => setHoveredIndex(index)}
-                onFocus={() => setHoveredIndex(index)}
-                onBlur={() => setHoveredIndex(null)}
-                className={`group relative h-full min-h-46 rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-all duration-500 sm:min-h-55 sm:rounded-3xl sm:p-6 ${
-                  isActive
-                    ? isLight
-                      ? "m-1 border-blue-300 bg-white shadow-[0_22px_40px_rgba(59,130,246,0.18)] ring-1 ring-blue-100"
-                      : "border-blue-400/40 bg-[linear-gradient(180deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92))] shadow-[0_20px_42px_rgba(59,130,246,0.18)]"
-                    : isLight
-                      ? "m-1 border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
-                      : "border-white/10 bg-white/5"
-                } focus:outline-hidden focus:ring-2 focus:ring-blum-blue/50`}
-                aria-pressed={isActive}
-              >
-                <div
-                  className={`pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 ${
+              <SectionReveal key={service.title} delay={0.05 * (index + 1)}>
+                <button
+                  type="button"
+                  onClick={handleSelect}
+                  onPointerEnter={() => setHoveredIndex(index)}
+                  onFocus={() => setHoveredIndex(index)}
+                  onBlur={() => setHoveredIndex(null)}
+                  className={`group relative h-full min-h-46 rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-[transform,border-color,background-color,box-shadow] duration-500 hover:-translate-y-1.5 sm:min-h-55 sm:rounded-3xl sm:p-6 ${
                     isActive
-                      ? "opacity-100"
-                      : ""
-                  } ${
-                    isLight
-                      ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.10),transparent_55%)]"
-                      : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_50%)]"
-                  }`}
-                />
-
-                <div
-                  className={`relative flex h-11 w-11 items-center justify-center rounded-2xl sm:h-12 sm:w-12 ${
-                    isActive
-                      ? "bg-blue-500 text-white"
+                      ? isLight
+                        ? "m-1 border-blue-300 bg-white shadow-[0_22px_40px_rgba(59,130,246,0.18)] ring-1 ring-blue-100"
+                        : "border-blue-400/40 bg-[linear-gradient(180deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92))] shadow-[0_20px_42px_rgba(59,130,246,0.18)]"
                       : isLight
-                        ? "bg-slate-100 text-blue-600"
-                        : "bg-white/10 text-blue-200"
-                  }`}
+                        ? "m-1 border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
+                        : "border-white/10 bg-white/5"
+                  } focus:outline-hidden focus:ring-2 focus:ring-blum-blue/50`}
+                  aria-pressed={isActive}
                 >
-                  <Icon className="h-6 w-6" />
-                </div>
+                  <div
+                    className={`pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 ${
+                      isActive
+                        ? "opacity-100"
+                        : ""
+                    } ${
+                      isLight
+                        ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.10),transparent_55%)]"
+                        : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_50%)]"
+                    }`}
+                  />
 
-                <div className="relative mt-5 flex items-start justify-between gap-3">
-                  <h3 className={`text-lg font-semibold leading-snug sm:text-xl ${
-                    isLight
-                      ? "text-slate-950"
-                      : isActive
-                        ? "text-white"
+                  <div
+                    className={`relative flex h-11 w-11 items-center justify-center rounded-2xl transition-colors sm:h-12 sm:w-12 ${
+                      isActive
+                        ? "bg-blue-500 text-white"
+                        : isLight
+                          ? "bg-slate-100 text-blue-600"
+                          : "bg-white/10 text-blue-200"
+                    }`}
+                  >
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <div className="relative mt-5 flex items-start justify-between gap-3">
+                    <h3 className={`text-lg font-semibold leading-snug sm:text-xl ${
+                      isLight
+                        ? "text-slate-950"
                         : "text-white"
-                  }`}>
-                    {service.title}
-                  </h3>
-                  <span className={`shrink-0 text-xs font-semibold uppercase tracking-[0.22em] ${
+                    }`}>
+                      {service.title}
+                    </h3>
+                    <span className={`shrink-0 text-xs font-semibold uppercase tracking-[0.22em] ${
+                      isLight
+                        ? isActive
+                          ? "text-blue-600"
+                          : "text-slate-400"
+                        : isActive
+                          ? "text-blue-200"
+                          : "text-white/35"
+                    }`}>
+                      0{index + 1}
+                    </span>
+                  </div>
+
+                  <p className={`relative mt-3 text-[13px] leading-5 sm:text-[15px] sm:leading-6 ${
                     isLight
                       ? isActive
-                        ? "text-blue-600"
-                        : "text-slate-400"
+                        ? "text-slate-700"
+                        : "text-slate-600"
                       : isActive
-                        ? "text-blue-200"
-                        : "text-white/35"
+                        ? "text-slate-100"
+                        : "text-slate-300"
                   }`}>
-                    0{index + 1}
-                  </span>
-                </div>
-
-                <p className={`relative mt-3 text-[13px] leading-5 sm:text-[15px] sm:leading-6 ${
-                  isLight
-                    ? isActive
-                      ? "text-slate-700"
-                      : "text-slate-600"
-                    : isActive
-                      ? "text-slate-100"
-                      : "text-slate-300"
-                }`}>
-                  {service.description}
-                </p>
-              </m.button>
+                    {service.description}
+                  </p>
+                </button>
+              </SectionReveal>
             );
           })}
-        </m.div>
+        </div>
       </div>
     </section>
   );

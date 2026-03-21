@@ -1,7 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
 type Props = {
   children: ReactNode;
@@ -15,6 +14,8 @@ export default function SectionReveal({
   delay = 0,
 }: Props) {
   const [disableReveal, setDisableReveal] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(
@@ -28,23 +29,44 @@ export default function SectionReveal({
     return () => mediaQuery.removeEventListener("change", update);
   }, []);
 
+  useEffect(() => {
+    if (disableReveal) {
+      return;
+    }
+
+    const element = containerRef.current;
+    if (!element) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        setIsVisible(true);
+        observer.disconnect();
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.12 }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [disableReveal]);
+
   if (disableReveal) {
     return <div className={className}>{children}</div>;
   }
 
   return (
-    <m.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{
-        duration: 0.42,
-        delay,
-        ease: "easeOut",
-      }}
-      className={className}
+    <div
+      ref={containerRef}
+      className={`${className} reveal-up ${isVisible ? "reveal-visible" : ""}`.trim()}
+      style={{ transitionDelay: `${delay}s` }}
     >
       {children}
-    </m.div>
+    </div>
   );
 }

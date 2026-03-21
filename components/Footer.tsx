@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { m } from "framer-motion";
 
+import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
 
 export default function Footer({
@@ -39,13 +39,7 @@ export default function Footer({
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <m.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mb-12 text-center sm:mb-16"
-        >
+        <SectionReveal className="mb-12 text-center sm:mb-16">
           <h2
             className={`mb-4 text-3xl font-extrabold tracking-tight sm:mb-6 sm:text-5xl lg:text-6xl ${
               isLight ? "text-slate-950" : "text-white"
@@ -87,7 +81,7 @@ export default function Footer({
               {t.email}
             </a>
           </div>
-        </m.div>
+        </SectionReveal>
 
         <div
           className={`rounded-[24px] p-6 backdrop-blur-sm sm:rounded-[34px] sm:p-10 ${

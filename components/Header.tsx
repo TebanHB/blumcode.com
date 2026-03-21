@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MoonStar, SunMedium } from "lucide-react";
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+
 import { Locale } from "@/i18n";
-import { AnimatePresence, m } from "framer-motion";
+
 import { useTheme } from "./ThemeProvider";
 
 const NAV_ITEMS = [
@@ -45,7 +46,7 @@ export default function Header({
         : "Switch to light theme";
   const languageButtonLabel =
     lang === "es"
-      ? `Cambiar idioma a ${otherLang === "en" ? "inglés" : "español"}`
+      ? `Cambiar idioma a ${otherLang === "en" ? "ingles" : "espanol"}`
       : `Switch language to ${otherLang === "es" ? "Spanish" : "English"}`;
 
   const getNavLabel = useCallback(
@@ -57,6 +58,7 @@ export default function Header({
         team: nav.team,
         contact: nav.contact,
       };
+
       return map[key] ?? key;
     },
     [nav]
@@ -70,39 +72,37 @@ export default function Header({
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // IntersectionObserver to track active section
   useEffect(() => {
-    const sectionIds = NAV_ITEMS.map((i) => i.sectionId);
+    const sectionIds = NAV_ITEMS.map((item) => item.sectionId);
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
+      const element = document.getElementById(id);
+      if (!element) return;
+
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
         },
         { rootMargin: "-40% 0px -55% 0px" }
       );
-      observer.observe(el);
+
+      observer.observe(element);
       observers.push(observer);
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => observers.forEach((observer) => observer.disconnect());
   }, []);
 
   return (
     <header className="fixed top-0 z-50 w-full">
-      {/* Navbar container — always transparent initially, dark glassmorphism pill on scroll */}
-      <m.div
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
-        className="px-3 pt-3 sm:px-4 sm:pt-4 md:px-6 md:pt-5"
-      >
+      <div className="animate-enter-down px-3 pt-3 sm:px-4 sm:pt-4 md:px-6 md:pt-5">
         <div
           className={`mx-auto flex items-center justify-between rounded-full px-3.5 transition-all duration-500 ease-in-out sm:px-5 lg:px-7 ${
             scrolled
@@ -114,11 +114,10 @@ export default function Header({
                 : "h-[3.5rem] max-w-7xl bg-transparent sm:h-16"
           }`}
         >
-          {/* Logo */}
           <div className="shrink-0">
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center cursor-pointer"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="flex cursor-pointer items-center"
               aria-label="Scroll to top"
             >
               <Image
@@ -134,11 +133,11 @@ export default function Header({
             </button>
           </div>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex md:items-center md:gap-0.5">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.sectionId;
               const isContact = item.key === "contact";
+
               return (
                 <a
                   key={item.sectionId}
@@ -148,47 +147,38 @@ export default function Header({
                       ? "ui-btn ui-btn-primary ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
                       : isActive
                         ? isLight
-                          ? "bg-blue-500/10 text-slate-950 font-semibold"
-                          : "text-white font-semibold bg-white/10"
+                          ? "bg-blue-500/10 font-semibold text-slate-950"
+                          : "bg-white/10 font-semibold text-white"
                         : isLight
-                          ? "text-slate-600 hover:text-slate-950 hover:bg-slate-900/5"
-                          : "text-white/60 hover:text-white hover:bg-white/5"
+                          ? "text-slate-600 hover:bg-slate-900/5 hover:text-slate-950"
+                          : "text-white/60 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   {getNavLabel(item.key)}
                   {isActive && !isContact && (
-                    <m.span
-                      layoutId="navDot"
-                      className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-blum-blue"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
+                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-blum-blue" />
                   )}
                 </a>
               );
             })}
 
-            <div className={`ml-3 flex items-center gap-2.5 pl-3 ${isLight ? "border-l border-slate-200/80" : "border-l border-white/15"}`}>
+            <div
+              className={`ml-3 flex items-center gap-2.5 pl-3 ${
+                isLight ? "border-l border-slate-200/80" : "border-l border-white/15"
+              }`}
+            >
               <button
                 onClick={toggleTheme}
                 className="ui-btn ui-btn-icon h-10 w-10"
                 aria-label={themeButtonLabel}
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  <m.span
-                    key={isLight ? "sun" : "moon"}
-                    initial={{ opacity: 0, rotate: -35, scale: 0.7 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                    exit={{ opacity: 0, rotate: 35, scale: 0.7 }}
-                    transition={{ duration: 0.16, ease: "easeOut" }}
-                    className="inline-flex"
-                  >
-                    {isLight ? (
-                      <SunMedium className="h-4 w-4" />
-                    ) : (
-                      <MoonStar className="h-4 w-4" />
-                    )}
-                  </m.span>
-                </AnimatePresence>
+                <span className="inline-flex transition-transform duration-200">
+                  {isLight ? (
+                    <SunMedium className="h-4 w-4" />
+                  ) : (
+                    <MoonStar className="h-4 w-4" />
+                  )}
+                </span>
               </button>
               <Link
                 href={`/${otherLang}`}
@@ -202,29 +192,19 @@ export default function Header({
             </div>
           </nav>
 
-          {/* Mobile Menu Button */}
           <div className="flex items-center md:hidden">
             <button
               onClick={toggleTheme}
               className="ui-btn ui-btn-icon mr-1 h-9 w-9 sm:h-10 sm:w-10"
               aria-label={themeButtonLabel}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <m.span
-                  key={isLight ? "sun-mobile" : "moon-mobile"}
-                  initial={{ opacity: 0, rotate: -35, scale: 0.7 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 35, scale: 0.7 }}
-                  transition={{ duration: 0.16, ease: "easeOut" }}
-                  className="inline-flex"
-                >
-                  {isLight ? (
-                    <SunMedium className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
-                  ) : (
-                    <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
-                  )}
-                </m.span>
-              </AnimatePresence>
+              <span className="inline-flex transition-transform duration-200">
+                {isLight ? (
+                  <SunMedium className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
+                ) : (
+                  <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
+                )}
+              </span>
             </button>
             <Link
               href={`/${otherLang}`}
@@ -236,7 +216,7 @@ export default function Header({
               {otherLangLabel}
             </Link>
             <button
-              onClick={() => setOpen(!open)}
+              onClick={() => setOpen((current) => !current)}
               className={`relative inline-grid h-9 w-9 shrink-0 place-items-center rounded-full p-0 leading-none transition-all focus:outline-hidden sm:h-10 sm:w-10 ${
                 isLight
                   ? "border border-slate-200/80 bg-white/92 text-slate-800 shadow-[0_10px_22px_rgba(148,163,184,0.16)]"
@@ -274,47 +254,44 @@ export default function Header({
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown */}
-        <AnimatePresence>
-          {open && (
-            <m.div
-              initial={{ opacity: 0, y: -10, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className={`mx-auto mt-2 max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl backdrop-blur-xl shadow-2xl md:hidden sm:max-w-5xl ${
-                isLight
-                  ? "border border-slate-200/80 bg-white/90"
-                  : "border border-white/10 bg-slate-950/90"
-              }`}
-            >
-              <div className="space-y-1 px-4 pb-4 pt-3">
-                {NAV_ITEMS.map((item) => {
-                  const isActive = activeSection === item.sectionId;
-                  return (
-                    <a
-                      key={item.sectionId}
-                      href={`#${item.sectionId}`}
-                      onClick={() => setOpen(false)}
-                      className={`block rounded-xl px-4 py-3 text-base font-medium transition-colors ${
-                        isActive
-                          ? isLight
-                            ? "bg-blue-500/10 text-slate-950"
-                            : "bg-white/10 text-white"
-                          : isLight
-                            ? "text-slate-600 hover:bg-slate-900/5 hover:text-slate-950"
-                            : "text-white/60 hover:bg-white/5 hover:text-white"
-                      }`}
-                    >
-                      {getNavLabel(item.key)}
-                    </a>
-                  );
-                })}
-              </div>
-            </m.div>
-          )}
-        </AnimatePresence>
-      </m.div>
+        <div
+          aria-hidden={!open}
+          className={`mx-auto max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-2xl backdrop-blur-xl shadow-2xl transition-all duration-200 md:hidden sm:max-w-5xl ${
+            isLight
+              ? "border border-slate-200/80 bg-white/90"
+              : "border border-white/10 bg-slate-950/90"
+          } ${
+            open
+              ? "mt-2 max-h-[28rem] translate-y-0 scale-100 opacity-100"
+              : "pointer-events-none max-h-0 -translate-y-2 scale-[0.98] opacity-0"
+          }`}
+        >
+          <div className="space-y-1 px-4 pb-4 pt-3">
+            {NAV_ITEMS.map((item) => {
+              const isActive = activeSection === item.sectionId;
+
+              return (
+                <a
+                  key={item.sectionId}
+                  href={`#${item.sectionId}`}
+                  onClick={() => setOpen(false)}
+                  className={`block rounded-xl px-4 py-3 text-base font-medium transition-colors ${
+                    isActive
+                      ? isLight
+                        ? "bg-blue-500/10 text-slate-950"
+                        : "bg-white/10 text-white"
+                      : isLight
+                        ? "text-slate-600 hover:bg-slate-900/5 hover:text-slate-950"
+                        : "text-white/60 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  {getNavLabel(item.key)}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </header>
   );
 }
