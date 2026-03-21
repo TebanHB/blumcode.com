@@ -91,7 +91,7 @@ export default function SEOSection({
                   className={`inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-semibold sm:text-sm ${
                     isLight
                       ? "border border-slate-200 bg-white/85 text-slate-700"
-                      : "border border-white/10 bg-white/[0.06] text-slate-200"
+                      : "border border-white/10 bg-white/6 text-slate-200"
                   }`}
                 >
                   <MapPin className="h-3.5 w-3.5 text-blum-blue" />
@@ -106,7 +106,7 @@ export default function SEOSection({
               className={`space-y-4 rounded-[30px] border p-5 shadow-[0_22px_44px_-24px_rgba(15,23,42,0.3)] backdrop-blur-xl sm:p-7 ${
                 isLight
                   ? "m-1 border-slate-200 bg-white/88"
-                  : "border-white/10 bg-white/[0.06]"
+                  : "border-white/10 bg-white/6"
               }`}
             >
               {t.questions.map((item) => (
