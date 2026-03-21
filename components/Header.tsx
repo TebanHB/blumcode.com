@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Globe, MoonStar } from "lucide-react";
+import { MoonStar, SunMedium } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { Locale } from "@/i18n";
 import { AnimatePresence, m } from "framer-motion";
@@ -33,8 +33,20 @@ export default function Header({
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
   const otherLang = lang === "es" ? "en" : "es";
+  const otherLangLabel = otherLang.toUpperCase();
   const { isLight, toggleTheme } = useTheme();
-  const themeButtonLabel = lang === "es" ? "Cambiar tema" : "Toggle theme";
+  const themeButtonLabel =
+    lang === "es"
+      ? isLight
+        ? "Cambiar a tema oscuro"
+        : "Cambiar a tema claro"
+      : isLight
+        ? "Switch to dark theme"
+        : "Switch to light theme";
+  const languageButtonLabel =
+    lang === "es"
+      ? `Cambiar idioma a ${otherLang === "en" ? "inglés" : "español"}`
+      : `Switch language to ${otherLang === "es" ? "Spanish" : "English"}`;
 
   const getNavLabel = useCallback(
     (key: string) => {
@@ -161,15 +173,31 @@ export default function Header({
                 className="ui-btn ui-btn-icon h-10 w-10"
                 aria-label={themeButtonLabel}
               >
-                <MoonStar className="h-4 w-4" />
+                <AnimatePresence mode="wait" initial={false}>
+                  <m.span
+                    key={isLight ? "sun" : "moon"}
+                    initial={{ opacity: 0, rotate: -35, scale: 0.7 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 35, scale: 0.7 }}
+                    transition={{ duration: 0.16, ease: "easeOut" }}
+                    className="inline-flex"
+                  >
+                    {isLight ? (
+                      <SunMedium className="h-4 w-4" />
+                    ) : (
+                      <MoonStar className="h-4 w-4" />
+                    )}
+                  </m.span>
+                </AnimatePresence>
               </button>
               <Link
                 href={`/${otherLang}`}
                 scroll={false}
-                className="ui-btn ui-btn-soft ui-btn-chip gap-2 px-3 py-2 text-[0.68rem]"
+                aria-label={languageButtonLabel}
+                title={languageButtonLabel}
+                className="ui-btn ui-btn-icon h-10 w-10 text-[0.68rem] tracking-[0.18em]"
               >
-                <Globe className="h-3.5 w-3.5" />
-                {otherLang}
+                {otherLangLabel}
               </Link>
             </div>
           </nav>
@@ -181,14 +209,31 @@ export default function Header({
               className="ui-btn ui-btn-icon mr-1 h-9 w-9 sm:h-10 sm:w-10"
               aria-label={themeButtonLabel}
             >
-              <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
+              <AnimatePresence mode="wait" initial={false}>
+                <m.span
+                  key={isLight ? "sun-mobile" : "moon-mobile"}
+                  initial={{ opacity: 0, rotate: -35, scale: 0.7 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 35, scale: 0.7 }}
+                  transition={{ duration: 0.16, ease: "easeOut" }}
+                  className="inline-flex"
+                >
+                  {isLight ? (
+                    <SunMedium className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
+                  ) : (
+                    <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
+                  )}
+                </m.span>
+              </AnimatePresence>
             </button>
             <Link
               href={`/${otherLang}`}
               scroll={false}
-              className="ui-btn ui-btn-icon mr-1.5 h-9 w-9 sm:mr-2 sm:h-10 sm:w-10"
+              aria-label={languageButtonLabel}
+              title={languageButtonLabel}
+              className="ui-btn ui-btn-icon mr-1.5 h-9 w-9 text-[0.62rem] tracking-[0.16em] sm:mr-2 sm:h-10 sm:w-10 sm:text-[0.68rem] sm:tracking-[0.18em]"
             >
-              <Globe className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
+              {otherLangLabel}
             </Link>
             <button
               onClick={() => setOpen(!open)}

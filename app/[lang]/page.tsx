@@ -15,7 +15,6 @@ const Services = dynamic(() => import("@/components/Services"));
 const Solutions = dynamic(() => import("@/components/Solutions"));
 const Process = dynamic(() => import("@/components/Process"));
 const About = dynamic(() => import("@/components/About"));
-const SEOSection = dynamic(() => import("@/components/SEOSection"));
 const Footer = dynamic(() => import("@/components/Footer"));
 
 type Dictionary = {
@@ -93,17 +92,6 @@ type Dictionary = {
       focus: string;
     }[];
   };
-  seo: {
-    badge: string;
-    title: string;
-    description: string;
-    paragraphs: string[];
-    chips: string[];
-    questions: {
-      question: string;
-      answer: string;
-    }[];
-  };
   footer: {
     description: string;
     contact: string;
@@ -128,7 +116,7 @@ const dictionary: Record<Locale, Dictionary> = {
       title2: "a Medida",
       title3: "para tu Empresa",
       description:
-        "En BlumCode desarrollamos software a medida en Santa Cruz, Bolivia. Creamos aplicaciones web, sistemas internos, apps m\u00f3viles, integraciones y soporte continuo para empresas que quieren crecer con tecnolog\u00eda bien hecha.",
+        "En BlumCode transformamos tus ideas en soluciones tecnol\u00f3gicas innovadoras. Desarrollamos software personalizado, optimizamos sistemas existentes y brindamos soporte continuo para impulsar tu negocio.",
       primary: "Solicitar Cotizaci\u00f3n",
       secondary: "Ver Nuestros Servicios",
       cards: {
@@ -148,7 +136,7 @@ const dictionary: Record<Locale, Dictionary> = {
       badge: "Servicios",
       title: "Nuestros Servicios",
       description:
-        "Ofrecemos desarrollo de software, desarrollo web, apps m\u00f3viles, integraciones y soporte tecnol\u00f3gico para empresas que necesitan resultados medibles.",
+        "Ofrecemos soluciones tecnol\u00f3gicas completas para impulsar tu negocio al siguiente nivel.",
       items: [
         {
           title: "Desarrollo a Medida",
@@ -299,7 +287,7 @@ const dictionary: Record<Locale, Dictionary> = {
         },
         {
           name: "Jefferson Antelo",
-          role: "Senior Full Stack Developer.",
+          role: "Semi-Senior Full Stack Developer.",
           description:
             "Especialista en el desarrollo integral de plataformas web, con enfoque en calidad, escalabilidad y rendimiento.",
           tag: "Desarrollo",
@@ -315,50 +303,9 @@ const dictionary: Record<Locale, Dictionary> = {
         },
       ],
     },
-    seo: {
-      badge: "SEO y visibilidad",
-      title:
-        "Desarrollo de software en Santa Cruz, Bolivia para empresas que necesitan resultados",
-      description:
-        "Ayudamos a empresas que buscan una empresa de software confiable para crear plataformas web, sistemas internos, apps m\u00f3viles e integraciones con foco en negocio, rendimiento y soporte real.",
-      paragraphs: [
-        "Trabajamos con empresas de Santa Cruz, Bolivia y otros mercados que necesitan ordenar procesos, digitalizar operaciones y lanzar productos digitales con un equipo t\u00e9cnico serio y cercano.",
-        "Si buscas desarrollo de software a medida, desarrollo web, aplicaciones m\u00f3viles o integraci\u00f3n de sistemas, en BlumCode combinamos estrategia, dise\u00f1o, desarrollo y acompa\u00f1amiento continuo en un solo equipo.",
-      ],
-      chips: [
-        "Santa Cruz, Bolivia",
-        "Software a medida",
-        "Desarrollo web",
-        "Apps m\u00f3viles",
-        "Integraciones",
-        "Soporte continuo",
-      ],
-      questions: [
-        {
-          question: "\u00bfQu\u00e9 tipo de software desarrolla BlumCode?",
-          answer:
-            "Desarrollamos software a medida para empresas: sistemas internos, plataformas web, landing pages, apps m\u00f3viles, dashboards, integraciones con APIs y mejoras UX/UI para productos digitales existentes.",
-        },
-        {
-          question: "\u00bfTrabajan solo en Santa Cruz o tambi\u00e9n con otras ciudades?",
-          answer:
-            "Aunque estamos en Santa Cruz, Bolivia, podemos trabajar con empresas de otras ciudades y mercados. La base del trabajo es una comunicaci\u00f3n clara, procesos definidos y entregables concretos.",
-        },
-        {
-          question: "\u00bfBlumCode ofrece mantenimiento y soporte despu\u00e9s del desarrollo?",
-          answer:
-            "S\u00ed. Adem\u00e1s del desarrollo inicial, podemos acompa\u00f1ar tu proyecto con mantenimiento, mejoras evolutivas, soporte t\u00e9cnico, monitoreo y optimizaci\u00f3n continua.",
-        },
-        {
-          question: "\u00bfPueden integrar sistemas, formularios, CRMs o APIs?",
-          answer:
-            "S\u00ed. Una de nuestras l\u00edneas de trabajo es la integraci\u00f3n de sistemas y APIs para conectar formularios, CRMs, plataformas de ventas, paneles de datos y herramientas internas.",
-        },
-      ],
-    },
     footer: {
       description:
-        "Software a medida, desarrollo web y soluciones tecnol\u00f3gicas para empresas en Santa Cruz, Bolivia y otros mercados.",
+        "Soluciones tecnol\u00f3gicas modernas y personalizadas para empresas que quieren crecer.",
       contact: "Contacto",
       city: "Santa Cruz, Bolivia",
       rights: "Todos los derechos reservados.",
@@ -379,7 +326,7 @@ const dictionary: Record<Locale, Dictionary> = {
       title2: "Development",
       title3: "for Your Business",
       description:
-        "At BlumCode, we provide custom software development in Santa Cruz, Bolivia. We build web applications, internal systems, mobile apps, integrations, and long-term support for businesses that want to grow with better technology.",
+        "At BlumCode, we transform your ideas into innovative technology solutions. We build custom software, optimize existing systems, and provide ongoing support to boost your business.",
       primary: "Request a Quote",
       secondary: "View Our Services",
       cards: {
@@ -399,7 +346,7 @@ const dictionary: Record<Locale, Dictionary> = {
       badge: "Services",
       title: "Our Services",
       description:
-        "We deliver custom software, web development, mobile apps, integrations, and technical support for businesses that need measurable outcomes.",
+        "We provide complete technology solutions to take your business to the next level.",
       items: [
         {
           title: "Custom Development",
@@ -549,7 +496,7 @@ const dictionary: Record<Locale, Dictionary> = {
         },
         {
           name: "Jefferson Antelo",
-          role: "Senior Full Stack Developer.",
+          role: "Semi-Senior Full Stack Developer.",
           description:
             "Specialist in end-to-end web platform development, with a strong focus on quality, scalability, and performance.",
           tag: "Development",
@@ -565,50 +512,9 @@ const dictionary: Record<Locale, Dictionary> = {
         },
       ],
     },
-    seo: {
-      badge: "SEO and visibility",
-      title:
-        "Custom software development in Santa Cruz, Bolivia for businesses that need results",
-      description:
-        "We help companies looking for a reliable software partner to build web platforms, internal systems, mobile apps, and integrations with a strong focus on business goals, performance, and ongoing support.",
-      paragraphs: [
-        "We work with companies in Santa Cruz, Bolivia and other markets that need to organize processes, digitize operations, and launch digital products with a technical team that is clear, responsive, and execution-focused.",
-        "If you are looking for custom software development, web development, mobile applications, or systems integration, BlumCode combines strategy, design, development, and long-term support in one team.",
-      ],
-      chips: [
-        "Santa Cruz, Bolivia",
-        "Custom software",
-        "Web development",
-        "Mobile apps",
-        "Systems integration",
-        "Ongoing support",
-      ],
-      questions: [
-        {
-          question: "What kind of software does BlumCode build?",
-          answer:
-            "We build custom software for businesses, including internal systems, web platforms, landing pages, mobile apps, dashboards, API integrations, and UX/UI improvements for existing digital products.",
-        },
-        {
-          question: "Do you work only in Santa Cruz or with other markets too?",
-          answer:
-            "We are based in Santa Cruz, Bolivia, but we can work with companies in other cities and markets as well. The key is having clear communication, defined scope, and concrete deliverables.",
-        },
-        {
-          question: "Does BlumCode offer support after the initial launch?",
-          answer:
-            "Yes. Beyond the initial build, we can continue with maintenance, iterative improvements, technical support, monitoring, and ongoing optimization.",
-        },
-        {
-          question: "Can you integrate CRMs, forms, APIs, and internal tools?",
-          answer:
-            "Yes. Systems integration is one of our core services, including CRMs, forms, sales platforms, data dashboards, APIs, and internal operational tools.",
-        },
-      ],
-    },
     footer: {
       description:
-        "Custom software, web development, and technology solutions for businesses in Santa Cruz, Bolivia and beyond.",
+        "Modern and custom technology solutions for businesses that want to grow.",
       contact: "Contact",
       city: "Santa Cruz, Bolivia",
       rights: "All rights reserved.",
@@ -660,9 +566,7 @@ export default async function HomePage({
         <Process t={t.process} />
         <SectionDivider variant="process-to-team" />
         <About t={t.about} />
-        <SectionDivider variant="team-to-seo" />
-        <SEOSection t={t.seo} />
-        <SectionDivider variant="seo-to-footer" />
+        <SectionDivider variant="team-to-footer" />
       </main>
       <Footer t={t.footer} />
     </>
