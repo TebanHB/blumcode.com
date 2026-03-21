@@ -294,10 +294,10 @@ const dictionary: Record<Locale, Dictionary> = {
           focus: "Arquitectura s\u00f3lida, calidad de c\u00f3digo y rendimiento.",
         },
         {
-          name: "Favio Cuentas y Pablo Coppa",
+          name: "Pablo Coppa",
           role: "\u00c1rea comercial y ventas.",
           description:
-            "Responsables de fortalecer la relaci\u00f3n con los clientes, identificar nuevas oportunidades y potenciar el crecimiento comercial de la empresa.",
+            "Responsable de fortalecer la relaci\u00f3n con los clientes, identificar nuevas oportunidades y potenciar el crecimiento comercial de la empresa.",
           tag: "Comercial",
           focus: "Relaci\u00f3n cercana con clientes y crecimiento comercial.",
         },
@@ -503,10 +503,10 @@ const dictionary: Record<Locale, Dictionary> = {
           focus: "Strong architecture, code quality, and performance.",
         },
         {
-          name: "Favio Cuentas and Pablo Coppa",
+          name: "Pablo Coppa",
           role: "Commercial and sales area.",
           description:
-            "They strengthen client relationships, identify new opportunities, and help drive the company's commercial growth.",
+            "He strengthens client relationships, identifies new opportunities, and helps drive the company's commercial growth.",
           tag: "Commercial",
           focus: "Client relationships, opportunity discovery, and growth.",
         },
