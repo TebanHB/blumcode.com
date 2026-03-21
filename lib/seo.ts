@@ -8,6 +8,9 @@ export const COMPANY_PHONE = "+59173628134";
 export const COMPANY_WHATSAPP_URL = "https://wa.me/59173628134";
 export const COMPANY_CITY = "Santa Cruz de la Sierra";
 export const COMPANY_COUNTRY = "Bolivia";
+export const ORGANIZATION_LOGO_PATH = "/blumcode-icon-fixed.png";
+export const ORGANIZATION_LOGO_WIDTH = 520;
+export const ORGANIZATION_LOGO_HEIGHT = 520;
 
 type LocaleSeoContent = {
   title: string;
@@ -22,12 +25,15 @@ type LocaleSeoContent = {
 
 const SEO_CONTENT: Record<Locale, LocaleSeoContent> = {
   es: {
-    title: "Desarrollo de Software a Medida para Empresas | BlumCode",
+    title: "Desarrollo de Software a Medida en Santa Cruz, Bolivia | BlumCode",
     description:
-      "BlumCode crea software a medida, aplicaciones web y mobile, integraciones, UX/UI, analitica y soporte continuo para empresas que quieren crecer.",
+      "BlumCode desarrolla software a medida en Santa Cruz, Bolivia: aplicaciones web, sistemas internos, apps moviles, integraciones, UX/UI y soporte continuo para empresas.",
     keywords: [
       "desarrollo de software a medida",
+      "desarrollo de software en santa cruz",
+      "empresa de software en bolivia",
       "desarrollo web",
+      "desarrollo web en bolivia",
       "desarrollo mobile",
       "integracion de sistemas",
       "ux ui",
@@ -35,6 +41,7 @@ const SEO_CONTENT: Record<Locale, LocaleSeoContent> = {
       "data analytics",
       "cloud services",
       "mantenimiento de software",
+      "sistemas para empresas",
       "BlumCode",
     ],
     ogLocale: "es_BO",
@@ -44,12 +51,15 @@ const SEO_CONTENT: Record<Locale, LocaleSeoContent> = {
     contactLabel: "ventas",
   },
   en: {
-    title: "Custom Software Development for Businesses | BlumCode",
+    title: "Custom Software Development in Santa Cruz, Bolivia | BlumCode",
     description:
-      "BlumCode builds custom software, web and mobile apps, integrations, UX/UI, analytics, and long-term support for growing businesses.",
+      "BlumCode provides custom software development in Santa Cruz, Bolivia: web apps, internal systems, mobile apps, integrations, UX/UI, analytics, and ongoing support for growing businesses.",
     keywords: [
       "custom software development",
+      "software company bolivia",
+      "software development santa cruz bolivia",
       "web development",
+      "web development bolivia",
       "mobile app development",
       "systems integration",
       "UX UI",
@@ -57,6 +67,7 @@ const SEO_CONTENT: Record<Locale, LocaleSeoContent> = {
       "data analytics",
       "cloud services",
       "software maintenance",
+      "business software solutions",
       "BlumCode",
     ],
     ogLocale: "en_US",
@@ -98,6 +109,10 @@ export function getLocaleEmail(lang: Locale) {
 
 export function getOpenGraphImageUrl(lang: Locale) {
   return `${getLocaleUrl(lang)}/opengraph-image`;
+}
+
+export function getOrganizationLogoUrl() {
+  return `${SITE_URL}${ORGANIZATION_LOGO_PATH}`;
 }
 
 export function buildPageMetadata(lang: Locale): Metadata {
@@ -170,10 +185,15 @@ export function buildStructuredData(
         "@type": "Organization",
         "@id": `${SITE_URL}#organization`,
         name: SITE_NAME,
+        alternateName: SITE_NAME,
         url: SITE_URL,
+        image: getOrganizationLogoUrl(),
         logo: {
           "@type": "ImageObject",
-          url: `${SITE_URL}/blumcode-icon-fixed.svg`,
+          url: getOrganizationLogoUrl(),
+          contentUrl: getOrganizationLogoUrl(),
+          width: ORGANIZATION_LOGO_WIDTH,
+          height: ORGANIZATION_LOGO_HEIGHT,
         },
         email,
         telephone: COMPANY_PHONE,
@@ -198,6 +218,7 @@ export function buildStructuredData(
         "@id": `${SITE_URL}#website`,
         url: SITE_URL,
         name: SITE_NAME,
+        alternateName: SITE_NAME,
         inLanguage: ["es", "en"],
         publisher: {
           "@id": `${SITE_URL}#organization`,

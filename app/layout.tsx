@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
-import { SITE_NAME, SITE_URL } from "@/lib/seo";
+import { ORGANIZATION_LOGO_HEIGHT, ORGANIZATION_LOGO_PATH, ORGANIZATION_LOGO_WIDTH, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -14,10 +14,21 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
+      {
+        url: ORGANIZATION_LOGO_PATH,
+        sizes: `${ORGANIZATION_LOGO_WIDTH}x${ORGANIZATION_LOGO_HEIGHT}`,
+        type: "image/png",
+      },
       { url: "/blumcode-icon-fixed.svg", type: "image/svg+xml" },
     ],
     shortcut: ["/favicon.ico"],
-    apple: [{ url: "/blumcode-icon-fixed.svg", type: "image/svg+xml" }],
+    apple: [
+      {
+        url: ORGANIZATION_LOGO_PATH,
+        sizes: `${ORGANIZATION_LOGO_WIDTH}x${ORGANIZATION_LOGO_HEIGHT}`,
+        type: "image/png",
+      },
+    ],
   },
 };
 
