@@ -3,14 +3,28 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-const PARTICLE_COUNT = 40;
-const SQUARE_COUNT = 14;
 const ENABLE_3D_MEDIA_QUERY =
   "(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
 
 type HeroBackgroundProps = {
   isLight: boolean;
 };
+
+type QualityMode = "off" | "balanced" | "full";
+
+function getQualityMode(): QualityMode {
+  if (!window.matchMedia(ENABLE_3D_MEDIA_QUERY).matches) {
+    return "off";
+  }
+
+  const deviceMemory = "deviceMemory" in navigator ? navigator.deviceMemory : undefined;
+  const hardwareThreads = navigator.hardwareConcurrency;
+  const isLowerPowerDevice =
+    (typeof deviceMemory === "number" && deviceMemory <= 4) ||
+    (typeof hardwareThreads === "number" && hardwareThreads <= 6);
+
+  return isLowerPowerDevice ? "balanced" : "full";
+}
 
 function populateParticles(layer: HTMLDivElement, count: number) {
   const fragment = document.createDocumentFragment();
@@ -57,7 +71,7 @@ function populateSquares(layer: HTMLDivElement, count: number) {
 }
 
 export default function HeroBackground({ isLight }: HeroBackgroundProps) {
-  const [is3DEnabled, setIs3DEnabled] = useState(false);
+  const [qualityMode, setQualityMode] = useState<QualityMode>("off");
   const sceneRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -68,7 +82,7 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(ENABLE_3D_MEDIA_QUERY);
-    const updateMode = () => setIs3DEnabled(mediaQuery.matches);
+    const updateMode = () => setQualityMode(getQualityMode());
 
     updateMode();
 
@@ -88,7 +102,7 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
   }, []);
 
   useEffect(() => {
-    if (!is3DEnabled) {
+    if (qualityMode === "off") {
       return;
     }
 
@@ -112,10 +126,16 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
     const logoPlateElement = logoPlate;
     const logoCoreElement = logoCore;
 
-    if (particlesElement && squaresElement) {
-      populateParticles(particlesElement, PARTICLE_COUNT);
-      populateSquares(squaresElement, SQUARE_COUNT);
-    }
+    const particleCount = qualityMode === "full" ? 28 : 16;
+    const squareCount = qualityMode === "full" ? 10 : 5;
+    const pointerStrength = qualityMode === "full" ? 0.45 : 0.32;
+    const pointerEase = qualityMode === "full" ? 0.05 : 0.08;
+    const orbitY = qualityMode === "full" ? 6 : 4;
+    const orbitX = qualityMode === "full" ? 3.2 : 2.4;
+    const depthStrength = qualityMode === "full" ? 24 : 14;
+
+    populateParticles(particlesElement, particleCount);
+    populateSquares(squaresElement, squareCount);
 
     let pointerX = 0;
     let pointerY = 0;
@@ -167,18 +187,24 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
       targetY = 0;
     };
 
+    const handleWindowPointerOut = (event: PointerEvent) => {
+      if (event.relatedTarget === null) {
+        handlePointerLeave();
+      }
+    };
+
     function animate() {
       frameId = 0;
 
-      pointerX += (targetX - pointerX) * 0.05;
-      pointerY += (targetY - pointerY) * 0.05;
+      pointerX += (targetX - pointerX) * pointerEase;
+      pointerY += (targetY - pointerY) * pointerEase;
 
       const time = performance.now() * 0.00035;
-      const autoY = Math.sin(time * 1.4) * 6;
-      const autoX = Math.cos(time * 1.1) * 3.2;
-      const depth = Math.sin(time * 1.8) * 24;
+      const autoY = Math.sin(time * 1.4) * orbitY;
+      const autoX = Math.cos(time * 1.1) * orbitX;
+      const depth = Math.sin(time * 1.8) * depthStrength;
 
-      cameraElement.style.transform = `rotateX(${-pointerY * 0.45}deg) rotateY(${pointerX * 0.45}deg)`;
+      cameraElement.style.transform = `rotateX(${-pointerY * pointerStrength}deg) rotateY(${pointerX * pointerStrength}deg)`;
       worldElement.style.transform = `translate3d(-50%, -50%, 0) rotateX(${autoX + pointerY * 0.35}deg) rotateY(${autoY + pointerX * 0.5}deg)`;
       logoPlateElement.style.transform = `rotateX(${autoX * 0.8 + pointerY * 0.7}deg) rotateY(${autoY * 1.1 + pointerX * 0.9}deg) rotateZ(${Math.sin(time) * 1.2}deg) translateZ(${22 + depth}px)`;
       logoCoreElement.style.transform = `translate3d(-50%, -50%, ${90 + depth * 0.5}px)`;
@@ -212,30 +238,36 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
     resetTransforms();
     sceneObserver.observe(sceneElement);
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    sceneElement.addEventListener("pointermove", handlePointerMove, {
+    window.addEventListener("pointermove", handlePointerMove, {
       passive: true,
     });
-    sceneElement.addEventListener("pointerleave", handlePointerLeave);
+    window.addEventListener("blur", handlePointerLeave);
+    window.addEventListener("pointerout", handleWindowPointerOut, {
+      passive: true,
+    });
     startAnimation();
 
     return () => {
       stopAnimation();
       sceneObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      sceneElement.removeEventListener("pointermove", handlePointerMove);
-      sceneElement.removeEventListener("pointerleave", handlePointerLeave);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("blur", handlePointerLeave);
+      window.removeEventListener("pointerout", handleWindowPointerOut);
     };
-  }, [is3DEnabled]);
+  }, [qualityMode]);
 
-  if (!is3DEnabled) {
+  if (qualityMode === "off") {
     return null;
   }
+
+  const isFullQuality = qualityMode === "full";
 
   return (
     <div
       ref={sceneRef}
       aria-hidden="true"
-      className={`hero-3d-scene ${isLight ? "is-light" : "is-dark"}`}
+      className={`hero-3d-scene ${isLight ? "is-light" : "is-dark"} ${!isFullQuality ? "hero-3d-scene-balanced" : ""}`}
     >
       <div ref={cameraRef} className="hero-3d-camera">
         <div ref={worldRef} className="hero-3d-world">
@@ -244,11 +276,11 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
 
           <div className="hero-3d-ring-plane" />
           <div className="hero-3d-ring-plane hero-3d-ring-plane-r2" />
-          <div className="hero-3d-ring-plane hero-3d-ring-plane-r3" />
+          {isFullQuality && <div className="hero-3d-ring-plane hero-3d-ring-plane-r3" />}
 
           <div className="hero-3d-light-sweep hero-3d-light-sweep-s1" />
           <div className="hero-3d-light-sweep hero-3d-light-sweep-s2" />
-          <div className="hero-3d-light-sweep hero-3d-light-sweep-s3" />
+          {isFullQuality && <div className="hero-3d-light-sweep hero-3d-light-sweep-s3" />}
 
           <div ref={particlesRef} className="hero-3d-particle-layer" />
           <div ref={squaresRef} className="hero-3d-particle-layer" />

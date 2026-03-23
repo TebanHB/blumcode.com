@@ -3,10 +3,8 @@
 import { BarChart, Cloud, Code2, Layers, Smartphone, Sparkles, Workflow, Wrench } from "lucide-react";
 import {
   useEffect,
-  useMemo,
   useRef,
   useState,
-  type CSSProperties,
   type PointerEvent,
 } from "react";
 
@@ -14,6 +12,7 @@ import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
 
 const icons = [Code2, Wrench, Layers, Smartphone, Workflow, Wrench, BarChart, Cloud];
+const DESKTOP_INTERACTION_QUERY = "(min-width: 768px) and (hover: hover) and (pointer: fine)";
 
 export default function Services({
   t,
@@ -33,20 +32,49 @@ export default function Services({
   const [manualSelection, setManualSelection] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isGridHovered, setIsGridHovered] = useState(false);
-  const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const [canUseDesktopInteractions, setCanUseDesktopInteractions] = useState(false);
   const gridBoundsRef = useRef<DOMRect | null>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
   const displayedActiveIndex = hoveredIndex ?? activeIndex;
-  const glowStyle = useMemo(
-    () =>
-      ({
-        transform: `translate(${pointer.x}px, ${pointer.y}px) translate(-50%, -50%) scale(${isGridHovered ? 1 : 0.75})`,
-        opacity: isGridHovered ? 1 : 0,
-      }) satisfies CSSProperties,
-    [isGridHovered, pointer.x, pointer.y]
-  );
 
   useEffect(() => {
-    if (manualSelection || isGridHovered || hoveredIndex !== null || t.items.length <= 1) {
+    const mediaQuery = window.matchMedia(DESKTOP_INTERACTION_QUERY);
+    const update = () => {
+      const nextCanUseDesktopInteractions = mediaQuery.matches;
+
+      setCanUseDesktopInteractions(nextCanUseDesktopInteractions);
+
+      if (nextCanUseDesktopInteractions) {
+        return;
+      }
+
+      gridBoundsRef.current = null;
+
+      if (glowRef.current) {
+        glowRef.current.style.opacity = "0";
+        glowRef.current.style.transform = "translate(-50%, -50%) scale(0.75)";
+      }
+
+      window.requestAnimationFrame(() => {
+        setHoveredIndex(null);
+        setIsGridHovered(false);
+      });
+    };
+
+    update();
+    mediaQuery.addEventListener("change", update);
+
+    return () => mediaQuery.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (
+      !canUseDesktopInteractions ||
+      manualSelection ||
+      isGridHovered ||
+      hoveredIndex !== null ||
+      t.items.length <= 1
+    ) {
       return;
     }
 
@@ -55,7 +83,7 @@ export default function Services({
     }, 2000);
 
     return () => window.clearInterval(intervalId);
-  }, [hoveredIndex, isGridHovered, manualSelection, t.items.length]);
+  }, [canUseDesktopInteractions, hoveredIndex, isGridHovered, manualSelection, t.items.length]);
 
   useEffect(() => {
     const handleFocusRequest = (event: Event) => {
@@ -81,16 +109,22 @@ export default function Services({
   };
 
   const updatePointerPosition = (event: PointerEvent<HTMLDivElement>) => {
-    const bounds = gridBoundsRef.current;
-
-    if (!bounds) {
+    if (!canUseDesktopInteractions) {
       return;
     }
 
-    setPointer({
-      x: event.clientX - bounds.left,
-      y: event.clientY - bounds.top,
-    });
+    const bounds = gridBoundsRef.current;
+
+    if (!bounds || !glowRef.current) {
+      return;
+    }
+
+    const nextX = event.clientX - bounds.left;
+    const nextY = event.clientY - bounds.top;
+
+    glowRef.current.style.opacity = "1";
+    glowRef.current.style.transform =
+      `translate(${nextX}px, ${nextY}px) translate(-50%, -50%) scale(1)`;
   };
 
   return (
@@ -137,6 +171,10 @@ export default function Services({
 
         <div
           onPointerEnter={(event) => {
+            if (!canUseDesktopInteractions) {
+              return;
+            }
+
             setIsGridHovered(true);
             updateGridBounds(event.currentTarget);
             updatePointerPosition(event);
@@ -145,17 +183,34 @@ export default function Services({
           onPointerLeave={() => {
             setHoveredIndex(null);
             setIsGridHovered(false);
+
+            if (glowRef.current) {
+              glowRef.current.style.opacity = "0";
+              glowRef.current.style.transform = "translate(-50%, -50%) scale(0.75)";
+            }
           }}
-          onPointerDown={(event) => updateGridBounds(event.currentTarget)}
+          onPointerDown={(event) => {
+            if (!canUseDesktopInteractions) {
+              return;
+            }
+
+            updateGridBounds(event.currentTarget);
+          }}
           className="relative mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:gap-6 xl:grid-cols-4"
         >
-          <div
-            aria-hidden="true"
-            className={`pointer-events-none absolute left-0 top-0 z-0 h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[68px] sm:h-44 sm:w-44 ${
-              isLight ? "bg-blue-400/20" : "bg-blue-400/25"
-            }`}
-            style={glowStyle}
-          />
+          {canUseDesktopInteractions && (
+            <div
+              ref={glowRef}
+              aria-hidden="true"
+              className={`pointer-events-none absolute left-0 top-0 z-0 h-36 w-36 rounded-full blur-[68px] transition-opacity duration-200 sm:h-44 sm:w-44 ${
+                isLight ? "bg-blue-400/20" : "bg-blue-400/25"
+              }`}
+              style={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0.75)",
+              }}
+            />
+          )}
 
           {t.items.map((service, index) => {
             const Icon = icons[index % icons.length];

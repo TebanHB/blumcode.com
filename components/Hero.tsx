@@ -1,12 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
 import type { CSSProperties, MouseEvent } from "react";
 
 import { scrollToSection } from "@/lib/scrollToSection";
-
-import HeroBackground from "./HeroBackground";
 import { useTheme } from "./ThemeProvider";
+
+const HeroBackground = dynamic(() => import("./HeroBackground"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export default function Hero({
   t,

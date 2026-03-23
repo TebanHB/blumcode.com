@@ -252,7 +252,7 @@ html[data-theme="light"] .ui-btn-icon:hover {
 }
 
 @supports (content-visibility: auto) {
-  .content-auto-section {
+  .content-auto-section:not(.nav-anchor-section) {
     content-visibility: auto;
     contain-intrinsic-size: 1px 900px;
   }
@@ -294,6 +294,16 @@ html[data-theme="light"] .ui-btn-icon:hover {
 
   .ui-btn-readable {
     letter-spacing: 0.01em;
+  }
+
+  .animate-pulse-glow {
+    animation: none !important;
+  }
+
+  .animate-enter-up,
+  .animate-enter-right,
+  .animate-enter-down {
+    animation-duration: 320ms;
   }
 }
 
@@ -551,6 +561,25 @@ html[data-theme="light"] .ui-btn-icon:hover {
 .hero-3d-scene.is-light .hero-3d-vignette {
   background:
     radial-gradient(circle at 50% 50%, transparent 44%, rgba(148, 163, 184, 0.08) 76%, rgba(148, 163, 184, 0.12) 100%);
+}
+
+.hero-3d-scene-balanced .hero-3d-grid-floor {
+  opacity: 0.34;
+  animation-duration: 16s;
+}
+
+.hero-3d-scene-balanced .hero-3d-ring-plane {
+  box-shadow:
+    0 0 26px rgba(59, 130, 246, 0.16),
+    inset 0 0 18px rgba(59, 130, 246, 0.06);
+}
+
+.hero-3d-scene-balanced .hero-3d-light-sweep {
+  opacity: 0.12;
+}
+
+.hero-3d-scene-balanced .hero-3d-logo-plate {
+  animation-duration: 14s;
 }
 
 @media (max-width: 900px) {
