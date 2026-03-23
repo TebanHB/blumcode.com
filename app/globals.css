@@ -267,8 +267,12 @@ html[data-theme="light"] .ui-btn-icon:hover {
   html {
     scroll-behavior: auto;
   }
-  * {
+  *,
+  *::before,
+  *::after {
     -webkit-tap-highlight-color: transparent;
+    animation: none !important;
+    transition: none !important;
   }
 
   .ui-btn {
@@ -296,14 +300,35 @@ html[data-theme="light"] .ui-btn-icon:hover {
     letter-spacing: 0.01em;
   }
 
-  .animate-pulse-glow {
-    animation: none !important;
-  }
-
   .animate-enter-up,
   .animate-enter-right,
-  .animate-enter-down {
-    animation-duration: 320ms;
+  .animate-enter-down,
+  .reveal-up,
+  .reveal-visible,
+  .animate-pulse-glow {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  [class*="backdrop-blur"] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [class*="blur-"] {
+    filter: none !important;
+  }
+
+  [data-site-header-bar] {
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .ui-btn::before {
+    display: none;
   }
 }
 
