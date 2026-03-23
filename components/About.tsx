@@ -96,7 +96,7 @@ export default function About({
               className={`relative overflow-hidden rounded-[30px] border p-6 shadow-[0_22px_44px_-24px_rgba(15,23,42,0.3)] backdrop-blur-xl sm:p-8 ${
                 isLight
                   ? "m-1 border-slate-200 bg-white/88"
-                  : "border-white/10 bg-white/[0.06]"
+                  : "border-white/10 bg-white/6"
               }`}
             >
               <div
@@ -148,10 +148,10 @@ export default function About({
             return (
               <SectionReveal key={member.name} delay={0.06 * (index + 1)}>
                 <article
-                  className={`group relative h-full overflow-hidden rounded-[28px] border p-6 shadow-[0_20px_42px_-24px_rgba(15,23,42,0.32)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 sm:rounded-[32px] sm:p-8 ${
+                  className={`group relative h-full overflow-hidden rounded-[28px] border p-6 shadow-[0_20px_42px_-24px_rgba(15,23,42,0.32)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 sm:rounded-4xl sm:p-8 ${
                     isLight
                       ? "m-1 border-slate-200 bg-white/90 hover:border-blue-300 hover:shadow-[0_24px_50px_-20px_rgba(59,130,246,0.2)]"
-                      : "border-white/10 bg-white/[0.05] hover:border-blue-400/35 hover:bg-white/[0.07]"
+                      : "border-white/10 bg-white/5 hover:border-blue-400/35 hover:bg-white/7"
                   }`}
                 >
                   <div

@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
 import type { CSSProperties } from "react";
+import HeroBackground from "./HeroBackground";
 import { useTheme } from "./ThemeProvider";
 
 export default function Hero({
@@ -64,36 +64,28 @@ export default function Hero({
   });
 
   return (
-    <section className={`relative overflow-hidden ${isLight ? "bg-slate-50" : "bg-slate-900"}`}>
+    <section className={`relative isolate overflow-hidden ${isLight ? "bg-slate-50" : "bg-slate-900"}`}>
       <div className="absolute inset-0 z-0">
-        <Image
-          src="https://cdn.ailandingpage.ai/ai-landingpage/user-generate/1046af44-b971-4d82-929b-afe21f1ece96/1046af44-b971-4d82-929b-afe21f1ece96/hero/hero-main-291336271c124133b163823b16698d6b.png"
-          alt="Background working space"
-          fill
-          priority
-          quality={70}
-          sizes="100vw"
-          className={`object-cover ${isLight ? "opacity-[0.34] brightness-[0.95] saturate-[0.95] contrast-[1.05]" : "opacity-35 brightness-[0.45]"}`}
-        />
+        <HeroBackground isLight={isLight} />
         <div
           className={`absolute inset-0 ${
             isLight
-              ? "bg-[linear-gradient(120deg,rgba(248,250,252,0.74),rgba(241,245,249,0.66),rgba(226,232,240,0.52))]"
-              : "bg-[linear-gradient(120deg,rgba(2,6,23,0.94),rgba(15,23,42,0.76),rgba(15,23,42,0.88))]"
+              ? "bg-[linear-gradient(120deg,rgba(248,250,252,0.80),rgba(241,245,249,0.68),rgba(226,232,240,0.56))]"
+              : "bg-[linear-gradient(120deg,rgba(2,6,23,0.90),rgba(15,23,42,0.72),rgba(15,23,42,0.84))]"
           }`}
         />
         <div
           className={`absolute inset-0 ${
             isLight
-              ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.10),transparent_24%)]"
-              : "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.2),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.14),transparent_25%)]"
+              ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.14),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.12),transparent_24%)]"
+              : "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.22),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(14,165,233,0.16),transparent_25%)]"
           }`}
         />
       </div>
 
       <div className="relative z-10 mx-auto flex max-w-7xl items-start px-4 pb-14 pt-[96px] sm:px-6 sm:pb-20 sm:pt-[132px] lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-28 lg:pt-[160px]">
         <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl font-hero-sans">
             <div className="animate-enter-up" style={enter(0)}>
               <div
                 className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-[0_0_30px_rgba(59,130,246,0.14)] backdrop-blur-md sm:px-4 sm:py-2 sm:text-sm ${
@@ -113,9 +105,9 @@ export default function Hero({
               }`}
               style={enter(50)}
             >
-              <span>{t.title1} </span>
+              <span className="font-medium tracking-[-0.05em]">{t.title1} </span>
               <span
-                className={`bg-[length:220%_auto] bg-clip-text font-semibold text-transparent ${
+                className={`font-hero-serif bg-[length:220%_auto] bg-clip-text text-[1.08em] font-semibold italic tracking-[-0.035em] text-transparent ${
                   isLight
                     ? "bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-500 drop-shadow-[0_10px_24px_rgba(59,130,246,0.22)]"
                     : "bg-gradient-to-r from-white via-blue-200 to-blum-blue"
@@ -124,7 +116,7 @@ export default function Hero({
               >
                 {t.title2}
               </span>
-              <span> {t.title3}</span>
+              <span className="font-medium tracking-[-0.05em]"> {t.title3}</span>
             </h1>
 
             <p
@@ -160,16 +152,16 @@ export default function Hero({
           <div
             className={`animate-enter-right relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:rounded-[32px] sm:p-6 lg:max-w-none ${
               isLight
-                ? "m-1 border border-slate-200/80 bg-white/85 shadow-[0_24px_60px_rgba(148,163,184,0.2)]"
-                : "border border-white/10 bg-slate-950/60"
+                ? "m-1 border border-slate-200/65 bg-white/40 shadow-[0_24px_60px_rgba(148,163,184,0.14)]"
+                : "border border-white/10 bg-slate-950/24"
             }`}
             style={enter(280)}
           >
             <div
               className={`absolute inset-0 ${
                 isLight
-                  ? "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.38),transparent_62%)]"
-                  : "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.24),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.08),transparent_62%)]"
+                  ? "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.14),transparent_62%)]"
+                  : "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.03),transparent_62%)]"
               }`}
             />
             <div
@@ -218,8 +210,8 @@ export default function Hero({
               <div
                 className={`relative mt-4 overflow-hidden rounded-[24px] p-4 sm:mt-5 sm:rounded-[26px] sm:p-5 ${
                   isLight
-                    ? "border border-slate-200/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.96),rgba(239,246,255,0.86))] shadow-[0_18px_35px_rgba(148,163,184,0.18)]"
-                    : "border border-white/10 bg-[linear-gradient(160deg,rgba(15,23,42,0.92),rgba(30,41,59,0.88))]"
+                    ? "border border-slate-200/70 bg-[linear-gradient(160deg,rgba(255,255,255,0.52),rgba(239,246,255,0.26))] shadow-[0_18px_35px_rgba(148,163,184,0.1)] backdrop-blur-lg"
+                    : "border border-white/10 bg-[linear-gradient(160deg,rgba(15,23,42,0.42),rgba(30,41,59,0.28))] backdrop-blur-lg"
                 }`}
               >
                 <div
@@ -241,8 +233,8 @@ export default function Hero({
                         key={item.title}
                         className={`inline-flex items-center gap-2 rounded-full px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs sm:tracking-[0.18em] ${
                           isLight
-                            ? "border border-slate-200/80 bg-white/90 text-slate-700"
-                            : "border border-white/10 bg-white/5 text-slate-200"
+                            ? "border border-slate-200/70 bg-white/38 text-slate-700 backdrop-blur-md"
+                            : "border border-white/10 bg-white/4 text-slate-200 backdrop-blur-md"
                         }`}
                       >
                         <span className={`${isLight ? "text-blue-700" : "text-blue-200"}`}>0{index + 1}</span>
@@ -267,8 +259,8 @@ export default function Hero({
                   <div
                     className={`relative flex items-start gap-3 rounded-[21px] px-3.5 py-3.5 sm:gap-4 sm:rounded-[23px] sm:px-4 sm:py-4 ${
                       isLight
-                        ? "border border-slate-200/80 bg-white/92"
-                        : "border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.88),rgba(15,23,42,0.82))]"
+                        ? "border border-slate-200/70 bg-white/36 backdrop-blur-lg"
+                        : "border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.4),rgba(15,23,42,0.24))] backdrop-blur-lg"
                     }`}
                   >
                     <div
