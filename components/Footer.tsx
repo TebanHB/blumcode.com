@@ -7,6 +7,7 @@ import { useTheme } from "./ThemeProvider";
 
 export default function Footer({
   t,
+  year,
 }: {
   t: {
     description: string;
@@ -15,13 +16,14 @@ export default function Footer({
     rights: string;
     email: string;
   };
+  year: number;
 }) {
   const { isLight } = useTheme();
 
   return (
     <footer
       id="contacto"
-      className={`content-auto-section relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`nav-anchor-section content-auto-section relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight
           ? "bg-[linear-gradient(to_bottom,#f8fafc,#e2e8f0)] text-slate-950"
           : "bg-[linear-gradient(to_bottom,#020617,#000000)] text-white"
@@ -39,7 +41,7 @@ export default function Footer({
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <SectionReveal className="mb-12 text-center sm:mb-16">
+        <SectionReveal anchor className="mb-12 text-center sm:mb-16">
           <h2
             className={`mb-4 text-3xl font-extrabold tracking-tight sm:mb-6 sm:text-5xl lg:text-6xl ${
               isLight ? "text-slate-950" : "text-white"
@@ -180,7 +182,7 @@ export default function Footer({
             isLight ? "border-slate-200 text-slate-500" : "border-white/10 text-gray-400"
           }`}
         >
-          {"\u00A9"} {new Date().getFullYear()} BlumCode. {t.rights}
+          {"\u00A9"} {year} BlumCode. {t.rights}
         </div>
       </div>
     </footer>

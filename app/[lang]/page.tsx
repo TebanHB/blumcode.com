@@ -541,6 +541,7 @@ export default async function HomePage({
   const { lang } = await params;
   const safeLang = getSafeLocale(lang);
   const t = dictionary[safeLang];
+  const currentYear = new Date().getFullYear();
   const structuredData = buildStructuredData(
     safeLang,
     t.services.items,
@@ -568,7 +569,7 @@ export default async function HomePage({
         <About t={t.about} />
         <SectionDivider variant="team-to-footer" />
       </main>
-      <Footer t={t.footer} />
+      <Footer t={t.footer} year={currentYear} />
     </>
   );
 }

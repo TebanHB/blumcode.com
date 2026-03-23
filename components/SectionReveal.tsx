@@ -6,12 +6,14 @@ type Props = {
   children: ReactNode;
   className?: string;
   delay?: number;
+  anchor?: boolean;
 };
 
 export default function SectionReveal({
   children,
   className = "",
   delay = 0,
+  anchor = false,
 }: Props) {
   const [disableReveal, setDisableReveal] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -57,12 +59,17 @@ export default function SectionReveal({
   }, [disableReveal]);
 
   if (disableReveal) {
-    return <div className={className}>{children}</div>;
+    return (
+      <div className={className} data-nav-anchor={anchor ? "true" : undefined}>
+        {children}
+      </div>
+    );
   }
 
   return (
     <div
       ref={containerRef}
+      data-nav-anchor={anchor ? "true" : undefined}
       className={`${className} reveal-up ${isVisible ? "reveal-visible" : ""}`.trim()}
       style={{ transitionDelay: `${delay}s` }}
     >

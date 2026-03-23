@@ -22,31 +22,21 @@ const STORAGE_KEY = "blumcode-theme";
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [isReady, setIsReady] = useState(false);
+export function ThemeProvider({
+  children,
+  initialTheme,
+}: {
+  children: ReactNode;
+  initialTheme: Theme;
+}) {
+  const [theme, setTheme] = useState<Theme>(initialTheme);
 
   useEffect(() => {
-    const nextTheme =
-      document.documentElement.dataset.theme === "light" ? "light" : "dark";
-
-    queueMicrotask(() => {
-      if (nextTheme !== "dark") {
-        setTheme(nextTheme);
-      }
-      setIsReady(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!isReady) {
-      return;
-    }
-
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
+    document.cookie = `${STORAGE_KEY}=${theme}; path=/; max-age=31536000; samesite=lax`;
     window.localStorage.setItem(STORAGE_KEY, theme);
-  }, [isReady, theme]);
+  }, [theme]);
 
   const value = useMemo(
     () => ({

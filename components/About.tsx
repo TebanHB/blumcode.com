@@ -36,7 +36,7 @@ export default function About({
   return (
     <section
       id="nosotros"
-      className={`content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`nav-anchor-section content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight
           ? "bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_34%,#eef4ff_100%)] text-slate-950"
           : "bg-[linear-gradient(180deg,#020617_0%,#081225_34%,#0f172a_100%)] text-white"
@@ -62,7 +62,7 @@ export default function About({
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:items-end lg:gap-10">
-          <SectionReveal className="max-w-3xl">
+          <SectionReveal anchor className="max-w-3xl">
             <span
               className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm ${
                 isLight

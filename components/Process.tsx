@@ -39,7 +39,7 @@ export default function Process({
   return (
     <section
       id="proceso"
-      className={`content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-28 lg:px-8 lg:py-32 ${
+      className={`nav-anchor-section content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-28 lg:px-8 lg:py-32 ${
         isLight
           ? "bg-[linear-gradient(to_bottom,#dbeafe_0%,#eff6ff_18%,#f8fafc_48%,#ffffff_100%)]"
           : "bg-[linear-gradient(to_bottom,#0f172a_0%,#0f172a_16%,#172554_38%,#1e293b_68%,#020617_100%)]"
@@ -60,7 +60,7 @@ export default function Process({
       </div>
 
       <div className="relative mx-auto max-w-7xl z-10">
-        <SectionReveal className="mb-12 text-center sm:mb-20">
+        <SectionReveal anchor className="mb-12 text-center sm:mb-20">
           <span className={`mb-5 inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold backdrop-blur-md sm:mb-6 sm:px-5 sm:py-2 sm:text-sm ${
             isLight
               ? "border border-blue-200 bg-white/80 text-blue-700 shadow-[0_0_15px_rgba(59,130,246,0.08)]"

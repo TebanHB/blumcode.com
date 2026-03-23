@@ -23,7 +23,7 @@ export default function Solutions({
   return (
     <section
       id="soluciones"
-      className={`content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`nav-anchor-section content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight ? "bg-slate-100 text-slate-950" : "bg-slate-900 text-white"
       }`}
     >
@@ -39,7 +39,7 @@ export default function Solutions({
       />
 
       <div className="relative mx-auto max-w-7xl">
-        <SectionReveal className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
+        <SectionReveal anchor className="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
           <span
             className={`mb-5 inline-block rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-sm backdrop-blur-md sm:mb-6 sm:px-5 sm:py-2 sm:text-sm ${
               isLight

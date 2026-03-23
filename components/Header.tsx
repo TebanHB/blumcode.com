@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { MoonStar, SunMedium } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type MouseEvent } from "react";
 
 import { Locale } from "@/i18n";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 import { useTheme } from "./ThemeProvider";
 
@@ -64,6 +65,23 @@ export default function Header({
     [nav]
   );
 
+  const handleSectionNavigation = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+      event.preventDefault();
+
+      if (open) {
+        setOpen(false);
+        window.requestAnimationFrame(() => {
+          scrollToSection(sectionId);
+        });
+        return;
+      }
+
+      scrollToSection(sectionId);
+    },
+    [open]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       const nextScrolled = window.scrollY > 80;
@@ -104,6 +122,7 @@ export default function Header({
     <header className="fixed top-0 z-50 w-full">
       <div className="animate-enter-down px-3 pt-3 sm:px-4 sm:pt-4 md:px-6 md:pt-5">
         <div
+          data-site-header-bar
           className={`mx-auto flex items-center justify-between rounded-full px-3.5 transition-all duration-500 ease-in-out sm:px-5 lg:px-7 ${
             scrolled
               ? isLight
@@ -142,6 +161,7 @@ export default function Header({
                 <a
                   key={item.sectionId}
                   href={`#${item.sectionId}`}
+                  onClick={(event) => handleSectionNavigation(event, item.sectionId)}
                   className={`relative rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
                     isContact
                       ? "ui-btn ui-btn-primary ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
@@ -274,7 +294,7 @@ export default function Header({
                 <a
                   key={item.sectionId}
                   href={`#${item.sectionId}`}
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => handleSectionNavigation(event, item.sectionId)}
                   className={`block rounded-xl px-4 py-3 text-base font-medium transition-colors ${
                     isActive
                       ? isLight

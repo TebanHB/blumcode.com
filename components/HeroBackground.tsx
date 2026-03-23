@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PARTICLE_COUNT = 40;
 const SQUARE_COUNT = 14;
+const ENABLE_3D_MEDIA_QUERY =
+  "(min-width: 768px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
 
 type HeroBackgroundProps = {
   isLight: boolean;
@@ -55,6 +57,7 @@ function populateSquares(layer: HTMLDivElement, count: number) {
 }
 
 export default function HeroBackground({ isLight }: HeroBackgroundProps) {
+  const [is3DEnabled, setIs3DEnabled] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const cameraRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
@@ -64,6 +67,31 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
   const logoCoreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia(ENABLE_3D_MEDIA_QUERY);
+    const updateMode = () => setIs3DEnabled(mediaQuery.matches);
+
+    updateMode();
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", updateMode);
+    } else {
+      mediaQuery.addListener(updateMode);
+    }
+
+    return () => {
+      if (typeof mediaQuery.removeEventListener === "function") {
+        mediaQuery.removeEventListener("change", updateMode);
+      } else {
+        mediaQuery.removeListener(updateMode);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!is3DEnabled) {
+      return;
+    }
+
     const scene = sceneRef.current;
     const camera = cameraRef.current;
     const world = worldRef.current;
@@ -76,24 +104,25 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
       return;
     }
 
-    const sceneElement: HTMLDivElement = scene;
-    const cameraElement: HTMLDivElement = camera;
-    const worldElement: HTMLDivElement = world;
-    const particlesElement: HTMLDivElement = particles;
-    const squaresElement: HTMLDivElement = squares;
-    const logoPlateElement: HTMLDivElement = logoPlate;
-    const logoCoreElement: HTMLDivElement = logoCore;
+    const sceneElement = scene;
+    const cameraElement = camera;
+    const worldElement = world;
+    const particlesElement = particles;
+    const squaresElement = squares;
+    const logoPlateElement = logoPlate;
+    const logoCoreElement = logoCore;
 
-    populateParticles(particlesElement, PARTICLE_COUNT);
-    populateSquares(squaresElement, SQUARE_COUNT);
+    if (particlesElement && squaresElement) {
+      populateParticles(particlesElement, PARTICLE_COUNT);
+      populateSquares(squaresElement, SQUARE_COUNT);
+    }
 
     let pointerX = 0;
     let pointerY = 0;
     let targetX = 0;
     let targetY = 0;
     let frameId = 0;
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let prefersReducedMotion = reducedMotionQuery.matches;
+    let sceneIsVisible = true;
 
     const resetTransforms = () => {
       cameraElement.style.transform = "rotateX(0deg) rotateY(0deg)";
@@ -110,7 +139,7 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
     };
 
     const startAnimation = () => {
-      if (!frameId) {
+      if (!frameId && sceneIsVisible && !document.hidden) {
         frameId = window.requestAnimationFrame(animate);
       }
     };
@@ -130,10 +159,6 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
     };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (prefersReducedMotion) {
-        return;
-      }
-
       updatePointerTarget(event.clientX, event.clientY);
     };
 
@@ -142,26 +167,8 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
       targetY = 0;
     };
 
-    const handleReducedMotionChange = (event: MediaQueryListEvent) => {
-      prefersReducedMotion = event.matches;
-
-      if (prefersReducedMotion) {
-        handlePointerLeave();
-        stopAnimation();
-        resetTransforms();
-        return;
-      }
-
-      startAnimation();
-    };
-
     function animate() {
       frameId = 0;
-
-      if (prefersReducedMotion) {
-        resetTransforms();
-        return;
-      }
 
       pointerX += (targetX - pointerX) * 0.05;
       pointerY += (targetY - pointerY) * 0.05;
@@ -179,32 +186,50 @@ export default function HeroBackground({ isLight }: HeroBackgroundProps) {
       frameId = window.requestAnimationFrame(animate);
     }
 
-    resetTransforms();
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerleave", handlePointerLeave);
+    const sceneObserver = new IntersectionObserver(
+      ([entry]) => {
+        sceneIsVisible = entry.isIntersecting;
 
-    if (typeof reducedMotionQuery.addEventListener === "function") {
-      reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
-    } else {
-      reducedMotionQuery.addListener(handleReducedMotionChange);
-    }
+        if (sceneIsVisible) {
+          startAnimation();
+          return;
+        }
 
-    if (!prefersReducedMotion) {
+        stopAnimation();
+      },
+      { threshold: 0.08 }
+    );
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAnimation();
+        return;
+      }
+
       startAnimation();
-    }
+    };
+
+    resetTransforms();
+    sceneObserver.observe(sceneElement);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    sceneElement.addEventListener("pointermove", handlePointerMove, {
+      passive: true,
+    });
+    sceneElement.addEventListener("pointerleave", handlePointerLeave);
+    startAnimation();
 
     return () => {
       stopAnimation();
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerleave", handlePointerLeave);
-
-      if (typeof reducedMotionQuery.removeEventListener === "function") {
-        reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
-      } else {
-        reducedMotionQuery.removeListener(handleReducedMotionChange);
-      }
+      sceneObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      sceneElement.removeEventListener("pointermove", handlePointerMove);
+      sceneElement.removeEventListener("pointerleave", handlePointerLeave);
     };
-  }, []);
+  }, [is3DEnabled]);
+
+  if (!is3DEnabled) {
+    return null;
+  }
 
   return (
     <div

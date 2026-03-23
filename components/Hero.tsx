@@ -1,7 +1,10 @@
 "use client";
 
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, MouseEvent } from "react";
+
+import { scrollToSection } from "@/lib/scrollToSection";
+
 import HeroBackground from "./HeroBackground";
 import { useTheme } from "./ThemeProvider";
 
@@ -57,8 +60,15 @@ export default function Hero({
 
   const handleFocusService = (index: number) => {
     window.dispatchEvent(new CustomEvent("hero-service-focus", { detail: { index } }));
-    document.getElementById("servicios")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    scrollToSection("servicios");
   };
+
+  const handleCtaNavigation =
+    (sectionId: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      scrollToSection(sectionId);
+    };
+
   const enter = (delayMs: number): CSSProperties => ({
     animationDelay: `${delayMs}ms`,
   });
@@ -134,6 +144,7 @@ export default function Hero({
             >
               <a
                 href="#contacto"
+                onClick={handleCtaNavigation("contacto")}
                 className="ui-btn ui-btn-primary ui-btn-lg group w-full px-6 py-3.5 text-white sm:w-auto sm:px-8 sm:py-4"
               >
                 {t.primary}
@@ -142,6 +153,7 @@ export default function Hero({
 
               <a
                 href="#servicios"
+                onClick={handleCtaNavigation("servicios")}
                 className="ui-btn ui-btn-secondary ui-btn-lg w-full px-6 py-3.5 sm:w-auto sm:px-8 sm:py-4"
               >
                 {t.secondary}

@@ -6,8 +6,13 @@
   --color-blum-dark: #0f172a;
 }
 
+:root {
+  --nav-anchor-offset: clamp(6.75rem, 16vh, 9rem);
+}
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--nav-anchor-offset);
 }
 
 html[data-theme="dark"] {
@@ -39,6 +44,10 @@ html[data-theme="light"] body {
 
 .font-hero-serif {
   font-family: "Palatino Linotype", "Book Antiqua", "Georgia", "Times New Roman", serif;
+}
+
+.nav-anchor-section {
+  scroll-margin-top: var(--nav-anchor-offset);
 }
 
 * {
@@ -251,6 +260,10 @@ html[data-theme="light"] .ui-btn-icon:hover {
 
 /* Optimización para móviles y accesibilidad */
 @media (max-width: 767px) {
+  :root {
+    --nav-anchor-offset: 5.75rem;
+  }
+
   html {
     scroll-behavior: auto;
   }
@@ -281,6 +294,12 @@ html[data-theme="light"] .ui-btn-icon:hover {
 
   .ui-btn-readable {
     letter-spacing: 0.01em;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 760px) {
+  :root {
+    --nav-anchor-offset: clamp(7rem, 20vh, 9.5rem);
   }
 }
 

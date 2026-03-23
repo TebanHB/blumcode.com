@@ -1,19 +1,13 @@
+import { cookies } from "next/headers";
+
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { locales } from "@/i18n";
 
-const THEME_SCRIPT = `
-  (function() {
-    try {
-      var stored = window.localStorage.getItem("blumcode-theme");
-      var theme = stored === "light" || stored === "dark" ? stored : "dark";
-      document.documentElement.dataset.theme = theme;
-      document.documentElement.style.colorScheme = theme;
-    } catch (error) {
-      document.documentElement.dataset.theme = "dark";
-      document.documentElement.style.colorScheme = "dark";
-    }
-  })();
-`;
+const STORAGE_KEY = "blumcode-theme";
+
+function getSafeTheme(value: string | undefined) {
+  return value === "light" || value === "dark" ? value : "dark";
+}
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -27,12 +21,18 @@ export default async function LangLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  const cookieStore = await cookies();
+  const initialTheme = getSafeTheme(cookieStore.get(STORAGE_KEY)?.value);
 
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html
+      lang={lang}
+      data-theme={initialTheme}
+      style={{ colorScheme: initialTheme }}
+      suppressHydrationWarning
+    >
       <body>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
       </body>
     </html>
   );

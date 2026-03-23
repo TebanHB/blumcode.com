@@ -96,7 +96,7 @@ export default function Services({
   return (
     <section
       id="servicios"
-      className={`content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
+      className={`nav-anchor-section content-auto-section section-divider relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${
         isLight ? "bg-slate-50" : "bg-slate-950"
       }`}
     >
@@ -110,7 +110,7 @@ export default function Services({
       <div className={`absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent ${isLight ? "via-blue-500/10" : "via-blue-300/15"} to-transparent`} />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <SectionReveal>
+        <SectionReveal anchor>
           <div className="max-w-3xl">
             <span className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold backdrop-blur-sm sm:px-4 sm:py-2 sm:text-sm ${
               isLight
