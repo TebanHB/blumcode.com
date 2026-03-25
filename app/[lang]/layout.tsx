@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { locales } from "@/i18n";
 
@@ -33,6 +34,7 @@ export default async function LangLayout({
     >
       <body>
         <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
