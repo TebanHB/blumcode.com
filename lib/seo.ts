@@ -83,6 +83,14 @@ type ServiceItem = {
   description: string;
 };
 
+type TeamMember = {
+  name: string;
+  role: string;
+  description: string;
+  tag: string;
+  focus: string;
+};
+
 export function getSafeLocale(lang: string): Locale {
   return lang === "en" ? "en" : "es";
 }
@@ -172,100 +180,117 @@ export function buildPageMetadata(lang: Locale): Metadata {
 export function buildStructuredData(
   lang: Locale,
   services: ServiceItem[],
-  pageName: string
+  pageName: string,
+  members: TeamMember[] = []
 ) {
   const localeUrl = getLocaleUrl(lang);
   const email = getLocaleEmail(lang);
   const seo = getLocaleSeoContent(lang);
 
+  const graph: any[] = [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
+      name: SITE_NAME,
+      alternateName: SITE_NAME,
+      url: SITE_URL,
+      image: getOrganizationLogoUrl(),
+      logo: {
+        "@type": "ImageObject",
+        url: getOrganizationLogoUrl(),
+        contentUrl: getOrganizationLogoUrl(),
+        width: ORGANIZATION_LOGO_WIDTH,
+        height: ORGANIZATION_LOGO_HEIGHT,
+      },
+      email,
+      telephone: COMPANY_PHONE,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: COMPANY_CITY,
+        addressCountry: "BO",
+      },
+      contactPoint: [
+        {
+          "@type": "ContactPoint",
+          contactType: seo.contactLabel,
+          email,
+          telephone: COMPANY_PHONE,
+          url: COMPANY_WHATSAPP_URL,
+          availableLanguage: ["es", "en"],
+        },
+      ],
+      member: members.map((member) => ({
+        "@id": `${SITE_URL}#person-${member.name.toLowerCase().replace(/\s+/g, "-")}`,
+      })),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      alternateName: SITE_NAME,
+      inLanguage: ["es", "en"],
+      publisher: {
+        "@id": `${SITE_URL}#organization`,
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${localeUrl}#webpage`,
+      url: localeUrl,
+      name: pageName,
+      description: seo.description,
+      inLanguage: lang,
+      isPartOf: {
+        "@id": `${SITE_URL}#website`,
+      },
+      about: {
+        "@id": `${SITE_URL}#organization`,
+      },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: getOpenGraphImageUrl(lang),
+      },
+    },
+    {
+      "@type": "OfferCatalog",
+      "@id": `${localeUrl}#services`,
+      name:
+        lang === "es"
+          ? "Servicios de desarrollo de software"
+          : "Software development services",
+      itemListElement: services.map((service, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Service",
+          name: service.title,
+          description: service.description,
+          provider: {
+            "@id": `${SITE_URL}#organization`,
+          },
+          areaServed: {
+            "@type": "Country",
+            name: COMPANY_COUNTRY,
+          },
+        },
+      })),
+    },
+    ...members.map((member) => ({
+      "@type": "Person",
+      "@id": `${SITE_URL}#person-${member.name.toLowerCase().replace(/\s+/g, "-")}`,
+      name: member.name,
+      jobTitle: member.role,
+      description: member.description,
+      knowsAbout: member.focus,
+      worksFor: {
+        "@id": `${SITE_URL}#organization`,
+      },
+    })),
+  ];
+
   return {
     "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": `${SITE_URL}#organization`,
-        name: SITE_NAME,
-        alternateName: SITE_NAME,
-        url: SITE_URL,
-        image: getOrganizationLogoUrl(),
-        logo: {
-          "@type": "ImageObject",
-          url: getOrganizationLogoUrl(),
-          contentUrl: getOrganizationLogoUrl(),
-          width: ORGANIZATION_LOGO_WIDTH,
-          height: ORGANIZATION_LOGO_HEIGHT,
-        },
-        email,
-        telephone: COMPANY_PHONE,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: COMPANY_CITY,
-          addressCountry: "BO",
-        },
-        contactPoint: [
-          {
-            "@type": "ContactPoint",
-            contactType: seo.contactLabel,
-            email,
-            telephone: COMPANY_PHONE,
-            url: COMPANY_WHATSAPP_URL,
-            availableLanguage: ["es", "en"],
-          },
-        ],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}#website`,
-        url: SITE_URL,
-        name: SITE_NAME,
-        alternateName: SITE_NAME,
-        inLanguage: ["es", "en"],
-        publisher: {
-          "@id": `${SITE_URL}#organization`,
-        },
-      },
-      {
-        "@type": "WebPage",
-        "@id": `${localeUrl}#webpage`,
-        url: localeUrl,
-        name: pageName,
-        description: seo.description,
-        inLanguage: lang,
-        isPartOf: {
-          "@id": `${SITE_URL}#website`,
-        },
-        about: {
-          "@id": `${SITE_URL}#organization`,
-        },
-        primaryImageOfPage: {
-          "@type": "ImageObject",
-          url: getOpenGraphImageUrl(lang),
-        },
-      },
-      {
-        "@type": "OfferCatalog",
-        "@id": `${localeUrl}#services`,
-        name:
-          lang === "es"
-            ? "Servicios de desarrollo de software"
-            : "Software development services",
-        itemListElement: services.map((service, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          item: {
-            "@type": "Service",
-            name: service.title,
-            description: service.description,
-            provider: {
-              "@id": `${SITE_URL}#organization`,
-            },
-            areaServed: {
-              "@type": "Country",
-              name: COMPANY_COUNTRY,
-            },
-          },
-        })),
-      },
-    ],
+    "@graph": graph,
   };
 }

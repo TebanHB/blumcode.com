@@ -545,7 +545,8 @@ export default async function HomePage({
   const structuredData = buildStructuredData(
     safeLang,
     t.services.items,
-    `${t.hero.title1} ${t.hero.title2} ${t.hero.title3} | BlumCode`
+    `${t.hero.title1} ${t.hero.title2} ${t.hero.title3} | BlumCode`,
+    t.about.members
   );
 
   return (
