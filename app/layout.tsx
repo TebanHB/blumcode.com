@@ -42,10 +42,23 @@ export const viewport: Viewport = {
   ],
 };
 
+const themeScript = `
+  try {
+    const stored = localStorage.getItem('blumcode-theme') || 'dark';
+    document.documentElement.dataset.theme = stored;
+    document.documentElement.style.colorScheme = stored;
+  } catch (e) {}
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      {children}
+    </>
+  );
 }

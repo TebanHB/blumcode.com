@@ -32,6 +32,10 @@ export default async function LangLayout({
       style={{ colorScheme: initialTheme }}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body>
         <ThemeProvider initialTheme={initialTheme}>{children}</ThemeProvider>
         <Analytics />
