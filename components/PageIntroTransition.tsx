@@ -71,6 +71,10 @@ export default function PageIntroTransition({
         ? "page-intro-shell is-intro-visible is-intro-underlay"
         : "page-intro-shell is-intro-visible";
 
+  if (phase === "done") {
+    return <>{children}</>;
+  }
+
   return (
     <>
       <noscript>
@@ -79,47 +83,45 @@ export default function PageIntroTransition({
 
       <div className={shellClassName}>{children}</div>
 
-      {phase !== "done" ? (
-        <div
-          aria-hidden="true"
-          className={`page-intro-overlay ${isLight ? "is-light" : "is-dark"} ${
-            phase === "handoff" ? "is-handoff" : ""
-          }`}
-        >
-          <div className="page-intro-hero-scene">
-            <HeroBackground
-              isLight={isLight}
-              hideLogo
-              seed="hero-shared-scene"
+      <div
+        aria-hidden="true"
+        className={`page-intro-overlay ${isLight ? "is-light" : "is-dark"} ${
+          phase === "handoff" ? "is-handoff" : ""
+        }`}
+      >
+        <div className="page-intro-hero-scene">
+          <HeroBackground
+            isLight={isLight}
+            hideLogo
+            seed="hero-shared-scene"
+          />
+          <div
+            className={`page-intro-backdrop ${
+              isLight ? "page-intro-backdrop-light" : "page-intro-backdrop-dark"
+            }`}
+          />
+          <div
+            className={`page-intro-backdrop-accent ${
+              isLight
+                ? "page-intro-backdrop-accent-light"
+                : "page-intro-backdrop-accent-dark"
+            }`}
+          />
+        </div>
+        <div className="page-intro-logo-shell">
+          <div className="page-intro-logo-frame">
+            <Image
+              src={isLight ? "/logo.svg" : "/logo-blanco.svg"}
+              alt=""
+              width={1268}
+              height={429}
+              priority
+              unoptimized
+              className="page-intro-logo-image"
             />
-            <div
-              className={`page-intro-backdrop ${
-                isLight ? "page-intro-backdrop-light" : "page-intro-backdrop-dark"
-              }`}
-            />
-            <div
-              className={`page-intro-backdrop-accent ${
-                isLight
-                  ? "page-intro-backdrop-accent-light"
-                  : "page-intro-backdrop-accent-dark"
-              }`}
-            />
-          </div>
-          <div className="page-intro-logo-shell">
-            <div className="page-intro-logo-frame">
-              <Image
-                src={isLight ? "/logo.svg" : "/logo-blanco.svg"}
-                alt=""
-                width={1268}
-                height={429}
-                priority
-                unoptimized
-                className="page-intro-logo-image"
-              />
-            </div>
           </div>
         </div>
-      ) : null}
+      </div>
     </>
   );
 }

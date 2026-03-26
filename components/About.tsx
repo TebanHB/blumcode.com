@@ -7,6 +7,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import GlowCard from "./GlowCard";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
 
@@ -92,52 +93,53 @@ export default function About({
           </SectionReveal>
 
           <SectionReveal delay={0.08}>
-            <aside
-              className={`relative overflow-hidden rounded-[30px] border p-6 shadow-[0_22px_44px_-24px_rgba(15,23,42,0.3)] backdrop-blur-xl sm:p-8 ${
-                isLight
-                  ? "m-1 border-slate-200 bg-white/88"
-                  : "border-white/10 bg-white/6"
-              }`}
+            <GlowCard
+              isLight={isLight}
+              borderRadius={30}
+              backgroundColor={isLight ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.06)"}
+              boxShadow="0 22px 44px -24px rgba(15,23,42,0.3)"
             >
-              <div
-                className={`absolute inset-x-0 top-0 h-px ${
-                  isLight
-                    ? "bg-linear-to-r from-transparent via-blum-blue/35 to-transparent"
-                    : "bg-linear-to-r from-transparent via-blue-300/30 to-transparent"
-                }`}
-              />
+              <aside className="relative h-full p-6 sm:p-8">
+                <div
+                  className={`absolute inset-x-0 top-0 h-px ${
+                    isLight
+                      ? "bg-linear-to-r from-transparent via-blum-blue/35 to-transparent"
+                      : "bg-linear-to-r from-transparent via-blue-300/30 to-transparent"
+                  }`}
+                />
 
-              <p
-                className={`text-sm font-semibold uppercase tracking-[0.24em] ${
-                  isLight ? "text-blue-700" : "text-blue-200"
-                }`}
-              >
-                {t.summaryTitle}
-              </p>
+                <p
+                  className={`text-sm font-semibold uppercase tracking-[0.24em] ${
+                    isLight ? "text-blue-700" : "text-blue-200"
+                  }`}
+                >
+                  {t.summaryTitle}
+                </p>
 
-              <p
-                className={`mt-4 text-sm leading-6 sm:text-base sm:leading-7 ${
-                  isLight ? "text-slate-600" : "text-slate-300"
-                }`}
-              >
-                {t.summaryDescription}
-              </p>
+                <p
+                  className={`mt-4 text-sm leading-6 sm:text-base sm:leading-7 ${
+                    isLight ? "text-slate-600" : "text-slate-300"
+                  }`}
+                >
+                  {t.summaryDescription}
+                </p>
 
-              <div className="mt-6 flex flex-wrap gap-3">
-                {t.pillars.map((pillar) => (
-                  <span
-                    key={pillar}
-                    className={`rounded-full px-3.5 py-2 text-xs font-semibold sm:text-sm ${
-                      isLight
-                        ? "border border-slate-200 bg-slate-50 text-slate-700"
-                        : "border border-white/10 bg-white/5 text-slate-200"
-                    }`}
-                  >
-                    {pillar}
-                  </span>
-                ))}
-              </div>
-            </aside>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {t.pillars.map((pillar) => (
+                    <span
+                      key={pillar}
+                      className={`rounded-full px-3.5 py-2 text-xs font-semibold sm:text-sm ${
+                        isLight
+                          ? "border border-slate-200 bg-slate-50 text-slate-700"
+                          : "border border-white/10 bg-white/5 text-slate-200"
+                      }`}
+                    >
+                      {pillar}
+                    </span>
+                  ))}
+                </div>
+              </aside>
+            </GlowCard>
           </SectionReveal>
         </div>
 
@@ -147,79 +149,81 @@ export default function About({
 
             return (
               <SectionReveal key={member.name} delay={0.06 * (index + 1)}>
-                <article
-                  className={`group relative h-full overflow-hidden rounded-[28px] border p-6 shadow-[0_20px_42px_-24px_rgba(15,23,42,0.32)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-2 sm:rounded-4xl sm:p-8 ${
-                    isLight
-                      ? "m-1 border-slate-200 bg-white/90 hover:border-blue-300 hover:shadow-[0_24px_50px_-20px_rgba(59,130,246,0.2)]"
-                      : "border-white/10 bg-white/5 hover:border-blue-400/35 hover:bg-white/7"
-                  }`}
+                <GlowCard
+                  isLight={isLight}
+                  borderRadius={32}
+                  backgroundColor={isLight ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.06)"}
+                  boxShadow="0 20px 42px -24px rgba(15,23,42,0.32)"
+                  className="transition-all duration-500 hover:-translate-y-2"
                 >
-                  <div
-                    className={`absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
-                      isLight
-                        ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_48%)]"
-                        : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.16),transparent_46%)]"
-                    }`}
-                  />
-
-                  <div className="relative flex items-start justify-end">
+                  <article className="relative h-full p-6 sm:p-8">
                     <div
-                      className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                      className={`absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
                         isLight
-                          ? "bg-slate-100 text-blue-600"
-                          : "bg-white/10 text-blue-200"
+                          ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_48%)]"
+                          : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.16),transparent_46%)]"
                       }`}
-                    >
-                      <Icon className="h-5 w-5" />
+                    />
+
+                    <div className="relative flex items-start justify-end">
+                      <div
+                        className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                          isLight
+                            ? "bg-slate-100 text-blue-600"
+                            : "bg-white/10 text-blue-200"
+                        }`}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="relative mt-6">
-                    <span
-                      className={`inline-flex rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${
+                    <div className="relative mt-6">
+                      <span
+                        className={`inline-flex rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${
+                          isLight
+                            ? "bg-slate-100 text-slate-700"
+                            : "bg-white/10 text-slate-200"
+                        }`}
+                      >
+                        {member.tag}
+                      </span>
+
+                      <h3
+                        className={`mt-4 text-2xl font-semibold tracking-[-0.03em] sm:text-[2rem] ${
+                          isLight ? "text-slate-950" : "text-white"
+                        }`}
+                      >
+                        {member.name}
+                      </h3>
+
+                      <p
+                        className={`mt-3 text-sm font-semibold leading-6 sm:text-base ${
+                          isLight ? "text-blue-700" : "text-blue-200"
+                        }`}
+                      >
+                        {member.role}
+                      </p>
+
+                      <p
+                        className={`mt-4 text-sm leading-6 sm:text-[15px] sm:leading-7 ${
+                          isLight ? "text-slate-600" : "text-slate-300"
+                        }`}
+                      >
+                        {member.description}
+                      </p>
+                    </div>
+
+                    <div
+                      className={`relative mt-8 rounded-[22px] border px-4 py-3 text-sm font-medium ${
                         isLight
-                          ? "bg-slate-100 text-slate-700"
-                          : "bg-white/10 text-slate-200"
+                          ? "border-slate-200 bg-slate-50 text-slate-700"
+                          : "border-white/10 bg-black/10 text-slate-200"
                       }`}
                     >
-                      {member.tag}
-                    </span>
-
-                    <h3
-                      className={`mt-4 text-2xl font-semibold tracking-[-0.03em] sm:text-[2rem] ${
-                        isLight ? "text-slate-950" : "text-white"
-                      }`}
-                    >
-                      {member.name}
-                    </h3>
-
-                    <p
-                      className={`mt-3 text-sm font-semibold leading-6 sm:text-base ${
-                        isLight ? "text-blue-700" : "text-blue-200"
-                      }`}
-                    >
-                      {member.role}
-                    </p>
-
-                    <p
-                      className={`mt-4 text-sm leading-6 sm:text-[15px] sm:leading-7 ${
-                        isLight ? "text-slate-600" : "text-slate-300"
-                      }`}
-                    >
-                      {member.description}
-                    </p>
-                  </div>
-
-                  <div
-                    className={`relative mt-8 rounded-[22px] border px-4 py-3 text-sm font-medium ${
-                      isLight
-                        ? "border-slate-200 bg-slate-50 text-slate-700"
-                        : "border-white/10 bg-black/10 text-slate-200"
-                    }`}
-                  >
-                    {member.focus}
-                  </div>
-                </article>
+                      {member.focus}
+                    </div>
+                  </article>
+                </GlowCard>
               </SectionReveal>
             );
           })}

@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import GlowCard from "./GlowCard";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
 
 const icons = [Code2, Wrench, Layers, Smartphone, Workflow, Wrench, BarChart, Cloud];
-const AUTO_RESUME_DELAY_MS = 10000;
 const CAROUSEL_SPEED_PX_PER_SECOND = 58;
 const DRAG_THRESHOLD_PX = 6;
 
@@ -44,7 +44,7 @@ export default function Services({
   const trackRef = useRef<HTMLDivElement | null>(null);
   const glowRef = useRef<HTMLDivElement | null>(null);
   const firstGroupRef = useRef<HTMLDivElement | null>(null);
-  const cardRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const cardRefs = useRef<Array<HTMLDivElement | null>>([]);
   const animationFrameRef = useRef<number | null>(null);
   const lastFrameTimeRef = useRef<number | null>(null);
   const offsetRef = useRef(0);
@@ -245,18 +245,6 @@ export default function Services({
       lastFrameTimeRef.current = null;
     };
   }, [applyOffset, canAutoScroll, isDragging, selectedIndex, updateVisibleIndex]);
-
-  useEffect(() => {
-    if (selectedIndex === null) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setSelectedIndex(null);
-    }, AUTO_RESUME_DELAY_MS);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [selectedIndex]);
 
   useEffect(() => {
     if (selectedIndex === null) {
@@ -568,86 +556,110 @@ export default function Services({
                       const isSelected = selectedIndex === index;
 
                       return (
-                        <button
+                        <GlowCard
                           key={`${group}-${service.title}`}
                           ref={(element) => {
                             if (group === 0) {
                               cardRefs.current[index] = element;
                             }
                           }}
-                          type="button"
-                          data-service-card="true"
-                          onClick={() => selectCard(index)}
-                          className={`group relative w-[280px] shrink-0 overflow-hidden rounded-[22px] border p-5 text-left shadow-[0_14px_36px_rgba(2,6,23,0.22)] backdrop-blur-sm transition-[transform,border-color,background-color,box-shadow] duration-300 hover:-translate-y-1.5 sm:w-[320px] sm:rounded-3xl sm:p-6 lg:w-[340px] ${
+                          isLight={isLight}
+                          borderRadius={24}
+                          backgroundColor={
                             isSelected
                               ? isLight
-                                ? "border-blue-300 bg-white shadow-[0_22px_40px_rgba(59,130,246,0.18)] ring-1 ring-blue-100"
-                                : "border-blue-400/40 bg-[linear-gradient(180deg,rgba(59,130,246,0.18),rgba(15,23,42,0.92))] shadow-[0_20px_42px_rgba(59,130,246,0.18)]"
+                                ? "rgba(255,255,255,0.98)"
+                                : "rgba(15,23,42,0.94)"
                               : isLight
-                                ? "border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
-                                : "border-white/10 bg-white/5"
-                          } focus:outline-hidden focus:ring-2 focus:ring-blum-blue/50`}
-                          aria-pressed={isSelected}
+                                ? "rgba(255,255,255,0.92)"
+                                : "rgba(255,255,255,0.06)"
+                          }
+                          boxShadow={
+                            isSelected
+                              ? isLight
+                                ? "0 22px 40px rgba(59,130,246,0.18)"
+                                : "0 20px 42px rgba(59,130,246,0.18)"
+                              : isLight
+                                ? "0 18px 34px rgba(148,163,184,0.14)"
+                                : "0 14px 36px rgba(2,6,23,0.22)"
+                          }
+                          glowIntensity={isSelected ? 1.15 : 1}
+                          fillOpacity={
+                            isSelected
+                              ? isLight
+                                ? 0.28
+                                : 0.36
+                              : undefined
+                          }
+                          className="w-[280px] shrink-0 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 sm:w-[320px] lg:w-[340px]"
                         >
-                          <div
-                            className={`pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 ${
-                              isSelected ? "opacity-100" : ""
-                            } ${
-                              isLight
-                                ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.10),transparent_55%)]"
-                                : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_50%)]"
-                            }`}
-                          />
-
-                          <div
-                            className={`relative flex h-11 w-11 items-center justify-center rounded-2xl transition-colors sm:h-12 sm:w-12 ${
-                              isSelected
-                                ? "bg-blue-500 text-white"
-                                : isLight
-                                  ? "bg-slate-100 text-blue-600"
-                                  : "bg-white/10 text-blue-200"
-                            }`}
+                          <button
+                            type="button"
+                            data-service-card="true"
+                            onClick={() => selectCard(index)}
+                            className="relative flex h-full w-full flex-col rounded-[inherit] p-5 text-left focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blum-blue/50 sm:p-6"
+                            aria-pressed={isSelected}
                           >
-                            <Icon className="h-6 w-6" />
-                          </div>
+                            <div
+                              className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ${
+                                isSelected ? "opacity-100" : ""
+                              } ${
+                                isLight
+                                  ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.10),transparent_55%)]"
+                                  : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.18),transparent_50%)]"
+                              }`}
+                            />
 
-                          <div className="relative mt-5 flex items-start justify-between gap-3">
-                            <h3
-                              className={`text-lg font-semibold leading-snug sm:text-xl ${
-                                isLight ? "text-slate-950" : "text-white"
+                            <div
+                              className={`relative flex h-11 w-11 items-center justify-center rounded-2xl transition-colors sm:h-12 sm:w-12 ${
+                                isSelected
+                                  ? "bg-blue-500 text-white"
+                                  : isLight
+                                    ? "bg-slate-100 text-blue-600"
+                                    : "bg-white/10 text-blue-200"
                               }`}
                             >
-                              {service.title}
-                            </h3>
-                            <span
-                              className={`shrink-0 rounded-full px-2.5 py-1 text-[0.72rem] font-extrabold leading-none tracking-[0.24em] shadow-sm ring-1 sm:px-3 sm:py-1.5 sm:text-xs ${
+                              <Icon className="h-6 w-6" />
+                            </div>
+
+                            <div className="relative mt-5 flex items-start justify-between gap-3">
+                              <h3
+                                className={`text-lg font-semibold leading-snug sm:text-xl ${
+                                  isLight ? "text-slate-950" : "text-white"
+                                }`}
+                              >
+                                {service.title}
+                              </h3>
+                              <span
+                                className={`shrink-0 rounded-full px-2.5 py-1 text-[0.72rem] font-extrabold leading-none tracking-[0.24em] shadow-sm ring-1 sm:px-3 sm:py-1.5 sm:text-xs ${
+                                  isLight
+                                    ? isSelected
+                                      ? "bg-blue-50 text-blue-700 ring-blue-200 shadow-[0_8px_18px_rgba(59,130,246,0.16)]"
+                                      : "bg-slate-100 text-slate-600 ring-slate-200"
+                                    : isSelected
+                                      ? "bg-blue-400/14 text-blue-100 ring-blue-300/25 shadow-[0_8px_20px_rgba(59,130,246,0.18)]"
+                                      : "bg-white/8 text-slate-200 ring-white/12"
+                                }`}
+                              >
+                                0{index + 1}
+                              </span>
+                            </div>
+
+                            <p
+                              className={`relative mt-3 text-[13px] leading-5 sm:text-[15px] sm:leading-6 ${
                                 isLight
                                   ? isSelected
-                                    ? "bg-blue-50 text-blue-700 ring-blue-200 shadow-[0_8px_18px_rgba(59,130,246,0.16)]"
-                                    : "bg-slate-100 text-slate-600 ring-slate-200"
+                                    ? "text-slate-700"
+                                    : "text-slate-600"
                                   : isSelected
-                                    ? "bg-blue-400/14 text-blue-100 ring-blue-300/25 shadow-[0_8px_20px_rgba(59,130,246,0.18)]"
-                                    : "bg-white/8 text-slate-200 ring-white/12"
+                                    ? "text-slate-100"
+                                    : "text-slate-300"
                               }`}
                             >
-                              0{index + 1}
-                            </span>
-                          </div>
-
-                          <p
-                            className={`relative mt-3 text-[13px] leading-5 sm:text-[15px] sm:leading-6 ${
-                              isLight
-                                ? isSelected
-                                  ? "text-slate-700"
-                                  : "text-slate-600"
-                                : isSelected
-                                  ? "text-slate-100"
-                                  : "text-slate-300"
-                            }`}
-                          >
-                            {service.description}
-                          </p>
-                        </button>
+                              {service.description}
+                            </p>
+                          </button>
+                        </GlowCard>
                       );
                     })}
                   </div>
@@ -695,8 +707,8 @@ export default function Services({
 
               <div className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
                 {isSpanish
-                  ? "Arrastra, usa los controles o haz click en cualquier tarjeta para fijarla."
-                  : "Drag, use the controls, or click any card to pin it."}
+                  ? "Arrastra o haz click en una tarjeta para fijarla. Haz click fuera del carrusel para reanudar."
+                  : "Drag or click a card to pin it. Click outside the carousel to resume."}
               </div>
             </div>
           </div>

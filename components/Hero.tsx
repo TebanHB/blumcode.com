@@ -5,6 +5,7 @@ import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react"
 import type { CSSProperties, MouseEvent } from "react";
 
 import { scrollToSection } from "@/lib/scrollToSection";
+import GlowCard from "./GlowCard";
 import RotatingText from "./RotatingText";
 import ShineButtonLink from "./ShineButtonLink";
 import { useTheme } from "./ThemeProvider";
@@ -190,30 +191,31 @@ export default function Hero({
             </div>
           </div>
 
-          <div
-            className={`animate-enter-right relative mx-auto w-full max-w-xl overflow-hidden rounded-[28px] p-4 shadow-[0_20px_60px_rgba(2,6,23,0.28)] backdrop-blur-xl sm:rounded-[32px] sm:p-6 lg:max-w-none ${
-              isLight
-                ? "m-1 border border-slate-200/65 bg-white/40 shadow-[0_24px_60px_rgba(148,163,184,0.14)]"
-                : "border border-white/10 bg-slate-950/24"
-            }`}
+          <GlowCard
+            isLight={isLight}
+            borderRadius={32}
+            backgroundColor={isLight ? "rgba(255,255,255,0.46)" : "rgba(15,23,42,0.3)"}
+            boxShadow={isLight ? "0 24px 60px rgba(148,163,184,0.14)" : "0 20px 60px rgba(2,6,23,0.28)"}
+            className="animate-enter-right relative mx-auto w-full max-w-xl lg:max-w-none"
             style={enter(280)}
           >
-            <div
-              className={`absolute inset-0 ${
-                isLight
-                  ? "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.14),transparent_62%)]"
-                  : "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.03),transparent_62%)]"
-              }`}
-            />
-            <div
-              className={`absolute inset-0 opacity-70 ${
-                isLight
-                  ? "bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:26px_26px]"
-                  : "bg-[linear-gradient(rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.08)_1px,transparent_1px)] bg-[size:26px_26px]"
-              }`}
-            />
+            <div className="relative h-full p-4 sm:p-6">
+              <div
+                className={`absolute inset-0 ${
+                  isLight
+                    ? "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.14),transparent_62%)]"
+                    : "bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.18),transparent_32%),linear-gradient(145deg,rgba(255,255,255,0.03),transparent_62%)]"
+                }`}
+              />
+              <div
+                className={`absolute inset-0 opacity-70 ${
+                  isLight
+                    ? "bg-[linear-gradient(rgba(148,163,184,0.10)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.10)_1px,transparent_1px)] bg-[size:26px_26px]"
+                    : "bg-[linear-gradient(rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.08)_1px,transparent_1px)] bg-[size:26px_26px]"
+                }`}
+              />
 
-            <div className="relative">
+              <div className="relative">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2">
                   {[0, 1, 2].map((dot) => (
@@ -287,57 +289,60 @@ export default function Hero({
               </div>
             </div>
 
-            <div className="relative mt-4 grid gap-2.5 sm:gap-3">
-              {focusAreas.map(({ title, description, serviceIndex, Icon, accentLight, accentDark }, index) => (
-                <div
-                  key={title}
-                  style={enter(340 + index * 80)}
-                  className={`animate-enter-up group relative overflow-hidden rounded-[22px] p-[1px] transition-transform duration-200 hover:-translate-y-0.5 sm:rounded-[24px] ${
-                    isLight ? "m-1 shadow-[0_14px_28px_rgba(148,163,184,0.16)]" : ""
-                  }`}
-                >
-                  <div className={`absolute inset-0 ${isLight ? accentLight : accentDark}`} />
-                  <div
-                    className={`relative flex items-start gap-3 rounded-[21px] px-3.5 py-3.5 sm:gap-4 sm:rounded-[23px] sm:px-4 sm:py-4 ${
-                      isLight
-                        ? "border border-slate-200/70 bg-white/36 backdrop-blur-lg"
-                        : "border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.4),rgba(15,23,42,0.24))] backdrop-blur-lg"
-                    }`}
+              <div className="relative mt-4 grid gap-2.5 sm:gap-3">
+                {focusAreas.map(({ title, description, serviceIndex, Icon, accentLight, accentDark }, index) => (
+                  <GlowCard
+                    key={title}
+                    isLight={isLight}
+                    borderRadius={24}
+                    backgroundColor={isLight ? "rgba(255,255,255,0.74)" : "rgba(15,23,42,0.44)"}
+                    boxShadow={isLight ? "0 14px 28px rgba(148,163,184,0.16)" : "0 14px 28px rgba(2,6,23,0.24)"}
+                    className="animate-enter-up transition-transform duration-200 hover:-translate-y-0.5"
+                    style={enter(340 + index * 80)}
                   >
+                    <div className={`absolute inset-0 ${isLight ? accentLight : accentDark}`} />
                     <div
-                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px] text-blum-blue sm:h-12 sm:w-12 sm:rounded-[18px] ${
-                        isLight ? "bg-blue-50 ring-1 ring-blue-100" : "bg-white/10"
+                      className={`relative flex h-full items-start gap-3 px-3.5 py-3.5 sm:gap-4 sm:px-4 sm:py-4 ${
+                        isLight
+                          ? "bg-white/36 backdrop-blur-lg"
+                          : "bg-[linear-gradient(180deg,rgba(15,23,42,0.4),rgba(15,23,42,0.24))] backdrop-blur-lg"
                       }`}
                     >
-                      <Icon className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
-                            0{index + 1}
-                          </p>
-                          <h3 className={`mt-1 text-[15px] font-semibold leading-snug sm:text-lg ${isLight ? "text-slate-950" : "text-white"}`}>{title}</h3>
-                        </div>
-
-                        <button
-                          type="button"
-                          aria-label={`Ir a ${title}`}
-                          onClick={() => handleFocusService(serviceIndex)}
-                          className="ui-btn ui-btn-icon h-[2.125rem] w-[2.125rem] shrink-0 transition-transform group-hover:translate-x-1 sm:h-9 sm:w-9"
-                        >
-                          <ArrowRight className="h-4 w-4" />
-                        </button>
+                      <div
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[16px] text-blum-blue sm:h-12 sm:w-12 sm:rounded-[18px] ${
+                          isLight ? "bg-blue-50 ring-1 ring-blue-100" : "bg-white/10"
+                        }`}
+                      >
+                        <Icon className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
                       </div>
 
-                      <p className={`mt-2 text-[13px] leading-5 sm:text-sm sm:leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <p className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                              0{index + 1}
+                            </p>
+                            <h3 className={`mt-1 text-[15px] font-semibold leading-snug sm:text-lg ${isLight ? "text-slate-950" : "text-white"}`}>{title}</h3>
+                          </div>
+
+                          <button
+                            type="button"
+                            aria-label={`Ir a ${title}`}
+                            onClick={() => handleFocusService(serviceIndex)}
+                            className="ui-btn ui-btn-icon h-[2.125rem] w-[2.125rem] shrink-0 transition-transform group-hover:translate-x-1 sm:h-9 sm:w-9"
+                          >
+                            <ArrowRight className="h-4 w-4" />
+                          </button>
+                        </div>
+
+                        <p className={`mt-2 text-[13px] leading-5 sm:text-sm sm:leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>{description}</p>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  </GlowCard>
+                ))}
+              </div>
             </div>
-          </div>
+          </GlowCard>
         </div>
       </div>
     </section>

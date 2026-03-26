@@ -1,30 +1,26 @@
 "use client";
 
-import { Monitor, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 
 import {
   ThemeToggler,
   type Direction,
-  type ThemeSelection,
 } from "@/components/animate-ui/primitives/effects/theme-toggler";
 import { Locale } from "@/i18n";
 import { cn } from "@/lib/cn";
+import { type ResolvedTheme } from "@/lib/theme";
 
 import { useTheme } from "./ThemeProvider";
 
-function getNextTheme(theme: ThemeSelection): ThemeSelection {
+function getNextTheme(theme: ResolvedTheme): ResolvedTheme {
   if (theme === "dark") {
     return "light";
-  }
-
-  if (theme === "light") {
-    return "system";
   }
 
   return "dark";
 }
 
-function getThemeLabel(lang: Locale, theme: ThemeSelection) {
+function getThemeLabel(lang: Locale, theme: ResolvedTheme) {
   if (lang === "es") {
     if (theme === "dark") {
       return "oscuro";
@@ -33,8 +29,6 @@ function getThemeLabel(lang: Locale, theme: ThemeSelection) {
     if (theme === "light") {
       return "claro";
     }
-
-    return "sistema";
   }
 
   if (theme === "dark") {
@@ -44,8 +38,6 @@ function getThemeLabel(lang: Locale, theme: ThemeSelection) {
   if (theme === "light") {
     return "light";
   }
-
-  return "system";
 }
 
 export default function ThemeToggleButton({
@@ -66,9 +58,9 @@ export default function ThemeToggleButton({
       setTheme={setTheme}
       direction={direction}
     >
-      {({ effective, toggleTheme }) => {
-        const nextTheme = getNextTheme(effective);
-        const currentThemeLabel = getThemeLabel(lang, effective);
+      {({ resolvedTheme, toggleTheme }) => {
+        const nextTheme = getNextTheme(resolvedTheme);
+        const currentThemeLabel = getThemeLabel(lang, resolvedTheme);
         const nextThemeLabel = getThemeLabel(lang, nextTheme);
         const ariaLabel =
           lang === "es"
@@ -81,14 +73,13 @@ export default function ThemeToggleButton({
             onClick={() => toggleTheme(nextTheme)}
             aria-label={ariaLabel}
             title={ariaLabel}
-            data-theme-effective={effective}
+            data-theme-effective={resolvedTheme}
             data-theme-direction={direction}
             className={cn("theme-toggle-btn", className)}
           >
             <span className="theme-toggle-icon-stage" aria-hidden="true">
               <Sun className="theme-toggle-icon theme-toggle-icon-sun" />
               <Moon className="theme-toggle-icon theme-toggle-icon-moon" />
-              <Monitor className="theme-toggle-icon theme-toggle-icon-monitor" />
             </span>
           </button>
         );

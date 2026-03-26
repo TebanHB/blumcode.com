@@ -9,6 +9,7 @@ import {
   HoverCardTrigger,
 } from "@/components/animate-ui/components/radix/hover-card";
 
+import GlowCard from "./GlowCard";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
 
@@ -130,34 +131,34 @@ export default function Footer({
           </div>
         </SectionReveal>
 
-        <div
-          className={`rounded-[24px] p-6 backdrop-blur-sm sm:rounded-[34px] sm:p-10 ${
-            isLight
-              ? "m-1 border border-slate-200 bg-white/85 shadow-[0_18px_34px_rgba(148,163,184,0.18)]"
-              : "border border-white/10 bg-white/5 shadow-[0_12px_28px_rgba(0,0,0,0.2)]"
-          }`}
+        <GlowCard
+          isLight={isLight}
+          borderRadius={34}
+          backgroundColor={isLight ? "rgba(255,255,255,0.88)" : "rgba(255,255,255,0.06)"}
+          boxShadow={isLight ? "0 18px 34px rgba(148,163,184,0.18)" : "0 12px 28px rgba(0,0,0,0.2)"}
         >
-          <div className="grid gap-8 sm:gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] md:items-start md:gap-12 lg:gap-16">
-            <div className="flex h-full flex-col justify-center text-center md:text-left">
-              <div className="mx-auto flex h-12 w-[140px] items-center justify-center overflow-hidden md:mx-0 sm:h-14 sm:w-[160px]">
-                <Image
-                  src={isLight ? "/logo.svg" : "/logo-blanco.svg"}
-                  alt="BlumCode Logo"
-                  width={220}
-                  height={60}
-                  className="h-10 w-auto max-w-none object-contain object-left sm:h-12"
-                />
-              </div>
+          <div className="relative h-full p-6 sm:p-10">
+            <div className="grid gap-8 sm:gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] md:items-start md:gap-12 lg:gap-16">
+              <div className="flex h-full flex-col justify-center text-center md:text-left">
+                <div className="mx-auto flex h-12 w-[140px] items-center justify-center overflow-hidden md:mx-0 sm:h-14 sm:w-[160px]">
+                  <Image
+                    src={isLight ? "/logo.svg" : "/logo-blanco.svg"}
+                    alt="BlumCode Logo"
+                    width={220}
+                    height={60}
+                    className="h-10 w-auto max-w-none object-contain object-left sm:h-12"
+                  />
+                </div>
 
-              <p
-                className={`mt-4 max-w-md text-sm leading-6 md:max-w-none sm:mt-5 sm:text-lg sm:leading-7 ${
-                  isLight ? "text-slate-600" : "text-gray-300"
-                }`}
-              >
-                {t.description}
-              </p>
+                <p
+                  className={`mt-4 max-w-md text-sm leading-6 md:max-w-none sm:mt-5 sm:text-lg sm:leading-7 ${
+                    isLight ? "text-slate-600" : "text-gray-300"
+                  }`}
+                >
+                  {t.description}
+                </p>
 
-              {/* <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
+                {/* <div className="mt-7 flex flex-wrap items-center justify-center gap-3 sm:gap-4 md:justify-start">
                 {[
                   "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
                   "M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z",
@@ -171,153 +172,155 @@ export default function Footer({
                   </a>
                 ))}
               </div> */}
-            </div>
+              </div>
 
-            <div
-              className={`flex flex-col items-center rounded-[22px] border px-5 py-6 text-center sm:px-6 sm:py-7 md:items-end md:text-right ${
-                isLight
-                  ? "border-slate-200 bg-slate-50/85"
-                  : "border-white/10 bg-black/10"
-              }`}
-            >
-              <h4 className="mb-4 text-lg font-bold sm:mb-5 sm:text-xl">{t.contact}</h4>
-              <div className="flex w-full flex-col gap-4">
-                <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
-                  {(["whatsapp", "tiktok"] as const).map((key) => {
-                    const social = socialCards[key];
-                    const iconShellClassName =
-                      key === "whatsapp"
-                        ? isLight
-                          ? "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"
-                          : "bg-emerald-500/12 text-emerald-300 ring-1 ring-emerald-400/18"
-                        : isLight
-                          ? "bg-slate-950 text-white ring-1 ring-slate-900/10"
-                          : "bg-white/12 text-white ring-1 ring-white/12";
+              <GlowCard
+                isLight={isLight}
+                borderRadius={22}
+                backgroundColor={isLight ? "rgba(248,250,252,0.92)" : "rgba(0,0,0,0.18)"}
+                boxShadow="none"
+              >
+                <div className="flex h-full flex-col items-center px-5 py-6 text-center sm:px-6 sm:py-7 md:items-end md:text-right">
+                  <h4 className="mb-4 text-lg font-bold sm:mb-5 sm:text-xl">{t.contact}</h4>
+                  <div className="flex w-full flex-col gap-4">
+                    <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
+                      {(["whatsapp", "tiktok"] as const).map((key) => {
+                        const social = socialCards[key];
+                        const iconShellClassName =
+                          key === "whatsapp"
+                            ? isLight
+                              ? "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"
+                              : "bg-emerald-500/12 text-emerald-300 ring-1 ring-emerald-400/18"
+                            : isLight
+                              ? "bg-slate-950 text-white ring-1 ring-slate-900/10"
+                              : "bg-white/12 text-white ring-1 ring-white/12";
 
-                    return (
-                      <HoverCard key={key} followCursor="x">
-                        <HoverCardTrigger asChild>
-                          <a
-                            href={social.href}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            aria-label={social.subtitle}
-                            className={`group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full border transition-transform duration-200 hover:-translate-y-0.5 sm:size-12 ${
-                              isLight
-                                ? "border-slate-200 bg-white shadow-[0_14px_28px_rgba(148,163,184,0.16)]"
-                                : "border-white/10 bg-white/6 shadow-[0_14px_28px_rgba(0,0,0,0.24)]"
-                            }`}
-                          >
-                            <span
-                              className={`flex size-8 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 sm:size-9 ${iconShellClassName}`}
-                            >
-                              <Image
-                                src={social.image}
-                                alt={social.subtitle}
-                                width={22}
-                                height={22}
-                                className="h-[1.15rem] w-[1.15rem] object-contain sm:h-5 sm:w-5"
-                              />
-                            </span>
-                          </a>
-                        </HoverCardTrigger>
+                        return (
+                          <HoverCard key={key} followCursor="x">
+                            <HoverCardTrigger asChild>
+                              <a
+                                href={social.href}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                                aria-label={social.subtitle}
+                                className={`group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full border transition-transform duration-200 hover:-translate-y-0.5 sm:size-12 ${
+                                  isLight
+                                    ? "border-slate-200 bg-white shadow-[0_14px_28px_rgba(148,163,184,0.16)]"
+                                    : "border-white/10 bg-white/6 shadow-[0_14px_28px_rgba(0,0,0,0.24)]"
+                                }`}
+                              >
+                                <span
+                                  className={`flex size-8 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 sm:size-9 ${iconShellClassName}`}
+                                >
+                                  <Image
+                                    src={social.image}
+                                    alt={social.subtitle}
+                                    width={22}
+                                    height={22}
+                                    className="h-[1.15rem] w-[1.15rem] object-contain sm:h-5 sm:w-5"
+                                  />
+                                </span>
+                              </a>
+                            </HoverCardTrigger>
 
-                        <HoverCardContent
-                          side="top"
-                          sideOffset={20}
-                          align="end"
-                          className={`w-[20rem] ${
-                            isLight
-                              ? "border-slate-200 bg-white text-slate-950 shadow-[0_24px_70px_rgba(148,163,184,0.22)]"
-                              : "border-white/10 bg-slate-950/94 text-white shadow-[0_24px_70px_rgba(2,6,23,0.42)]"
-                          }`}
-                        >
-                          <div className="flex flex-col gap-4">
-                            <div
-                              className={`flex size-16 items-center justify-center rounded-full ${
+                            <HoverCardContent
+                              side="top"
+                              sideOffset={20}
+                              align="end"
+                              className={`w-[20rem] ${
                                 isLight
-                                  ? "border border-slate-200 bg-slate-50"
-                                  : "border border-white/10 bg-white/6"
+                                  ? "border-slate-200 bg-white text-slate-950 shadow-[0_24px_70px_rgba(148,163,184,0.22)]"
+                                  : "border-white/10 bg-slate-950/94 text-white shadow-[0_24px_70px_rgba(2,6,23,0.42)]"
                               }`}
                             >
-                              <span
-                                className={`flex size-11 items-center justify-center rounded-full ${iconShellClassName}`}
-                              >
-                                <Image
-                                  src={social.image}
-                                  alt={social.subtitle}
-                                  width={28}
-                                  height={28}
-                                  className="h-7 w-7 object-contain"
-                                />
-                              </span>
-                            </div>
-
-                            <div className="flex flex-col gap-4">
-                              <div>
-                                <div className="flex items-center gap-2">
-                                  <div className="font-bold">
-                                    {isSpanish ? social.titleEs : social.titleEn}
-                                  </div>
-                                  <ExternalLink className={`h-4 w-4 ${isLight ? "text-slate-400" : "text-slate-500"}`} />
+                              <div className="flex flex-col gap-4">
+                                <div
+                                  className={`flex size-16 items-center justify-center rounded-full ${
+                                    isLight
+                                      ? "border border-slate-200 bg-slate-50"
+                                      : "border border-white/10 bg-white/6"
+                                  }`}
+                                >
+                                  <span
+                                    className={`flex size-11 items-center justify-center rounded-full ${iconShellClassName}`}
+                                  >
+                                    <Image
+                                      src={social.image}
+                                      alt={social.subtitle}
+                                      width={28}
+                                      height={28}
+                                      className="h-7 w-7 object-contain"
+                                    />
+                                  </span>
                                 </div>
-                                <div className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
-                                  {social.subtitle}
+
+                                <div className="flex flex-col gap-4">
+                                  <div>
+                                    <div className="flex items-center gap-2">
+                                      <div className="font-bold">
+                                        {isSpanish ? social.titleEs : social.titleEn}
+                                      </div>
+                                      <ExternalLink className={`h-4 w-4 ${isLight ? "text-slate-400" : "text-slate-500"}`} />
+                                    </div>
+                                    <div className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                                      {social.subtitle}
+                                    </div>
+                                  </div>
+
+                                  <div className={`text-sm leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>
+                                    {isSpanish ? social.descriptionEs : social.descriptionEn}
+                                  </div>
+
+                                  <div className="flex gap-4">
+                                    <div className="flex items-center gap-1 text-sm">
+                                      <div className="font-bold">{social.metaPrimaryValue}</div>
+                                      <div className={isLight ? "text-slate-500" : "text-slate-400"}>
+                                        {isSpanish ? social.metaPrimaryEs : social.metaPrimaryEn}
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-1 text-sm">
+                                      <div className="font-bold">{social.metaSecondaryValue}</div>
+                                      <div className={isLight ? "text-slate-500" : "text-slate-400"}>
+                                        {isSpanish ? social.metaSecondaryEs : social.metaSecondaryEn}
+                                      </div>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
+                            </HoverCardContent>
+                          </HoverCard>
+                        );
+                      })}
+                    </div>
 
-                              <div className={`text-sm leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>
-                                {isSpanish ? social.descriptionEs : social.descriptionEn}
-                              </div>
-
-                              <div className="flex gap-4">
-                                <div className="flex items-center gap-1 text-sm">
-                                  <div className="font-bold">{social.metaPrimaryValue}</div>
-                                  <div className={isLight ? "text-slate-500" : "text-slate-400"}>
-                                    {isSpanish ? social.metaPrimaryEs : social.metaPrimaryEn}
-                                  </div>
-                                </div>
-                                <div className="flex items-center gap-1 text-sm">
-                                  <div className="font-bold">{social.metaSecondaryValue}</div>
-                                  <div className={isLight ? "text-slate-500" : "text-slate-400"}>
-                                    {isSpanish ? social.metaSecondaryEs : social.metaSecondaryEn}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </HoverCardContent>
-                      </HoverCard>
-                    );
-                  })}
+                    <a
+                      href={`mailto:${t.email}`}
+                      className={`flex flex-wrap items-center justify-center gap-3 break-all text-sm transition-colors sm:text-base md:justify-end ${
+                        isLight ? "text-slate-600 hover:text-slate-950" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span>{t.email}</span>
+                    </a>
+                    <p
+                      className={`mt-1 flex flex-wrap items-center justify-center gap-3 text-sm sm:text-base md:justify-end ${
+                        isLight ? "text-slate-600" : "text-gray-300"
+                      }`}
+                    >
+                      <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span>{t.city}</span>
+                    </p>
+                  </div>
                 </div>
-
-                <a
-                  href={`mailto:${t.email}`}
-                  className={`flex flex-wrap items-center justify-center gap-3 break-all text-sm transition-colors sm:text-base md:justify-end ${
-                    isLight ? "text-slate-600 hover:text-slate-950" : "text-gray-300 hover:text-white"
-                  }`}
-                >
-                  <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <span>{t.email}</span>
-                </a>
-                <p
-                  className={`mt-1 flex flex-wrap items-center justify-center gap-3 text-sm sm:text-base md:justify-end ${
-                    isLight ? "text-slate-600" : "text-gray-300"
-                  }`}
-                >
-                  <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span>{t.city}</span>
-                </p>
-              </div>
+              </GlowCard>
             </div>
           </div>
-        </div>
+        </GlowCard>
 
         <div
           className={`mt-10 border-t pt-6 text-center text-sm sm:mt-12 ${
