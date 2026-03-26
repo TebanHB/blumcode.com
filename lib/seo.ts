@@ -187,7 +187,7 @@ export function buildStructuredData(
   const email = getLocaleEmail(lang);
   const seo = getLocaleSeoContent(lang);
 
-  const graph: any[] = [
+  const graph: Record<string, unknown>[] = [
     {
       "@type": "Organization",
       "@id": `${SITE_URL}#organization`,

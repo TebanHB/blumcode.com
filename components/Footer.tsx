@@ -1,9 +1,53 @@
 "use client";
 
 import Image from "next/image";
+import { ExternalLink } from "lucide-react";
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/animate-ui/components/radix/hover-card";
 
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
+
+const socialCards = {
+  whatsapp: {
+    href: "https://wa.me/59173628134",
+    image: "/contact-whatsapp.svg",
+    titleEs: "WhatsApp BlumCode",
+    titleEn: "BlumCode WhatsApp",
+    subtitle: "+591 73628134",
+    descriptionEs:
+      "Habla con nosotros por WhatsApp para cotizaciones, seguimiento de proyectos y consultas rapidas.",
+    descriptionEn:
+      "Talk to us on WhatsApp for quotes, project follow-up, and quick questions.",
+    metaPrimaryEs: "Respuesta",
+    metaPrimaryEn: "Replies",
+    metaPrimaryValue: "< 1h",
+    metaSecondaryEs: "Canal",
+    metaSecondaryEn: "Channel",
+    metaSecondaryValue: "Directo",
+  },
+  tiktok: {
+    href: "https://www.tiktok.com/@blumcode_",
+    image: "/contact-tiktok.svg",
+    titleEs: "TikTok BlumCode",
+    titleEn: "BlumCode TikTok",
+    subtitle: "@blumcode_",
+    descriptionEs:
+      "Mira contenido corto sobre desarrollo, producto digital y el trabajo detras de BlumCode.",
+    descriptionEn:
+      "Watch short-form content about development, digital product, and the work behind BlumCode.",
+    metaPrimaryEs: "Cuenta",
+    metaPrimaryEn: "Account",
+    metaPrimaryValue: "Activa",
+    metaSecondaryEs: "Contenido",
+    metaSecondaryEn: "Content",
+    metaSecondaryValue: "Tech",
+  },
+} as const;
 
 export default function Footer({
   t,
@@ -19,6 +63,7 @@ export default function Footer({
   year: number;
 }) {
   const { isLight } = useTheme();
+  const isSpanish = t.contact === "Contacto";
 
   return (
     <footer
@@ -136,20 +181,95 @@ export default function Footer({
               }`}
             >
               <h4 className="mb-4 text-lg font-bold sm:mb-5 sm:text-xl">{t.contact}</h4>
-              <div className="flex flex-col gap-3">
-                <a
-                  href="https://wa.me/59173628134"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex flex-wrap items-center justify-center gap-3 text-sm transition-colors sm:text-base md:justify-end ${
-                    isLight ? "text-slate-600 hover:text-slate-950" : "text-gray-300 hover:text-white"
-                  }`}
-                >
-                  <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  <span>+591 73628134</span>
-                </a>
+              <div className="flex w-full flex-col gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
+                  {(["whatsapp", "tiktok"] as const).map((key) => {
+                    const social = socialCards[key];
+
+                    return (
+                      <HoverCard key={key} followCursor="x">
+                        <HoverCardTrigger asChild>
+                          <a
+                            href={social.href}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            aria-label={social.subtitle}
+                            className={`group relative inline-flex size-14 items-center justify-center overflow-hidden rounded-full border transition-transform duration-200 hover:-translate-y-0.5 ${
+                              isLight
+                                ? "border-slate-200 bg-white shadow-[0_14px_28px_rgba(148,163,184,0.16)]"
+                                : "border-white/10 bg-white/6 shadow-[0_14px_28px_rgba(0,0,0,0.24)]"
+                            }`}
+                          >
+                            <Image
+                              src={social.image}
+                              alt={social.subtitle}
+                              width={56}
+                              height={56}
+                              className="size-full object-cover"
+                            />
+                          </a>
+                        </HoverCardTrigger>
+
+                        <HoverCardContent
+                          side="top"
+                          sideOffset={20}
+                          align="end"
+                          className={`w-[20rem] ${
+                            isLight
+                              ? "border-slate-200 bg-white text-slate-950 shadow-[0_24px_70px_rgba(148,163,184,0.22)]"
+                              : "border-white/10 bg-slate-950/94 text-white shadow-[0_24px_70px_rgba(2,6,23,0.42)]"
+                          }`}
+                        >
+                          <div className="flex flex-col gap-4">
+                            <Image
+                              className={`size-16 rounded-full border object-cover ${
+                                isLight ? "border-slate-200" : "border-white/10"
+                              }`}
+                              src={social.image}
+                              alt={social.subtitle}
+                              width={64}
+                              height={64}
+                            />
+
+                            <div className="flex flex-col gap-4">
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <div className="font-bold">
+                                    {isSpanish ? social.titleEs : social.titleEn}
+                                  </div>
+                                  <ExternalLink className={`h-4 w-4 ${isLight ? "text-slate-400" : "text-slate-500"}`} />
+                                </div>
+                                <div className={`text-sm ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                                  {social.subtitle}
+                                </div>
+                              </div>
+
+                              <div className={`text-sm leading-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>
+                                {isSpanish ? social.descriptionEs : social.descriptionEn}
+                              </div>
+
+                              <div className="flex gap-4">
+                                <div className="flex items-center gap-1 text-sm">
+                                  <div className="font-bold">{social.metaPrimaryValue}</div>
+                                  <div className={isLight ? "text-slate-500" : "text-slate-400"}>
+                                    {isSpanish ? social.metaPrimaryEs : social.metaPrimaryEn}
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1 text-sm">
+                                  <div className="font-bold">{social.metaSecondaryValue}</div>
+                                  <div className={isLight ? "text-slate-500" : "text-slate-400"}>
+                                    {isSpanish ? social.metaSecondaryEs : social.metaSecondaryEn}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </HoverCardContent>
+                      </HoverCard>
+                    );
+                  })}
+                </div>
+
                 <a
                   href={`mailto:${t.email}`}
                   className={`flex flex-wrap items-center justify-center gap-3 break-all text-sm transition-colors sm:text-base md:justify-end ${

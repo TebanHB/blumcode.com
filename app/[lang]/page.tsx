@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import PageIntroTransition from "@/components/PageIntroTransition";
 import SectionDivider from "@/components/SectionDivider";
 import { Locale } from "@/i18n";
 import {
@@ -557,20 +558,22 @@ export default async function HomePage({
           __html: JSON.stringify(structuredData),
         }}
       />
-      <Header lang={safeLang} nav={t.nav} />
-      <main>
-        <Hero t={t.hero} />
-        <SectionDivider variant="hero-to-services" />
-        <Services t={t.services} />
-        <SectionDivider variant="services-to-solutions" />
-        <Solutions t={t.solutions} />
-        <SectionDivider variant="solutions-to-process" />
-        <Process t={t.process} />
-        <SectionDivider variant="process-to-team" />
-        <About t={t.about} />
-        <SectionDivider variant="team-to-footer" />
-      </main>
-      <Footer t={t.footer} year={currentYear} />
+      <PageIntroTransition>
+        <Header lang={safeLang} nav={t.nav} />
+        <main>
+          <Hero t={t.hero} />
+          <SectionDivider variant="hero-to-services" />
+          <Services t={t.services} />
+          <SectionDivider variant="services-to-solutions" />
+          <Solutions t={t.solutions} />
+          <SectionDivider variant="solutions-to-process" />
+          <Process t={t.process} />
+          <SectionDivider variant="process-to-team" />
+          <About t={t.about} />
+          <SectionDivider variant="team-to-footer" />
+        </main>
+        <Footer t={t.footer} year={currentYear} />
+      </PageIntroTransition>
     </>
   );
 }

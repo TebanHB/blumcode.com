@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
 import type { CSSProperties, MouseEvent } from "react";
 
+import { Shine } from "@/components/animate-ui/primitives/effects/shine";
+import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scrollToSection";
 import { useTheme } from "./ThemeProvider";
 
@@ -80,7 +82,7 @@ export default function Hero({
   return (
     <section className={`relative isolate overflow-hidden ${isLight ? "bg-slate-50" : "bg-slate-900"}`}>
       <div className="absolute inset-0 z-0">
-        <HeroBackground isLight={isLight} />
+        <HeroBackground isLight={isLight} seed="hero-shared-scene" />
         <div
           className={`absolute inset-0 ${
             isLight
@@ -146,14 +148,28 @@ export default function Hero({
               className="animate-enter-up mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
               style={enter(320)}
             >
-              <a
-                href="#contacto"
-                onClick={handleCtaNavigation("contacto")}
-                className="ui-btn ui-btn-primary ui-btn-lg group w-full px-6 py-3.5 text-white sm:w-auto sm:px-8 sm:py-4"
+              <Shine
+                asChild
+                duration={1500}
+                loop
+                loopDelay={2800}
+                deg={18}
+                enableOnHover
+                enableOnTap
               >
-                {t.primary}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+                <Button
+                  asChild
+                  className="ui-btn ui-btn-primary ui-btn-lg group w-full px-6 py-3.5 text-white sm:w-auto sm:px-8 sm:py-4"
+                >
+                  <a
+                    href="#contacto"
+                    onClick={handleCtaNavigation("contacto")}
+                  >
+                    {t.primary}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </Button>
+              </Shine>
 
               <a
                 href="#servicios"

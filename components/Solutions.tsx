@@ -1,9 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
+
+const solutionImages = [
+  "/solution-proven-experience.svg",
+  "/solution-modern-technology.svg",
+  "/solution-continuous-support.svg",
+  "/solution-measurable-results.svg",
+];
 
 export default function Solutions({
   t,
@@ -69,28 +77,56 @@ export default function Solutions({
           {t.items.map((item, index) => (
             <SectionReveal key={item.title} delay={0.06 * (index + 1)}>
               <article
-                className={`group relative min-h-[188px] overflow-hidden rounded-[24px] p-5 backdrop-blur-md transition-[transform,border-color,background-color,box-shadow] duration-300 hover:-translate-y-1.5 sm:min-h-[220px] sm:rounded-[28px] sm:p-7 ${
+                className={`group relative overflow-hidden rounded-[24px] p-5 backdrop-blur-md transition-[transform,border-color,background-color,box-shadow] duration-300 hover:-translate-y-1.5 sm:rounded-[28px] sm:p-7 ${
                   isLight
                     ? "m-1 border border-slate-200 bg-white/90 shadow-[0_18px_34px_rgba(148,163,184,0.15)] hover:border-blum-blue/30 hover:bg-white"
                     : "border border-white/10 bg-white/5 shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:border-blum-blue/40 hover:bg-white/10"
                 }`}
               >
-              <div className={`absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none ${isLight ? "bg-linear-to-r from-blue-50/0 via-blue-50 to-transparent" : "bg-linear-to-r from-blum-blue/0 via-blum-blue/10 to-transparent"}`} />
+                <div className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 ${
+                  isLight
+                    ? "bg-linear-to-r from-blue-50/0 via-blue-50 to-transparent"
+                    : "bg-linear-to-r from-blum-blue/0 via-blum-blue/10 to-transparent"
+                }`} />
 
-              <div className="relative flex items-start gap-4 sm:gap-5">
-                <div className="mt-1 shrink-0 rounded-2xl bg-linear-to-br from-yellow-300 to-amber-500 p-2.5 text-slate-950 shadow-lg shadow-amber-500/30 sm:p-3">
-                  <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
+                <div
+                  className={`relative overflow-hidden rounded-[20px] border sm:rounded-[24px] ${
+                    isLight
+                      ? "border-slate-200/80 bg-slate-50/90"
+                      : "border-white/10 bg-slate-950/30"
+                  }`}
+                >
+                  <div
+                    className={`pointer-events-none absolute inset-0 z-10 bg-linear-to-br ${
+                      isLight
+                        ? "from-white/12 via-transparent to-blue-100/12"
+                        : "from-white/8 via-transparent to-blue-400/8"
+                    }`}
+                  />
+                  <Image
+                    src={solutionImages[index % solutionImages.length]}
+                    alt={item.title}
+                    width={800}
+                    height={520}
+                    className="relative z-0 h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+                    draggable={false}
+                  />
                 </div>
 
-                <div>
-                  <h3 className={`text-xl font-bold tracking-wide sm:text-[1.75rem] ${isLight ? "text-slate-950" : "text-white"}`}>
-                    {item.title}
-                  </h3>
-                  <p className={`mt-2.5 text-sm leading-6 sm:mt-3 sm:text-lg sm:leading-7 ${isLight ? "text-slate-600" : "text-slate-300"}`}>
-                    {item.description}
-                  </p>
+                <div className="relative mt-5 flex items-start gap-4 sm:mt-6 sm:gap-5">
+                  <div className="mt-1 shrink-0 rounded-2xl bg-linear-to-br from-yellow-300 to-amber-500 p-2.5 text-slate-950 shadow-lg shadow-amber-500/30 sm:p-3">
+                    <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6" />
+                  </div>
+
+                  <div>
+                    <h3 className={`text-xl font-bold tracking-wide sm:text-[1.75rem] ${isLight ? "text-slate-950" : "text-white"}`}>
+                      {item.title}
+                    </h3>
+                    <p className={`mt-2.5 text-sm leading-6 sm:mt-3 sm:text-lg sm:leading-7 ${isLight ? "text-slate-600" : "text-slate-300"}`}>
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
               </article>
             </SectionReveal>
           ))}

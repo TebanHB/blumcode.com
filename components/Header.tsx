@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MoonStar, SunMedium } from "lucide-react";
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 
+import { Shine } from "@/components/animate-ui/primitives/effects/shine";
+import { Button } from "@/components/ui/button";
 import { Locale } from "@/i18n";
 import { scrollToSection } from "@/lib/scrollToSection";
 
+import ThemeToggleButton from "./ThemeToggleButton";
 import { useTheme } from "./ThemeProvider";
 
 const NAV_ITEMS = [
@@ -36,15 +38,7 @@ export default function Header({
   const [activeSection, setActiveSection] = useState<string>("");
   const otherLang = lang === "es" ? "en" : "es";
   const otherLangLabel = otherLang.toUpperCase();
-  const { isLight, toggleTheme } = useTheme();
-  const themeButtonLabel =
-    lang === "es"
-      ? isLight
-        ? "Cambiar a tema oscuro"
-        : "Cambiar a tema claro"
-      : isLight
-        ? "Switch to dark theme"
-        : "Switch to light theme";
+  const { isLight } = useTheme();
   const languageButtonLabel =
     lang === "es"
       ? `Cambiar idioma a ${otherLang === "en" ? "ingles" : "espanol"}`
@@ -158,27 +152,50 @@ export default function Header({
               const isContact = item.key === "contact";
 
               return (
-                <a
-                  key={item.sectionId}
-                  href={`#${item.sectionId}`}
-                  onClick={(event) => handleSectionNavigation(event, item.sectionId)}
-                  className={`relative rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
-                    isContact
-                      ? "ui-btn ui-btn-primary ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
-                      : isActive
+                isContact ? (
+                  <Shine
+                    key={item.sectionId}
+                    asChild
+                    duration={1500}
+                    loop
+                    loopDelay={3000}
+                    deg={16}
+                    enableOnHover
+                    enableOnTap
+                  >
+                    <Button
+                      asChild
+                      className="ui-btn ui-btn-primary ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
+                    >
+                      <a
+                        href={`#${item.sectionId}`}
+                        onClick={(event) => handleSectionNavigation(event, item.sectionId)}
+                      >
+                        {getNavLabel(item.key)}
+                      </a>
+                    </Button>
+                  </Shine>
+                ) : (
+                  <a
+                    key={item.sectionId}
+                    href={`#${item.sectionId}`}
+                    onClick={(event) => handleSectionNavigation(event, item.sectionId)}
+                    className={`relative rounded-full px-3.5 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
+                      isActive
                         ? isLight
                           ? "bg-blue-500/10 font-semibold text-slate-950"
                           : "bg-white/10 font-semibold text-white"
                         : isLight
                           ? "text-slate-600 hover:bg-slate-900/5 hover:text-slate-950"
                           : "text-white/60 hover:bg-white/5 hover:text-white"
-                  }`}
-                >
-                  {getNavLabel(item.key)}
-                  {isActive && !isContact && (
-                    <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-blum-blue" />
-                  )}
-                </a>
+                    }`}
+                  >
+                    {getNavLabel(item.key)}
+                    {isActive && (
+                      <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-blum-blue" />
+                    )}
+                  </a>
+                )
               );
             })}
 
@@ -187,19 +204,7 @@ export default function Header({
                 isLight ? "border-l border-slate-200/80" : "border-l border-white/15"
               }`}
             >
-              <button
-                onClick={toggleTheme}
-                className="ui-btn ui-btn-icon h-10 w-10"
-                aria-label={themeButtonLabel}
-              >
-                <span className="inline-flex transition-transform duration-200">
-                  {isLight ? (
-                    <SunMedium className="h-4 w-4" />
-                  ) : (
-                    <MoonStar className="h-4 w-4" />
-                  )}
-                </span>
-              </button>
+              <ThemeToggleButton lang={lang} className="h-10 w-10" />
               <Link
                 href={`/${otherLang}`}
                 scroll={false}
@@ -213,19 +218,10 @@ export default function Header({
           </nav>
 
           <div className="flex items-center md:hidden">
-            <button
-              onClick={toggleTheme}
-              className="ui-btn ui-btn-icon mr-1 h-9 w-9 sm:h-10 sm:w-10"
-              aria-label={themeButtonLabel}
-            >
-              <span className="inline-flex transition-transform duration-200">
-                {isLight ? (
-                  <SunMedium className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
-                ) : (
-                  <MoonStar className="h-[1.125rem] w-[1.125rem] sm:h-5 sm:w-5" />
-                )}
-              </span>
-            </button>
+            <ThemeToggleButton
+              lang={lang}
+              className="mr-1 h-9 w-9 sm:h-10 sm:w-10"
+            />
             <Link
               href={`/${otherLang}`}
               scroll={false}
