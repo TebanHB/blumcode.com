@@ -185,6 +185,14 @@ export default function Footer({
                 <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
                   {(["whatsapp", "tiktok"] as const).map((key) => {
                     const social = socialCards[key];
+                    const iconShellClassName =
+                      key === "whatsapp"
+                        ? isLight
+                          ? "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"
+                          : "bg-emerald-500/12 text-emerald-300 ring-1 ring-emerald-400/18"
+                        : isLight
+                          ? "bg-slate-950 text-white ring-1 ring-slate-900/10"
+                          : "bg-white/12 text-white ring-1 ring-white/12";
 
                     return (
                       <HoverCard key={key} followCursor="x">
@@ -194,19 +202,23 @@ export default function Footer({
                             target="_blank"
                             rel="noreferrer noopener"
                             aria-label={social.subtitle}
-                            className={`group relative inline-flex size-14 items-center justify-center overflow-hidden rounded-full border transition-transform duration-200 hover:-translate-y-0.5 ${
+                            className={`group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full border transition-transform duration-200 hover:-translate-y-0.5 sm:size-12 ${
                               isLight
                                 ? "border-slate-200 bg-white shadow-[0_14px_28px_rgba(148,163,184,0.16)]"
                                 : "border-white/10 bg-white/6 shadow-[0_14px_28px_rgba(0,0,0,0.24)]"
                             }`}
                           >
-                            <Image
-                              src={social.image}
-                              alt={social.subtitle}
-                              width={56}
-                              height={56}
-                              className="size-full object-cover"
-                            />
+                            <span
+                              className={`flex size-8 items-center justify-center rounded-full transition-transform duration-200 group-hover:scale-105 sm:size-9 ${iconShellClassName}`}
+                            >
+                              <Image
+                                src={social.image}
+                                alt={social.subtitle}
+                                width={22}
+                                height={22}
+                                className="h-[1.15rem] w-[1.15rem] object-contain sm:h-5 sm:w-5"
+                              />
+                            </span>
                           </a>
                         </HoverCardTrigger>
 
@@ -221,15 +233,25 @@ export default function Footer({
                           }`}
                         >
                           <div className="flex flex-col gap-4">
-                            <Image
-                              className={`size-16 rounded-full border object-cover ${
-                                isLight ? "border-slate-200" : "border-white/10"
+                            <div
+                              className={`flex size-16 items-center justify-center rounded-full ${
+                                isLight
+                                  ? "border border-slate-200 bg-slate-50"
+                                  : "border border-white/10 bg-white/6"
                               }`}
-                              src={social.image}
-                              alt={social.subtitle}
-                              width={64}
-                              height={64}
-                            />
+                            >
+                              <span
+                                className={`flex size-11 items-center justify-center rounded-full ${iconShellClassName}`}
+                              >
+                                <Image
+                                  src={social.image}
+                                  alt={social.subtitle}
+                                  width={28}
+                                  height={28}
+                                  className="h-7 w-7 object-contain"
+                                />
+                              </span>
+                            </div>
 
                             <div className="flex flex-col gap-4">
                               <div>

@@ -31,6 +31,7 @@ type Dictionary = {
     title1: string;
     title2: string;
     title3: string;
+    rotatingWords: string[];
     description: string;
     primary: string;
     secondary: string;
@@ -115,7 +116,8 @@ const dictionary: Record<Locale, Dictionary> = {
       badge: "Soluciones tecnol\u00f3gicas personalizadas",
       title1: "Desarrollo de Software",
       title2: "a Medida",
-      title3: "para tu Empresa",
+      title3: "para tu",
+      rotatingWords: ["Empresa", "Negocio", "Emprendimiento", "Comunidad"],
       description:
         "En BlumCode transformamos tus ideas en soluciones tecnol\u00f3gicas innovadoras. Desarrollamos software personalizado, optimizamos sistemas existentes y brindamos soporte continuo para impulsar tu negocio.",
       primary: "Solicitar Cotizaci\u00f3n",
@@ -325,7 +327,8 @@ const dictionary: Record<Locale, Dictionary> = {
       badge: "Custom technology solutions",
       title1: "Custom Software",
       title2: "Development",
-      title3: "for Your Business",
+      title3: "for Your",
+      rotatingWords: ["Business", "Company", "Startup", "Community"],
       description:
         "At BlumCode, we transform your ideas into innovative technology solutions. We build custom software, optimize existing systems, and provide ongoing support to boost your business.",
       primary: "Request a Quote",
@@ -546,7 +549,7 @@ export default async function HomePage({
   const structuredData = buildStructuredData(
     safeLang,
     t.services.items,
-    `${t.hero.title1} ${t.hero.title2} ${t.hero.title3} | BlumCode`,
+    `${t.hero.title1} ${t.hero.title2} ${t.hero.title3} ${t.hero.rotatingWords[0]} | BlumCode`,
     t.about.members
   );
 

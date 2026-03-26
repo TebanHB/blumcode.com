@@ -5,6 +5,7 @@ import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react"
 import type { CSSProperties, MouseEvent } from "react";
 
 import { scrollToSection } from "@/lib/scrollToSection";
+import RotatingText from "./RotatingText";
 import ShineButtonLink from "./ShineButtonLink";
 import { useTheme } from "./ThemeProvider";
 
@@ -21,6 +22,7 @@ export default function Hero({
     title1: string;
     title2: string;
     title3: string;
+    rotatingWords: string[];
     description: string;
     primary: string;
     secondary: string;
@@ -39,10 +41,12 @@ export default function Hero({
   };
 }) {
   const { isLight } = useTheme();
+  const rotatingWordWidth = `${Math.max(...t.rotatingWords.map((word) => word.length))}ch`;
   const focusAreas = [
     {
       title: t.cards.webTitle,
       description: t.cards.webDescription,
+      serviceIndex: 0,
       Icon: Code2,
       accentLight: "bg-[linear-gradient(135deg,rgba(59,130,246,0.20),rgba(34,211,238,0.12),transparent_72%)]",
       accentDark: "bg-[linear-gradient(135deg,rgba(59,130,246,0.24),rgba(34,211,238,0.12),transparent_72%)]",
@@ -50,6 +54,7 @@ export default function Hero({
     {
       title: t.cards.mobileTitle,
       description: t.cards.mobileDescription,
+      serviceIndex: 3,
       Icon: Smartphone,
       accentLight: "bg-[linear-gradient(135deg,rgba(14,165,233,0.18),rgba(99,102,241,0.10),transparent_72%)]",
       accentDark: "bg-[linear-gradient(135deg,rgba(14,165,233,0.22),rgba(99,102,241,0.12),transparent_72%)]",
@@ -57,6 +62,7 @@ export default function Hero({
     {
       title: t.cards.supportTitle,
       description: t.cards.supportDescription,
+      serviceIndex: 1,
       Icon: Wrench,
       accentLight: "bg-[linear-gradient(135deg,rgba(250,204,21,0.20),rgba(59,130,246,0.10),transparent_72%)]",
       accentDark: "bg-[linear-gradient(135deg,rgba(250,204,21,0.18),rgba(59,130,246,0.10),transparent_72%)]",
@@ -99,7 +105,7 @@ export default function Hero({
       </div>
 
       <div className="relative z-10 mx-auto flex max-w-7xl items-start px-4 pb-14 pt-[96px] sm:px-6 sm:pb-20 sm:pt-[132px] lg:min-h-[100svh] lg:items-center lg:px-8 lg:pb-28 lg:pt-[160px]">
-        <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.72fr)] lg:items-center lg:gap-14">
+        <div className="grid w-full gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(320px,0.68fr)] lg:items-center lg:gap-16">
           <div className="max-w-4xl font-hero-sans">
             <div className="animate-enter-up" style={enter(0)}>
               <div
@@ -131,11 +137,23 @@ export default function Hero({
               >
                 {t.title2}
               </span>
-              <span className="font-medium tracking-[-0.05em]"> {t.title3}</span>
+              <span className="inline-flex items-baseline gap-[0.16em] whitespace-nowrap font-medium tracking-[-0.05em]">
+                <span>{t.title3}</span>
+                <RotatingText
+                  texts={t.rotatingWords}
+                  rotationInterval={2300}
+                  staggerDuration={0.022}
+                  splitBy="characters"
+                  mainClassName={`${isLight ? "text-slate-950" : "text-white"} pb-[0.14em] -mb-[0.14em]`}
+                  splitLevelClassName="overflow-hidden pb-[0.14em] -mb-[0.14em]"
+                  elementLevelClassName="will-change-transform"
+                  style={{ minWidth: rotatingWordWidth }}
+                />
+              </span>
             </h1>
 
             <p
-              className={`animate-enter-up mt-5 max-w-2xl text-base leading-7 sm:mt-7 sm:text-xl sm:leading-8 lg:text-2xl ${
+              className={`animate-enter-up mt-6 max-w-2xl text-base leading-7 sm:mt-8 sm:text-xl sm:leading-8 lg:text-2xl ${
                 isLight ? "text-slate-700" : "text-slate-200"
               }`}
               style={enter(180)}
@@ -270,7 +288,7 @@ export default function Hero({
             </div>
 
             <div className="relative mt-4 grid gap-2.5 sm:gap-3">
-              {focusAreas.map(({ title, description, Icon, accentLight, accentDark }, index) => (
+              {focusAreas.map(({ title, description, serviceIndex, Icon, accentLight, accentDark }, index) => (
                 <div
                   key={title}
                   style={enter(340 + index * 80)}
@@ -306,7 +324,7 @@ export default function Hero({
                         <button
                           type="button"
                           aria-label={`Ir a ${title}`}
-                          onClick={() => handleFocusService(index)}
+                          onClick={() => handleFocusService(serviceIndex)}
                           className="ui-btn ui-btn-icon h-[2.125rem] w-[2.125rem] shrink-0 transition-transform group-hover:translate-x-1 sm:h-9 sm:w-9"
                         >
                           <ArrowRight className="h-4 w-4" />
