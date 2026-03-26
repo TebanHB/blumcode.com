@@ -3,6 +3,7 @@
 import {
   Children,
   cloneElement,
+  type CSSProperties,
   isValidElement,
   type ButtonHTMLAttributes,
   type ReactElement,
@@ -39,9 +40,17 @@ export function Button({
     return null;
   }
 
-  const element = child as ReactElement<{ className?: string }>;
+  const element = child as ReactElement<{
+    className?: string;
+    style?: CSSProperties;
+  }>;
 
   return cloneElement(element, {
+    ...props,
     className: cn(buttonBaseClassName, className, element.props.className),
+    style: {
+      ...(element.props.style ?? {}),
+      ...(props.style ?? {}),
+    },
   });
 }

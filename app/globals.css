@@ -133,6 +133,20 @@ html[data-theme-transition="running"][data-theme-transition-to="dark"] {
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+.ui-btn-cta {
+  box-shadow:
+    0 18px 40px rgba(37, 99, 235, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(191, 219, 254, 0.12);
+}
+
+.ui-btn-cta:hover {
+  box-shadow:
+    0 22px 46px rgba(37, 99, 235, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 0 1px rgba(191, 219, 254, 0.18);
+}
+
 .ui-btn-secondary {
   border-color: rgba(255, 255, 255, 0.14);
   background:
@@ -359,18 +373,20 @@ html[data-theme="light"] .theme-toggle-btn:hover {
 .shine-effect::after {
   content: "";
   position: absolute;
-  inset: -220% -120%;
+  inset: -210% -90%;
   background: linear-gradient(
     var(--shine-angle),
     transparent 34%,
-    rgba(255, 255, 255, 0.02) 42%,
-    rgba(255, 255, 255, 0.4) 49%,
-    rgba(255, 255, 255, 0.12) 52%,
-    transparent 60%
+    rgba(255, 255, 255, 0.04) 41%,
+    rgba(255, 255, 255, 0.92) 48.5%,
+    rgba(191, 219, 254, 0.88) 50.5%,
+    rgba(255, 255, 255, 0.22) 55%,
+    transparent 62%
   );
   transform: translate3d(-42%, 0, 0);
   opacity: 0;
   pointer-events: none;
+  filter: blur(0.4px);
   will-change: transform, opacity;
 }
 

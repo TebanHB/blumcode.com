@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 
-import { Shine } from "@/components/animate-ui/primitives/effects/shine";
-import { Button } from "@/components/ui/button";
 import { Locale } from "@/i18n";
 import { scrollToSection } from "@/lib/scrollToSection";
 
+import ShineButtonLink from "./ShineButtonLink";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { useTheme } from "./ThemeProvider";
 
@@ -153,28 +152,20 @@ export default function Header({
 
               return (
                 isContact ? (
-                  <Shine
+                  <ShineButtonLink
                     key={item.sectionId}
-                    asChild
-                    duration={1500}
+                    href={`#${item.sectionId}`}
+                    onClick={(event) => handleSectionNavigation(event, item.sectionId)}
+                    duration={1300}
                     loop
-                    loopDelay={3000}
+                    loopDelay={2200}
                     deg={16}
                     enableOnHover
                     enableOnTap
+                    className="ui-btn ui-btn-primary ui-btn-cta ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
                   >
-                    <Button
-                      asChild
-                      className="ui-btn ui-btn-primary ui-btn-chip ml-1.5 px-4 py-2.5 text-white"
-                    >
-                      <a
-                        href={`#${item.sectionId}`}
-                        onClick={(event) => handleSectionNavigation(event, item.sectionId)}
-                      >
-                        {getNavLabel(item.key)}
-                      </a>
-                    </Button>
-                  </Shine>
+                    {getNavLabel(item.key)}
+                  </ShineButtonLink>
                 ) : (
                   <a
                     key={item.sectionId}

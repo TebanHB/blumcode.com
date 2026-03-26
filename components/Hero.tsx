@@ -4,9 +4,8 @@ import dynamic from "next/dynamic";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
 import type { CSSProperties, MouseEvent } from "react";
 
-import { Shine } from "@/components/animate-ui/primitives/effects/shine";
-import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scrollToSection";
+import ShineButtonLink from "./ShineButtonLink";
 import { useTheme } from "./ThemeProvider";
 
 const HeroBackground = dynamic(() => import("./HeroBackground"), {
@@ -148,28 +147,20 @@ export default function Hero({
               className="animate-enter-up mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
               style={enter(320)}
             >
-              <Shine
-                asChild
-                duration={1500}
+              <ShineButtonLink
+                href="#contacto"
+                onClick={handleCtaNavigation("contacto")}
+                duration={1350}
                 loop
-                loopDelay={2800}
+                loopDelay={1900}
                 deg={18}
                 enableOnHover
                 enableOnTap
+                className="ui-btn ui-btn-primary ui-btn-cta ui-btn-lg group w-full px-6 py-3.5 text-white sm:w-auto sm:px-8 sm:py-4"
               >
-                <Button
-                  asChild
-                  className="ui-btn ui-btn-primary ui-btn-lg group w-full px-6 py-3.5 text-white sm:w-auto sm:px-8 sm:py-4"
-                >
-                  <a
-                    href="#contacto"
-                    onClick={handleCtaNavigation("contacto")}
-                  >
-                    {t.primary}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </Button>
-              </Shine>
+                {t.primary}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </ShineButtonLink>
 
               <a
                 href="#servicios"
