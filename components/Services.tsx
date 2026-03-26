@@ -57,6 +57,7 @@ export default function Services({
     startX: 0,
     startOffset: 0,
   });
+  const pressedCardIndexRef = useRef<number | null>(null);
   const suppressClickRef = useRef(false);
   const canAutoScroll = !prefersReducedMotion && t.items.length > 1;
 
@@ -159,9 +160,14 @@ export default function Services({
   const selectCard = useCallback((index: number) => {
     const boundedIndex = Math.max(0, Math.min(index, t.items.length - 1));
 
+    if (selectedIndex === boundedIndex) {
+      setSelectedIndex(null);
+      return;
+    }
+
     setSelectedIndex(boundedIndex);
     window.requestAnimationFrame(() => centerCard(boundedIndex));
-  }, [centerCard, t.items.length]);
+  }, [centerCard, selectedIndex, t.items.length]);
 
   useEffect(() => {
     const measure = () => {
@@ -288,6 +294,7 @@ export default function Services({
     const dragState = dragStateRef.current;
 
     if (!dragState.active) {
+      pressedCardIndexRef.current = null;
       return;
     }
 
@@ -305,6 +312,7 @@ export default function Services({
     dragState.active = false;
     dragState.moved = false;
     dragState.pointerId = -1;
+    pressedCardIndexRef.current = null;
     setIsDragging(false);
     lastFrameTimeRef.current = null;
   }, []);
@@ -454,11 +462,20 @@ export default function Services({
                   return;
                 }
 
+                const target = event.target as HTMLElement | null;
+                const cardElement = target?.closest("[data-service-card='true']") as
+                  | HTMLElement
+                  | null;
+
                 dragStateRef.current.active = true;
                 dragStateRef.current.moved = false;
                 dragStateRef.current.pointerId = event.pointerId;
                 dragStateRef.current.startX = event.clientX;
                 dragStateRef.current.startOffset = offsetRef.current;
+                pressedCardIndexRef.current =
+                  cardElement?.dataset.serviceCardIndex !== undefined
+                    ? Number(cardElement.dataset.serviceCardIndex)
+                    : null;
                 setIsDragging(true);
                 lastFrameTimeRef.current = null;
                 event.currentTarget.setPointerCapture(event.pointerId);
@@ -488,7 +505,19 @@ export default function Services({
                 offsetRef.current = normalizeOffset(dragState.startOffset - deltaX);
                 applyOffset();
               }}
-              onPointerUp={(event) => finishDrag(event.pointerId)}
+              onPointerUp={(event) => {
+                const shouldToggleCard =
+                  dragStateRef.current.active &&
+                  !dragStateRef.current.moved &&
+                  pressedCardIndexRef.current !== null;
+                const cardIndex = pressedCardIndexRef.current;
+
+                finishDrag(event.pointerId);
+
+                if (shouldToggleCard && cardIndex !== null) {
+                  selectCard(cardIndex);
+                }
+              }}
               onPointerCancel={(event) => finishDrag(event.pointerId)}
               onPointerLeave={(event) => {
                 hideGlow();
@@ -596,7 +625,7 @@ export default function Services({
                           <button
                             type="button"
                             data-service-card="true"
-                            onClick={() => selectCard(index)}
+                            data-service-card-index={index}
                             className="relative flex h-full w-full flex-col rounded-[inherit] p-5 text-left focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blum-blue/50 sm:p-6"
                             aria-pressed={isSelected}
                           >
@@ -667,7 +696,7 @@ export default function Services({
               </div>
             </div>
 
-            <div className="mt-5 flex flex-col gap-3 sm:mt-6">
+            <div className="mt-5 sm:mt-6">
               <div className="flex flex-wrap items-center gap-2">
                 {t.items.map((item, index) => {
                   const isCurrent = index === displayedIndex;
@@ -703,12 +732,6 @@ export default function Services({
                     </button>
                   );
                 })}
-              </div>
-
-              <div className={`text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
-                {isSpanish
-                  ? "Arrastra o haz click en una tarjeta para fijarla. Haz click fuera del carrusel para reanudar."
-                  : "Drag or click a card to pin it. Click outside the carousel to resume."}
               </div>
             </div>
           </div>
