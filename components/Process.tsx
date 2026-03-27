@@ -1,22 +1,29 @@
 "use client";
 
-import { useRef } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
 import {
   BadgeCheck,
   ChevronLeft,
   ChevronRight,
   FileText,
   MessageSquareText,
-  MousePointerClick,
   Rocket,
   ShieldCheck,
   Wrench,
 } from "lucide-react";
 
 import { useReducedEffects } from "@/lib/useReducedEffects";
-import CardSwap, { Card, type CardSwapHandle } from "./CardSwap";
+import type { CardProps, CardSwapHandle } from "./CardSwap";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
+
+const CardSwap = dynamic(() => import("./CardSwap").then((module) => module.default), {
+  ssr: false,
+});
+const Card = dynamic<CardProps>(() => import("./CardSwap").then((module) => module.Card), {
+  ssr: false,
+});
 
 const icons = [
   ShieldCheck,
@@ -46,7 +53,16 @@ export default function Process({
 }) {
   const { isLight } = useTheme();
   const reduceEffects = useReducedEffects();
+  const [hasMounted, setHasMounted] = useState(false);
   const cardSwapRef = useRef<CardSwapHandle | null>(null);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setHasMounted(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   return (
     <section
@@ -137,101 +153,160 @@ export default function Process({
 
           <SectionReveal delay={0.12}>
             <div className="mx-auto w-full max-w-[46rem]">
-              <div className="relative h-[38rem] overflow-visible sm:h-[44rem] lg:h-[46rem]">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="flex w-full items-center justify-center gap-3 sm:gap-5">
-                    <div className="flex flex-col gap-3 sm:gap-4">
-                    <button
-                      type="button"
-                      aria-label={t.badge === "Confianza" ? "Tarjeta anterior" : "Previous card"}
-                      onClick={() => cardSwapRef.current?.previous()}
-                      className={`inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-md transition hover:-translate-y-0.5 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500/40 sm:h-13 sm:w-13 ${
-                        isLight
-                          ? "border-slate-200 bg-white/88 text-slate-700 shadow-[0_14px_26px_rgba(148,163,184,0.18)] hover:bg-white"
-                          : "border-white/12 bg-white/8 text-white/84 shadow-[0_14px_26px_rgba(2,6,23,0.24)] hover:bg-white/12"
-                      }`}
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label={t.badge === "Confianza" ? "Tarjeta siguiente" : "Next card"}
-                      onClick={() => cardSwapRef.current?.next()}
-                      className={`inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-md transition hover:-translate-y-0.5 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500/40 sm:h-13 sm:w-13 ${
-                        isLight
-                          ? "border-slate-200 bg-white/88 text-slate-700 shadow-[0_14px_26px_rgba(148,163,184,0.18)] hover:bg-white"
-                          : "border-white/12 bg-white/8 text-white/84 shadow-[0_14px_26px_rgba(2,6,23,0.24)] hover:bg-white/12"
-                      }`}
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                    </div>
+              {!hasMounted || reduceEffects ? (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {t.cards.map((item, index) => {
+                    const Icon = icons[index % icons.length];
 
-                    <CardSwap
-                      ref={cardSwapRef}
-                      autoplay={!reduceEffects}
-                      width="min(100%, 38rem)"
-                      height={450}
-                      cardDistance={88}
-                      verticalDistance={80}
-                      delay={4800}
-                      pauseOnHover={false}
-                      skewAmount={reduceEffects ? 0.8 : 2.5}
-                      easing={reduceEffects ? "linear" : "elastic"}
-                      className="w-full max-w-[38rem]"
-                    >
-                      {t.cards.map((item, index) => {
-                        const Icon = icons[index % icons.length];
-
-                        return (
-                          <Card
-                            key={item.title}
-                            customClass="process-swap-card cursor-pointer"
-                          >
-                            <button
-                              type="button"
-                              aria-label={`${t.badge === "Confianza" ? "Traer al frente" : "Bring forward"}: ${item.title}`}
-                              className="process-swap-tab absolute left-7 top-0 z-20 -translate-y-[calc(100%-1px)] rounded-t-[18px] border border-b-0 px-5 py-3 text-left text-[1rem] font-semibold leading-none shadow-[0_14px_30px_rgba(0,0,0,0.18)] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset sm:left-8 sm:px-6 sm:text-[1.1rem]"
+                    return (
+                      <article
+                        key={item.title}
+                        className={`relative overflow-hidden rounded-[28px] border p-5 sm:p-6 ${
+                          isLight
+                            ? "border-slate-200 bg-white shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
+                            : "border-white/10 bg-white/6 shadow-[0_18px_34px_rgba(2,6,23,0.26)]"
+                        }`}
+                      >
+                        <div
+                          className={`absolute inset-0 ${
+                            isLight
+                              ? "bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.06),transparent_38%)]"
+                              : "bg-[radial-gradient(circle_at_top_right,rgba(96,165,250,0.08),transparent_38%)]"
+                          }`}
+                        />
+                        <div className="relative">
+                          <div className="flex items-start justify-between gap-4">
+                            <span
+                              className={`inline-flex rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${
+                                isLight
+                                  ? "bg-slate-100 text-slate-700"
+                                  : "bg-white/10 text-slate-200"
+                              }`}
                             >
-                              <span className="flex max-w-[30rem] items-center gap-3 truncate">
-                                <span className="process-swap-number inline-flex h-7 min-w-7 items-center justify-center rounded-full border px-2 text-[0.76rem] font-extrabold tracking-[0.2em] sm:h-8 sm:min-w-8 sm:text-[0.82rem]">
-                                  {String(index + 1).padStart(2, "0")}
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <div
+                              className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                                isLight
+                                  ? "bg-slate-100 text-blue-600"
+                                  : "bg-white/10 text-blue-200"
+                              }`}
+                            >
+                              <Icon className="h-5 w-5" />
+                            </div>
+                          </div>
+
+                          <h3
+                            className={`mt-6 text-xl font-semibold leading-tight sm:text-2xl ${
+                              isLight ? "text-slate-950" : "text-white"
+                            }`}
+                          >
+                            {item.title}
+                          </h3>
+                          <p
+                            className={`mt-3 text-sm leading-6 sm:text-base sm:leading-7 ${
+                              isLight ? "text-slate-600" : "text-slate-300"
+                            }`}
+                          >
+                            {item.description}
+                          </p>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="relative h-[38rem] overflow-visible sm:h-[44rem] lg:h-[46rem]">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex w-full items-center justify-center gap-3 sm:gap-5">
+                      <div className="flex flex-col gap-3 sm:gap-4">
+                        <button
+                          type="button"
+                          aria-label={t.badge === "Confianza" ? "Tarjeta anterior" : "Previous card"}
+                          onClick={() => cardSwapRef.current?.previous()}
+                          className={`inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-md transition hover:-translate-y-0.5 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500/40 sm:h-13 sm:w-13 ${
+                            isLight
+                              ? "border-slate-200 bg-white/88 text-slate-700 shadow-[0_14px_26px_rgba(148,163,184,0.18)] hover:bg-white"
+                              : "border-white/12 bg-white/8 text-white/84 shadow-[0_14px_26px_rgba(2,6,23,0.24)] hover:bg-white/12"
+                          }`}
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={t.badge === "Confianza" ? "Tarjeta siguiente" : "Next card"}
+                          onClick={() => cardSwapRef.current?.next()}
+                          className={`inline-flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-md transition hover:-translate-y-0.5 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-500/40 sm:h-13 sm:w-13 ${
+                            isLight
+                              ? "border-slate-200 bg-white/88 text-slate-700 shadow-[0_14px_26px_rgba(148,163,184,0.18)] hover:bg-white"
+                              : "border-white/12 bg-white/8 text-white/84 shadow-[0_14px_26px_rgba(2,6,23,0.24)] hover:bg-white/12"
+                          }`}
+                        >
+                          <ChevronRight className="h-5 w-5" />
+                        </button>
+                      </div>
+
+                      <CardSwap
+                        ref={cardSwapRef}
+                        autoplay
+                        width="min(100%, 38rem)"
+                        height={450}
+                        cardDistance={88}
+                        verticalDistance={80}
+                        delay={4800}
+                        pauseOnHover={false}
+                        skewAmount={2.5}
+                        easing="elastic"
+                        className="w-full max-w-[38rem]"
+                      >
+                        {t.cards.map((item, index) => {
+                          const Icon = icons[index % icons.length];
+
+                          return (
+                            <Card
+                              key={item.title}
+                              customClass="process-swap-card cursor-pointer"
+                            >
+                              <button
+                                type="button"
+                                aria-label={`${t.badge === "Confianza" ? "Traer al frente" : "Bring forward"}: ${item.title}`}
+                                className="process-swap-tab absolute left-6 top-0 z-20 min-h-11 -translate-y-[calc(100%-1px)] rounded-t-[18px] border border-b-0 px-5 py-3 text-left text-[1rem] font-semibold leading-none shadow-[0_14px_30px_rgba(0,0,0,0.18)] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset sm:left-8 sm:min-h-12 sm:px-6 sm:text-[1.1rem]"
+                              >
+                                <span className="flex max-w-[30rem] items-center gap-3 truncate">
+                                  <span className="process-swap-number inline-flex h-7 min-w-7 items-center justify-center rounded-full border px-2 text-[0.76rem] font-extrabold tracking-[0.2em] sm:h-8 sm:min-w-8 sm:text-[0.82rem]">
+                                    {String(index + 1).padStart(2, "0")}
+                                  </span>
+                                  <span className="truncate">{item.title}</span>
                                 </span>
-                                <span className="truncate">{item.title}</span>
-                              </span>
-                            </button>
+                              </button>
 
-                            <article className="relative h-full overflow-hidden rounded-[inherit] p-6 sm:p-7">
-                              <div className="process-swap-surface absolute inset-0" />
-                              <div className="process-swap-topline absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent" />
+                              <article className="relative h-full overflow-hidden rounded-[inherit] p-6 sm:p-7">
+                                <div className="process-swap-surface absolute inset-0" />
+                                <div className="process-swap-topline absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent" />
 
-                              <div className="relative z-10 flex h-full items-center">
-                                <div className="process-swap-icon-shell absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-2xl border sm:left-8 sm:top-8 sm:h-12 sm:w-12">
-                                  <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                                </div>
+                                <div className="relative z-10 flex h-full items-center">
+                                  <div className="process-swap-icon-shell absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-2xl border sm:left-8 sm:top-8 sm:h-12 sm:w-12">
+                                    <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                                  </div>
 
-                                <div className="mx-auto flex w-full max-w-[21rem] flex-col items-center justify-center text-center">
-                                  <h3 className="process-swap-title text-[1.65rem] font-semibold leading-tight sm:text-[2rem]">
-                                    {item.title}
-                                  </h3>
-                                  <p className="process-swap-description mt-4 max-w-[20rem] text-[0.98rem] leading-7 sm:text-base sm:leading-8">
-                                    {item.description}
-                                  </p>
-
-                                  <div className="process-swap-chip mt-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium">
-                                    <MousePointerClick className="process-swap-chip-icon h-4 w-4" />
-                                    <span>{t.badge === "Confianza" ? "Click para traer al frente" : "Click to bring forward"}</span>
+                                  <div className="mx-auto flex w-full max-w-[21rem] flex-col items-center justify-center text-center">
+                                    <h3 className="process-swap-title text-[1.65rem] font-semibold leading-tight sm:text-[2rem]">
+                                      {item.title}
+                                    </h3>
+                                    <p className="process-swap-description mt-4 max-w-[20rem] text-[0.98rem] leading-7 sm:text-base sm:leading-8">
+                                      {item.description}
+                                    </p>
                                   </div>
                                 </div>
-                              </div>
-                            </article>
-                          </Card>
-                        );
-                      })}
-                    </CardSwap>
+                              </article>
+                            </Card>
+                          );
+                        })}
+                      </CardSwap>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </SectionReveal>
         </div>

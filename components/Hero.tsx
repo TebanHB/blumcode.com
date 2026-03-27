@@ -2,9 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { ArrowRight, BadgeCheck, Code2, Smartphone, Wrench } from "lucide-react";
-import type { CSSProperties, MouseEvent } from "react";
+import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
 
 import { scrollToSection } from "@/lib/scrollToSection";
+import { useReducedEffects } from "@/lib/useReducedEffects";
 import GlowCard from "./GlowCard";
 import RotatingText from "./RotatingText";
 import ShineButtonLink from "./ShineButtonLink";
@@ -42,7 +43,10 @@ export default function Hero({
   };
 }) {
   const { isLight } = useTheme();
-  const rotatingWordWidth = `${Math.max(...t.rotatingWords.map((word) => word.length))}ch`;
+  const reduceEffects = useReducedEffects();
+  const [hasMounted, setHasMounted] = useState(false);
+  const rotatingTexts = reduceEffects ? [t.rotatingWords[0] ?? ""] : t.rotatingWords;
+  const rotatingWordWidth = `${Math.max(...rotatingTexts.map((word) => word.length))}ch`;
   const focusAreas = [
     {
       title: t.cards.webTitle,
@@ -85,10 +89,20 @@ export default function Hero({
     animationDelay: `${delayMs}ms`,
   });
 
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setHasMounted(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <section className={`relative isolate overflow-hidden ${isLight ? "bg-slate-50" : "bg-slate-900"}`}>
       <div className="absolute inset-0 z-0">
-        <HeroBackground isLight={isLight} seed="hero-shared-scene" />
+        {hasMounted && !reduceEffects ? (
+          <HeroBackground isLight={isLight} seed="hero-shared-scene" />
+        ) : null}
         <div
           className={`absolute inset-0 ${
             isLight
@@ -122,7 +136,7 @@ export default function Hero({
             </div>
 
             <h1
-              className={`animate-enter-up mt-5 max-w-5xl text-[2.85rem] font-light leading-[0.94] tracking-[-0.04em] sm:mt-6 sm:text-6xl lg:text-[5.3rem] ${
+              className={`animate-enter-up mt-5 max-w-5xl text-[clamp(2.35rem,10vw,2.85rem)] font-light leading-[0.94] tracking-[-0.04em] sm:mt-6 sm:text-6xl lg:text-[5.3rem] ${
                 isLight ? "text-slate-950" : "text-white"
               }`}
               style={enter(50)}
@@ -138,17 +152,18 @@ export default function Hero({
               >
                 {t.title2}
               </span>
-              <span className="inline-flex items-baseline gap-[0.16em] whitespace-nowrap font-medium tracking-[-0.05em]">
+              <span className="mt-1 inline-flex max-w-full flex-wrap items-baseline gap-x-[0.16em] gap-y-[0.04em] font-medium tracking-[-0.05em] sm:mt-0 sm:flex-nowrap">
                 <span>{t.title3}</span>
                 <RotatingText
-                  texts={t.rotatingWords}
+                  texts={rotatingTexts}
                   rotationInterval={2300}
                   staggerDuration={0.022}
                   splitBy="characters"
+                  auto={!reduceEffects}
                   mainClassName={`${isLight ? "text-slate-950" : "text-white"} pb-[0.14em] -mb-[0.14em]`}
                   splitLevelClassName="overflow-hidden pb-[0.14em] -mb-[0.14em]"
                   elementLevelClassName="will-change-transform"
-                  style={{ minWidth: rotatingWordWidth }}
+                  style={reduceEffects ? undefined : { minWidth: rotatingWordWidth }}
                 />
               </span>
             </h1>

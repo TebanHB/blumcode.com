@@ -361,7 +361,7 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(function CardSwap(
     focusCardRef.current = focusCard;
     nextCardRef.current = goToNext;
     previousCardRef.current = () => {
-      const previousIndex = orderRef.current.at(-1);
+      const previousIndex = orderRef.current[orderRef.current.length - 1];
 
       if (previousIndex === undefined) {
         return;

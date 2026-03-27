@@ -8,6 +8,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/animate-ui/components/radix/hover-card";
+import { useReducedEffects } from "@/lib/useReducedEffects";
 
 import GlowCard from "./GlowCard";
 import SectionReveal from "./SectionReveal";
@@ -64,6 +65,7 @@ export default function Footer({
   year: number;
 }) {
   const { isLight } = useTheme();
+  const reduceEffects = useReducedEffects();
   const isSpanish = t.contact === "Contacto";
 
   return (
@@ -181,9 +183,13 @@ export default function Footer({
                 boxShadow="none"
               >
                 <div className="flex h-full flex-col items-center px-5 py-6 text-center sm:px-6 sm:py-7 md:items-end md:text-right">
-                  <h4 className="mb-4 text-lg font-bold sm:mb-5 sm:text-xl">{t.contact}</h4>
+                  <h3 className="mb-4 text-lg font-bold sm:mb-5 sm:text-xl">{t.contact}</h3>
                   <div className="flex w-full flex-col gap-4">
-                    <div className="flex flex-wrap items-center justify-center gap-3 md:justify-end">
+                    <div
+                      className={`grid w-full gap-3 ${
+                        reduceEffects ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-[repeat(auto-fit,minmax(0,auto))] justify-center md:justify-end"
+                      }`}
+                    >
                       {(["whatsapp", "tiktok"] as const).map((key) => {
                         const social = socialCards[key];
                         const iconShellClassName =
@@ -192,8 +198,48 @@ export default function Footer({
                               ? "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"
                               : "bg-emerald-500/12 text-emerald-300 ring-1 ring-emerald-400/18"
                             : isLight
-                              ? "bg-slate-950 text-white ring-1 ring-slate-900/10"
-                              : "bg-white/12 text-white ring-1 ring-white/12";
+                            ? "bg-slate-950 text-white ring-1 ring-slate-900/10"
+                            : "bg-white/12 text-white ring-1 ring-white/12";
+
+                        if (reduceEffects) {
+                          return (
+                            <a
+                              key={key}
+                              href={social.href}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              aria-label={social.subtitle}
+                              className={`flex items-center gap-3 rounded-[20px] border px-4 py-3 text-left transition-colors ${
+                                isLight
+                                  ? "border-slate-200 bg-white text-slate-900 shadow-[0_14px_28px_rgba(148,163,184,0.14)]"
+                                  : "border-white/10 bg-white/6 text-white shadow-[0_14px_28px_rgba(0,0,0,0.2)]"
+                              }`}
+                            >
+                              <span
+                                className={`flex size-10 shrink-0 items-center justify-center rounded-full ${iconShellClassName}`}
+                              >
+                                <Image
+                                  src={social.image}
+                                  alt={social.subtitle}
+                                  width={22}
+                                  height={22}
+                                  className="h-[1.15rem] w-[1.15rem] object-contain"
+                                />
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span className="flex items-center gap-2">
+                                  <span className="truncate text-sm font-semibold">
+                                    {isSpanish ? social.titleEs : social.titleEn}
+                                  </span>
+                                  <ExternalLink className={`h-3.5 w-3.5 shrink-0 ${isLight ? "text-slate-400" : "text-slate-500"}`} />
+                                </span>
+                                <span className={`mt-1 block truncate text-xs ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                                  {social.subtitle}
+                                </span>
+                              </span>
+                            </a>
+                          );
+                        }
 
                         return (
                           <HoverCard key={key} followCursor="x">
