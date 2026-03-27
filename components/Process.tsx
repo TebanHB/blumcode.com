@@ -75,9 +75,9 @@ export default function Process({
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.94fr)_minmax(360px,0.88fr)] lg:items-center lg:gap-16">
-          <SectionReveal anchor className="max-w-2xl text-left">
+      <div className="relative z-10 mx-auto max-w-[78rem]">
+        <div className="grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:items-center lg:gap-12 xl:gap-20">
+          <SectionReveal anchor className="mx-auto flex max-w-2xl flex-col items-center text-center lg:mx-0 lg:max-w-[34rem] lg:items-start lg:justify-self-center lg:text-left">
             <span
               className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold backdrop-blur-md sm:px-5 sm:py-2 sm:text-sm ${
                 isLight
@@ -104,8 +104,8 @@ export default function Process({
               {t.description}
             </p>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {t.bottom.map((item, index) => (
+            <div className="mt-8 grid w-full gap-3 sm:grid-cols-3">
+              {t.bottom.map((item) => (
                 <div
                   key={item.title}
                   className={`rounded-[22px] px-4 py-4 backdrop-blur-md ${
@@ -115,14 +115,7 @@ export default function Process({
                   }`}
                 >
                   <div
-                    className={`text-[0.68rem] font-extrabold uppercase tracking-[0.24em] ${
-                      isLight ? "text-blue-700" : "text-blue-200"
-                    }`}
-                  >
-                    0{index + 1}
-                  </div>
-                  <div
-                    className={`mt-3 text-sm font-semibold leading-5 ${
+                    className={`text-sm font-semibold leading-5 ${
                       isLight ? "text-slate-950" : "text-white"
                     }`}
                   >
@@ -141,10 +134,11 @@ export default function Process({
           </SectionReveal>
 
           <SectionReveal delay={0.12}>
-            <div className="relative h-[37rem] overflow-visible sm:h-[44rem] lg:h-[49rem]">
-              <div className="absolute inset-0 flex items-end justify-center lg:justify-end">
-                <div className="flex w-full items-end justify-center gap-3 sm:gap-4 lg:justify-end">
-                  <div className="flex flex-col gap-3 pb-6 sm:pb-8 lg:pb-14">
+            <div className="mx-auto w-full max-w-[46rem]">
+              <div className="relative h-[38rem] overflow-visible sm:h-[44rem] lg:h-[46rem]">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex w-full items-center justify-center gap-3 sm:gap-5">
+                    <div className="flex flex-col gap-3 sm:gap-4">
                     <button
                       type="button"
                       aria-label={t.badge === "Confianza" ? "Tarjeta anterior" : "Previous card"}
@@ -169,69 +163,70 @@ export default function Process({
                     >
                       <ChevronRight className="h-5 w-5" />
                     </button>
-                  </div>
+                    </div>
 
-                  <CardSwap
-                    ref={cardSwapRef}
-                    width="min(100%, 38rem)"
-                    height={450}
-                    cardDistance={88}
-                    verticalDistance={80}
-                    delay={4800}
-                    pauseOnHover
-                    skewAmount={2.5}
-                    easing="elastic"
-                    className="w-full max-w-[38rem] translate-y-1 sm:translate-y-2 lg:translate-x-10 lg:translate-y-3"
-                  >
-                    {t.cards.map((item, index) => {
-                      const Icon = icons[index % icons.length];
+                    <CardSwap
+                      ref={cardSwapRef}
+                      width="min(100%, 38rem)"
+                      height={450}
+                      cardDistance={88}
+                      verticalDistance={80}
+                      delay={4800}
+                      pauseOnHover={false}
+                      skewAmount={2.5}
+                      easing="elastic"
+                      className="w-full max-w-[38rem]"
+                    >
+                      {t.cards.map((item, index) => {
+                        const Icon = icons[index % icons.length];
 
-                      return (
-                        <Card
-                          key={item.title}
-                          customClass="process-swap-card cursor-pointer"
-                        >
-                          <button
-                            type="button"
-                            aria-label={`${t.badge === "Confianza" ? "Traer al frente" : "Bring forward"}: ${item.title}`}
-                            className="process-swap-tab absolute left-7 top-0 z-20 -translate-y-[calc(100%-1px)] rounded-t-[18px] border border-b-0 px-5 py-3 text-left text-[1rem] font-semibold leading-none shadow-[0_14px_30px_rgba(0,0,0,0.18)] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset sm:left-8 sm:px-6 sm:text-[1.1rem]"
+                        return (
+                          <Card
+                            key={item.title}
+                            customClass="process-swap-card cursor-pointer"
                           >
-                            <span className="flex max-w-[30rem] items-center gap-3 truncate">
-                              <span className="process-swap-number inline-flex h-7 min-w-7 items-center justify-center rounded-full border px-2 text-[0.76rem] font-extrabold tracking-[0.2em] sm:h-8 sm:min-w-8 sm:text-[0.82rem]">
-                                {String(index + 1).padStart(2, "0")}
+                            <button
+                              type="button"
+                              aria-label={`${t.badge === "Confianza" ? "Traer al frente" : "Bring forward"}: ${item.title}`}
+                              className="process-swap-tab absolute left-7 top-0 z-20 -translate-y-[calc(100%-1px)] rounded-t-[18px] border border-b-0 px-5 py-3 text-left text-[1rem] font-semibold leading-none shadow-[0_14px_30px_rgba(0,0,0,0.18)] transition-colors focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset sm:left-8 sm:px-6 sm:text-[1.1rem]"
+                            >
+                              <span className="flex max-w-[30rem] items-center gap-3 truncate">
+                                <span className="process-swap-number inline-flex h-7 min-w-7 items-center justify-center rounded-full border px-2 text-[0.76rem] font-extrabold tracking-[0.2em] sm:h-8 sm:min-w-8 sm:text-[0.82rem]">
+                                  {String(index + 1).padStart(2, "0")}
+                                </span>
+                                <span className="truncate">{item.title}</span>
                               </span>
-                              <span className="truncate">{item.title}</span>
-                            </span>
-                          </button>
+                            </button>
 
-                          <article className="relative h-full overflow-hidden rounded-[inherit] p-6 sm:p-7">
-                            <div className="process-swap-surface absolute inset-0" />
-                            <div className="process-swap-topline absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent" />
+                            <article className="relative h-full overflow-hidden rounded-[inherit] p-6 sm:p-7">
+                              <div className="process-swap-surface absolute inset-0" />
+                              <div className="process-swap-topline absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent to-transparent" />
 
-                            <div className="relative z-10 flex h-full items-center">
-                              <div className="process-swap-icon-shell absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-2xl border sm:left-8 sm:top-8 sm:h-12 sm:w-12">
-                                <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
-                              </div>
+                              <div className="relative z-10 flex h-full items-center">
+                                <div className="process-swap-icon-shell absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-2xl border sm:left-8 sm:top-8 sm:h-12 sm:w-12">
+                                  <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                                </div>
 
-                              <div className="mx-auto flex w-full max-w-[21rem] flex-col items-center justify-center text-center">
-                                <h3 className="process-swap-title text-[1.65rem] font-semibold leading-tight sm:text-[2rem]">
-                                  {item.title}
-                                </h3>
-                                <p className="process-swap-description mt-4 max-w-[20rem] text-[0.98rem] leading-7 sm:text-base sm:leading-8">
-                                  {item.description}
-                                </p>
+                                <div className="mx-auto flex w-full max-w-[21rem] flex-col items-center justify-center text-center">
+                                  <h3 className="process-swap-title text-[1.65rem] font-semibold leading-tight sm:text-[2rem]">
+                                    {item.title}
+                                  </h3>
+                                  <p className="process-swap-description mt-4 max-w-[20rem] text-[0.98rem] leading-7 sm:text-base sm:leading-8">
+                                    {item.description}
+                                  </p>
 
-                                <div className="process-swap-chip mt-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium">
-                                  <MousePointerClick className="process-swap-chip-icon h-4 w-4" />
-                                  <span>{t.badge === "Confianza" ? "Click para traer al frente" : "Click to bring forward"}</span>
+                                  <div className="process-swap-chip mt-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium">
+                                    <MousePointerClick className="process-swap-chip-icon h-4 w-4" />
+                                    <span>{t.badge === "Confianza" ? "Click para traer al frente" : "Click to bring forward"}</span>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </article>
-                        </Card>
-                      );
-                    })}
-                  </CardSwap>
+                            </article>
+                          </Card>
+                        );
+                      })}
+                    </CardSwap>
+                  </div>
                 </div>
               </div>
             </div>

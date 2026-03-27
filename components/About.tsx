@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   BriefcaseBusiness,
   Code2,
@@ -7,6 +8,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import { cn } from "@/lib/cn";
 import GlowCard from "./GlowCard";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
@@ -33,6 +35,15 @@ export default function About({
   };
 }) {
   const { isLight } = useTheme();
+  const [flippedMembers, setFlippedMembers] = useState<Record<string, boolean>>({});
+  const isSpanish = t.badge === "Nosotros";
+
+  const toggleMember = (name: string) => {
+    setFlippedMembers((current) => ({
+      ...current,
+      [name]: !current[name],
+    }));
+  };
 
   return (
     <section
@@ -146,6 +157,7 @@ export default function About({
         <div className="mt-12 grid gap-5 lg:grid-cols-3 lg:gap-6">
           {t.members.map((member, index) => {
             const Icon = icons[index % icons.length];
+            const isFlipped = Boolean(flippedMembers[member.name]);
 
             return (
               <SectionReveal key={member.name} delay={0.06 * (index + 1)}>
@@ -154,75 +166,158 @@ export default function About({
                   borderRadius={32}
                   backgroundColor={isLight ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.06)"}
                   boxShadow="0 20px 42px -24px rgba(15,23,42,0.32)"
-                  className="transition-all duration-500 hover:-translate-y-2"
+                  className="min-h-[22rem] transition-all duration-500 hover:-translate-y-2"
                 >
-                  <article className="relative h-full p-6 sm:p-8">
+                  <button
+                    type="button"
+                    onClick={() => toggleMember(member.name)}
+                    aria-pressed={isFlipped}
+                    aria-label={
+                      isSpanish
+                        ? `${isFlipped ? "Volver al frente" : "Ver detalles"} de ${member.name}`
+                        : `${isFlipped ? "Flip to front" : "View details"} for ${member.name}`
+                    }
+                    className="relative block h-full w-full rounded-[inherit] text-left [perspective:1600px] focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blum-blue/50"
+                  >
                     <div
-                      className={`absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
-                        isLight
-                          ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_48%)]"
-                          : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.16),transparent_46%)]"
-                      }`}
-                    />
-
-                    <div className="relative flex items-start justify-end">
-                      <div
-                        className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
-                          isLight
-                            ? "bg-slate-100 text-blue-600"
-                            : "bg-white/10 text-blue-200"
-                        }`}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </div>
-                    </div>
-
-                    <div className="relative mt-6">
-                      <span
-                        className={`inline-flex rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${
-                          isLight
-                            ? "bg-slate-100 text-slate-700"
-                            : "bg-white/10 text-slate-200"
-                        }`}
-                      >
-                        {member.tag}
-                      </span>
-
-                      <h3
-                        className={`mt-4 text-2xl font-semibold tracking-[-0.03em] sm:text-[2rem] ${
-                          isLight ? "text-slate-950" : "text-white"
-                        }`}
-                      >
-                        {member.name}
-                      </h3>
-
-                      <p
-                        className={`mt-3 text-sm font-semibold leading-6 sm:text-base ${
-                          isLight ? "text-blue-700" : "text-blue-200"
-                        }`}
-                      >
-                        {member.role}
-                      </p>
-
-                      <p
-                        className={`mt-4 text-sm leading-6 sm:text-[15px] sm:leading-7 ${
-                          isLight ? "text-slate-600" : "text-slate-300"
-                        }`}
-                      >
-                        {member.description}
-                      </p>
-                    </div>
-
-                    <div
-                      className={`relative mt-8 rounded-[22px] border px-4 py-3 text-sm font-medium ${
-                        isLight
-                          ? "border-slate-200 bg-slate-50 text-slate-700"
-                          : "border-white/10 bg-black/10 text-slate-200"
-                      }`}
+                      className={cn(
+                        "relative h-full min-h-[22rem] transition-transform duration-700 [transform-style:preserve-3d]",
+                        isFlipped && "[transform:rotateY(180deg)]"
+                      )}
                     >
-                      {member.focus}
+                      <article className="absolute inset-0 h-full [backface-visibility:hidden]">
+                        <div
+                          className={`absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${
+                            isLight
+                              ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.12),transparent_48%)]"
+                              : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.16),transparent_46%)]"
+                          }`}
+                        />
+
+                        <div className="relative flex h-full flex-col p-6 sm:p-8">
+                          <div className="flex items-start justify-between gap-4">
+                            <span
+                              className={`inline-flex rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${
+                                isLight
+                                  ? "bg-slate-100 text-slate-700"
+                                  : "bg-white/10 text-slate-200"
+                              }`}
+                            >
+                              {member.tag}
+                            </span>
+
+                            <div
+                              className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                                isLight
+                                  ? "bg-slate-100 text-blue-600"
+                                  : "bg-white/10 text-blue-200"
+                              }`}
+                            >
+                              <Icon className="h-5 w-5" />
+                            </div>
+                          </div>
+
+                          <div className="flex flex-1 flex-col items-center justify-center text-center">
+                            <h3
+                              className={`text-2xl font-semibold tracking-[-0.03em] sm:text-[2rem] ${
+                                isLight ? "text-slate-950" : "text-white"
+                              }`}
+                            >
+                              {member.name}
+                            </h3>
+
+                            <p
+                              className={`mt-4 max-w-[16rem] text-sm font-semibold leading-6 sm:text-base ${
+                                isLight ? "text-blue-700" : "text-blue-200"
+                              }`}
+                            >
+                              {member.role}
+                            </p>
+                          </div>
+
+                          <div
+                            className={`rounded-[22px] border px-4 py-3 text-center text-sm font-medium ${
+                              isLight
+                                ? "border-slate-200 bg-slate-50 text-slate-700"
+                                : "border-white/10 bg-black/10 text-slate-200"
+                            }`}
+                          >
+                            {isSpanish ? "Click para ver detalles" : "Click to view details"}
+                          </div>
+                        </div>
+                      </article>
+
+                      <article className="absolute inset-0 h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                        <div
+                          className={`absolute inset-0 ${
+                            isLight
+                              ? "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.1),transparent_52%)]"
+                              : "bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.14),transparent_50%)]"
+                          }`}
+                        />
+
+                        <div className="relative flex h-full flex-col p-6 sm:p-8">
+                          <div className="flex items-start justify-between gap-4">
+                            <span
+                              className={`inline-flex rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${
+                                isLight
+                                  ? "bg-slate-100 text-slate-700"
+                                  : "bg-white/10 text-slate-200"
+                              }`}
+                            >
+                              {member.tag}
+                            </span>
+
+                            <div
+                              className={`flex h-11 w-11 items-center justify-center rounded-2xl ${
+                                isLight
+                                  ? "bg-slate-100 text-blue-600"
+                                  : "bg-white/10 text-blue-200"
+                              }`}
+                            >
+                              <Icon className="h-5 w-5" />
+                            </div>
+                          </div>
+
+                          <div className="mt-6">
+                            <h3
+                              className={`text-xl font-semibold tracking-[-0.03em] sm:text-[1.6rem] ${
+                                isLight ? "text-slate-950" : "text-white"
+                              }`}
+                            >
+                              {member.name}
+                            </h3>
+
+                            <p
+                              className={`mt-3 text-sm leading-6 sm:text-[15px] sm:leading-7 ${
+                                isLight ? "text-slate-600" : "text-slate-300"
+                              }`}
+                            >
+                              {member.description}
+                            </p>
+                          </div>
+
+                          <div
+                            className={`mt-auto rounded-[22px] border px-4 py-3 text-sm font-medium ${
+                              isLight
+                                ? "border-slate-200 bg-slate-50 text-slate-700"
+                                : "border-white/10 bg-black/10 text-slate-200"
+                            }`}
+                          >
+                            {member.focus}
+                          </div>
+
+                          <div
+                            className={`mt-4 text-center text-xs font-semibold uppercase tracking-[0.2em] ${
+                              isLight ? "text-slate-400" : "text-slate-500"
+                            }`}
+                          >
+                            {isSpanish ? "Click para volver" : "Click to flip back"}
+                          </div>
+                        </div>
+                      </article>
                     </div>
-                  </article>
+                  </button>
                 </GlowCard>
               </SectionReveal>
             );
