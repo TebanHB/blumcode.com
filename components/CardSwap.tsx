@@ -22,6 +22,7 @@ export interface CardSwapProps {
   cardDistance?: number;
   verticalDistance?: number;
   delay?: number;
+  autoplay?: boolean;
   pauseOnHover?: boolean;
   onCardClick?: (idx: number) => void;
   skewAmount?: number;
@@ -92,6 +93,7 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(function CardSwap(
     cardDistance = 28,
     verticalDistance = 22,
     delay = 5000,
+    autoplay = true,
     pauseOnHover = false,
     onCardClick,
     skewAmount = 4,
@@ -259,10 +261,10 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(function CardSwap(
         );
       });
 
-      timeline.call(() => {
+        timeline.call(() => {
         normalizeZIndexes(nextOrder);
 
-        if (!pauseOnHover) {
+        if (autoplay && !pauseOnHover) {
           startInterval();
         }
       });
@@ -351,7 +353,7 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(function CardSwap(
       settleActiveAnimation();
       swap();
 
-      if (!pauseOnHover) {
+      if (autoplay && !pauseOnHover) {
         startInterval();
       }
     };
@@ -367,12 +369,16 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(function CardSwap(
 
       focusCard(previousIndex);
     };
-    swap();
-    startInterval();
+    if (autoplay) {
+      swap();
+      startInterval();
+    } else {
+      normalizeZIndexes(orderRef.current);
+    }
 
     const node = containerRef.current;
 
-    if (pauseOnHover && node) {
+    if (autoplay && pauseOnHover && node) {
       const pause = () => {
         stopInterval();
       };
@@ -401,7 +407,7 @@ const CardSwap = forwardRef<CardSwapHandle, CardSwapProps>(function CardSwap(
       previousCardRef.current = null;
       stopInterval();
     };
-  }, [cardDistance, childArray.length, config, delay, pauseOnHover, skewAmount, verticalDistance]);
+  }, [autoplay, cardDistance, childArray.length, config, delay, pauseOnHover, skewAmount, verticalDistance]);
 
   const renderedChildren = childArray.map((child, index) => {
     if (!isValidElement<CardProps>(child)) {

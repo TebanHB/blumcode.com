@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { useReducedEffects } from "@/lib/useReducedEffects";
 import GlowCard from "./GlowCard";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
@@ -36,9 +37,9 @@ export default function Services({
   const { isLight } = useTheme();
   const isSpanish = t.badge === "Servicios";
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [visibleIndex, setVisibleIndex] = useState(0);
+  const reduceEffects = useReducedEffects();
   const sectionRef = useRef<HTMLElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
@@ -59,7 +60,7 @@ export default function Services({
   });
   const pressedCardIndexRef = useRef<number | null>(null);
   const suppressClickRef = useRef(false);
-  const canAutoScroll = !prefersReducedMotion && t.items.length > 1;
+  const canAutoScroll = !reduceEffects && t.items.length > 1;
 
   const normalizeOffset = useCallback((value: number) => {
     const loopWidth = loopWidthRef.current;
@@ -69,16 +70,6 @@ export default function Services({
     }
 
     return ((value % loopWidth) + loopWidth) % loopWidth;
-  }, []);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setPrefersReducedMotion(mediaQuery.matches);
-
-    update();
-    mediaQuery.addEventListener("change", update);
-
-    return () => mediaQuery.removeEventListener("change", update);
   }, []);
 
   const applyOffset = useCallback(() => {
@@ -451,7 +442,7 @@ export default function Services({
             <div
               ref={viewportRef}
               onPointerEnter={(event) => {
-                if (event.pointerType === "touch") {
+                if (reduceEffects || event.pointerType === "touch") {
                   return;
                 }
 
@@ -479,10 +470,12 @@ export default function Services({
                 setIsDragging(true);
                 lastFrameTimeRef.current = null;
                 event.currentTarget.setPointerCapture(event.pointerId);
-                updateGlowPosition(event.clientX, event.clientY);
+                if (!reduceEffects) {
+                  updateGlowPosition(event.clientX, event.clientY);
+                }
               }}
               onPointerMove={(event) => {
-                if (event.pointerType !== "touch") {
+                if (!reduceEffects && event.pointerType !== "touch") {
                   updateGlowPosition(event.clientX, event.clientY);
                 }
 
@@ -520,7 +513,9 @@ export default function Services({
               }}
               onPointerCancel={(event) => finishDrag(event.pointerId)}
               onPointerLeave={(event) => {
-                hideGlow();
+                if (!reduceEffects) {
+                  hideGlow();
+                }
 
                 if (!dragStateRef.current.active || !canAutoScroll) {
                   return;
@@ -561,17 +556,19 @@ export default function Services({
                 </>
               )}
 
-              <div
-                ref={glowRef}
-                aria-hidden="true"
-                className={`pointer-events-none absolute left-0 top-0 z-0 h-40 w-40 rounded-full blur-[72px] transition-opacity duration-150 will-change-transform sm:h-52 sm:w-52 ${
-                  isLight ? "bg-blue-400/20" : "bg-blue-400/28"
-                }`}
-                style={{
-                  opacity: 0,
-                  transform: "translate3d(-50%, -50%, 0) scale(0.92)",
-                }}
-              />
+              {!reduceEffects && (
+                <div
+                  ref={glowRef}
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute left-0 top-0 z-0 h-40 w-40 rounded-full blur-[72px] transition-opacity duration-150 will-change-transform sm:h-52 sm:w-52 ${
+                    isLight ? "bg-blue-400/20" : "bg-blue-400/28"
+                  }`}
+                  style={{
+                    opacity: 0,
+                    transform: "translate3d(-50%, -50%, 0) scale(0.92)",
+                  }}
+                />
+              )}
 
               <div ref={trackRef} className="relative z-10 flex w-max gap-0 will-change-transform">
                 {repeatedGroups.map((group) => (

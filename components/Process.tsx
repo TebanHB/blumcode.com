@@ -13,6 +13,7 @@ import {
   Wrench,
 } from "lucide-react";
 
+import { useReducedEffects } from "@/lib/useReducedEffects";
 import CardSwap, { Card, type CardSwapHandle } from "./CardSwap";
 import SectionReveal from "./SectionReveal";
 import { useTheme } from "./ThemeProvider";
@@ -44,6 +45,7 @@ export default function Process({
   };
 }) {
   const { isLight } = useTheme();
+  const reduceEffects = useReducedEffects();
   const cardSwapRef = useRef<CardSwapHandle | null>(null);
 
   return (
@@ -167,14 +169,15 @@ export default function Process({
 
                     <CardSwap
                       ref={cardSwapRef}
+                      autoplay={!reduceEffects}
                       width="min(100%, 38rem)"
                       height={450}
                       cardDistance={88}
                       verticalDistance={80}
                       delay={4800}
                       pauseOnHover={false}
-                      skewAmount={2.5}
-                      easing="elastic"
+                      skewAmount={reduceEffects ? 0.8 : 2.5}
+                      easing={reduceEffects ? "linear" : "elastic"}
                       className="w-full max-w-[38rem]"
                     >
                       {t.cards.map((item, index) => {
