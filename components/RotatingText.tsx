@@ -49,6 +49,7 @@ export interface RotatingTextProps
   mainClassName?: string;
   splitLevelClassName?: string;
   elementLevelClassName?: string;
+  screenReaderText?: string | false;
 }
 
 const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
@@ -71,6 +72,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
       mainClassName,
       splitLevelClassName,
       elementLevelClassName,
+      screenReaderText,
       ...rest
     },
     ref
@@ -145,6 +147,11 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
       [onNext]
     );
 
+    const accessibleText =
+      screenReaderText === false
+        ? null
+        : screenReaderText ?? texts[currentTextIndex] ?? "";
+
     const next = useCallback(() => {
       const nextIndex =
         currentTextIndex === texts.length - 1
@@ -216,7 +223,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
         layout
         transition={transition}
       >
-        <span className="sr-only">{texts[currentTextIndex]}</span>
+        {accessibleText ? <span className="sr-only">{accessibleText}</span> : null}
         <AnimatePresence mode={animatePresenceMode} initial={animatePresenceInitial}>
           <motion.span
             key={currentTextIndex}

@@ -46,7 +46,10 @@ export default function Hero({
   const reduceEffects = useReducedEffects();
   const [hasMounted, setHasMounted] = useState(false);
   const rotatingTexts = reduceEffects ? [t.rotatingWords[0] ?? ""] : t.rotatingWords;
-  const rotatingWordWidth = `${Math.max(...rotatingTexts.map((word) => word.length))}ch`;
+  const rotatingWordWidth = `${Math.max(1, ...rotatingTexts.map((word) => word.length))}ch`;
+  const heroTitleLabel = [t.title1, t.title2, t.title3, t.rotatingWords[0] ?? ""]
+    .filter(Boolean)
+    .join(" ");
   const focusAreas = [
     {
       title: t.cards.webTitle,
@@ -140,31 +143,36 @@ export default function Hero({
                 isLight ? "text-slate-950" : "text-white"
               }`}
               style={enter(50)}
+              aria-label={heroTitleLabel}
             >
-              <span className="font-medium tracking-[-0.05em]">{t.title1} </span>
-              <span
-                className={`font-hero-serif bg-[length:220%_auto] bg-clip-text text-[1.08em] font-semibold italic tracking-[-0.035em] text-transparent ${
-                  isLight
-                    ? "bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-500 drop-shadow-[0_10px_24px_rgba(59,130,246,0.22)]"
-                    : "bg-gradient-to-r from-white via-blue-200 to-blum-blue"
-                }`}
-                style={{ animation: "shimmer 4s ease-in-out infinite" }}
-              >
-                {t.title2}
-              </span>
-              <span className="mt-1 inline-flex max-w-full flex-wrap items-baseline gap-x-[0.16em] gap-y-[0.04em] font-medium tracking-[-0.05em] sm:mt-0 sm:flex-nowrap">
-                <span>{t.title3}</span>
-                <RotatingText
-                  texts={rotatingTexts}
-                  rotationInterval={2300}
-                  staggerDuration={0.022}
-                  splitBy="characters"
-                  auto={!reduceEffects}
-                  mainClassName={`${isLight ? "text-slate-950" : "text-white"} pb-[0.14em] -mb-[0.14em]`}
-                  splitLevelClassName="overflow-hidden pb-[0.14em] -mb-[0.14em]"
-                  elementLevelClassName="will-change-transform"
-                  style={reduceEffects ? undefined : { minWidth: rotatingWordWidth }}
-                />
+              <span aria-hidden="true" className="contents">
+                <span className="font-medium tracking-[-0.05em]">{t.title1} </span>
+                <span
+                  className={`font-hero-serif bg-[length:220%_auto] bg-clip-text text-[1.08em] font-semibold italic tracking-[-0.035em] text-transparent ${
+                    isLight
+                      ? "bg-gradient-to-r from-blue-700 via-cyan-500 to-blue-500 drop-shadow-[0_10px_24px_rgba(59,130,246,0.22)]"
+                      : "bg-gradient-to-r from-white via-blue-200 to-blum-blue"
+                  }`}
+                  style={{ animation: "shimmer 4s ease-in-out infinite" }}
+                >
+                  {t.title2}
+                </span>
+                <span className="mt-1 inline-flex max-w-full flex-wrap items-baseline gap-x-[0.16em] gap-y-[0.04em] font-medium tracking-[-0.05em] sm:mt-0 sm:flex-nowrap">
+                  <span>{t.title3}</span>
+                  <RotatingText
+                    key={t.rotatingWords.join("|")}
+                    texts={rotatingTexts}
+                    rotationInterval={2300}
+                    staggerDuration={0}
+                    splitBy="words"
+                    auto={!reduceEffects}
+                    screenReaderText={false}
+                    mainClassName={`${isLight ? "text-slate-950" : "text-white"} pb-[0.14em] -mb-[0.14em]`}
+                    splitLevelClassName="overflow-hidden pb-[0.14em] -mb-[0.14em]"
+                    elementLevelClassName="will-change-transform"
+                    style={reduceEffects ? undefined : { minWidth: rotatingWordWidth }}
+                  />
+                </span>
               </span>
             </h1>
 

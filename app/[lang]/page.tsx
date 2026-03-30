@@ -117,7 +117,7 @@ const dictionary: Record<Locale, Dictionary> = {
       title1: "Desarrollo de Software",
       title2: "a Medida",
       title3: "para tu",
-      rotatingWords: ["Empresa", "Negocio", "Emprendimiento", "Comunidad"],
+      rotatingWords: ["Empresa", "Negocio", "Proyecto", "Comunidad"],
       description:
         "En BlumCode transformamos tus ideas en soluciones tecnol\u00f3gicas innovadoras. Desarrollamos software personalizado, optimizamos sistemas existentes y brindamos soporte continuo para impulsar tu negocio.",
       primary: "Solicitar Cotizaci\u00f3n",
@@ -328,7 +328,7 @@ const dictionary: Record<Locale, Dictionary> = {
       title1: "Custom Software",
       title2: "Development",
       title3: "for Your",
-      rotatingWords: ["Business", "Company", "Startup", "Community"],
+      rotatingWords: ["Business", "Company", "Project", "Community"],
       description:
         "At BlumCode, we transform your ideas into innovative technology solutions. We build custom software, optimize existing systems, and provide ongoing support to boost your business.",
       primary: "Request a Quote",
