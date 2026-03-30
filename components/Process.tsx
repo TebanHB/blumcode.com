@@ -161,7 +161,7 @@ export default function Process({
                     return (
                       <article
                         key={item.title}
-                        className={`relative overflow-hidden rounded-[28px] border p-5 sm:p-6 ${
+                        className={`relative overflow-hidden rounded-[28px] border-[1.5px] p-5 sm:p-6 ${
                           isLight
                             ? "border-slate-200 bg-white shadow-[0_18px_34px_rgba(148,163,184,0.14)]"
                             : "border-white/10 bg-white/6 shadow-[0_18px_34px_rgba(2,6,23,0.26)]"

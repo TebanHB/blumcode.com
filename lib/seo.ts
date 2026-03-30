@@ -25,9 +25,9 @@ type LocaleSeoContent = {
 
 const SEO_CONTENT: Record<Locale, LocaleSeoContent> = {
   es: {
-    title: "Desarrollo de Software a Medida en Santa Cruz, Bolivia | BlumCode",
+    title: "Desarrollo de Software a Medida en Santa Cruz | BlumCode",
     description:
-      "BlumCode desarrolla software a medida en Santa Cruz, Bolivia: aplicaciones web, sistemas internos, apps moviles, integraciones, UX/UI y soporte continuo para empresas.",
+      "BlumCode desarrolla software a medida en Santa Cruz, Bolivia: aplicaciones web, sistemas internos, integraciones, UX/UI y soporte continuo.",
     keywords: [
       "desarrollo de software a medida",
       "desarrollo de software en santa cruz",
@@ -51,9 +51,9 @@ const SEO_CONTENT: Record<Locale, LocaleSeoContent> = {
     contactLabel: "ventas",
   },
   en: {
-    title: "Custom Software Development in Santa Cruz, Bolivia | BlumCode",
+    title: "Custom Software Development in Santa Cruz | BlumCode",
     description:
-      "BlumCode provides custom software development in Santa Cruz, Bolivia: web apps, internal systems, mobile apps, integrations, UX/UI, analytics, and ongoing support for growing businesses.",
+      "BlumCode builds custom software in Santa Cruz, Bolivia, including web apps, internal systems, mobile apps, integrations, UX/UI, and ongoing support.",
     keywords: [
       "custom software development",
       "software company bolivia",
