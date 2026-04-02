@@ -164,7 +164,7 @@ export default function Hero({
                   {t.title2}
                 </span>
                 <span className="mt-1 inline-flex max-w-full flex-wrap items-baseline gap-x-[0.16em] gap-y-[0.04em] font-medium tracking-[-0.05em] sm:mt-0 sm:flex-nowrap">
-                  <span>{t.title3}</span>
+                  <span className="whitespace-nowrap">{t.title3}</span>
                   <RotatingText
                     key={t.rotatingWords.join("|")}
                     texts={rotatingTexts}
