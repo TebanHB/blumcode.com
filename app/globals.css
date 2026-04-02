@@ -8,9 +8,9 @@
 
 :root {
   --nav-anchor-offset: clamp(6.75rem, 16vh, 9rem);
-  --theme-sweep-duration: 760ms;
-  --theme-sweep-line: rgba(125, 211, 252, 0.95);
-  --theme-sweep-glow: rgba(59, 130, 246, 0.34);
+  --theme-sweep-duration: 920ms;
+  --theme-sweep-line: rgba(191, 219, 254, 0.42);
+  --theme-sweep-glow: rgba(59, 130, 246, 0.18);
 }
 
 html {
@@ -42,13 +42,13 @@ html[data-theme="light"] body {
 }
 
 html[data-theme-transition="running"][data-theme-transition-to="light"] {
-  --theme-sweep-line: rgba(34, 211, 238, 0.98);
-  --theme-sweep-glow: rgba(59, 130, 246, 0.34);
+  --theme-sweep-line: rgba(125, 211, 252, 0.48);
+  --theme-sweep-glow: rgba(34, 211, 238, 0.16);
 }
 
 html[data-theme-transition="running"][data-theme-transition-to="dark"] {
-  --theme-sweep-line: rgba(148, 163, 184, 0.95);
-  --theme-sweep-glow: rgba(37, 99, 235, 0.3);
+  --theme-sweep-line: rgba(148, 163, 184, 0.42);
+  --theme-sweep-glow: rgba(37, 99, 235, 0.14);
 }
 
 .font-hero-sans {
@@ -57,6 +57,30 @@ html[data-theme-transition="running"][data-theme-transition-to="dark"] {
 
 .font-hero-serif {
   font-family: "Palatino Linotype", "Book Antiqua", "Georgia", "Times New Roman", serif;
+}
+
+.font-hero-humanist {
+  font-family: "Candara", "Corbel", "Aptos", "Trebuchet MS", sans-serif;
+}
+
+.font-hero-corporate {
+  font-family: "Palatino Linotype", "Book Antiqua", "Georgia", "Times New Roman", serif;
+}
+
+.font-hero-editorial {
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Georgia", serif;
+}
+
+.font-hero-geometric {
+  font-family: "Baskerville Old Face", "Palatino Linotype", "Book Antiqua", "Georgia", serif;
+}
+
+.font-hero-slab {
+  font-family: "Constantia", "Cambria", "Georgia", "Times New Roman", serif;
+}
+
+.font-hero-display {
+  font-family: "Garamond", "Palatino Linotype", "Book Antiqua", "Georgia", serif;
 }
 
 .nav-anchor-section {
@@ -732,8 +756,9 @@ html[data-theme="light"] .process-swap-chip-icon {
   html[data-theme-transition="running"]::view-transition-old(root),
   html[data-theme-transition="running"]::view-transition-new(root) {
     animation-duration: var(--theme-sweep-duration);
-    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     animation-fill-mode: both;
+    transform-origin: center center;
   }
 
   html[data-theme-transition="running"]::view-transition-old(root) {
@@ -742,41 +767,52 @@ html[data-theme="light"] .process-swap-chip-icon {
 
   html[data-theme-transition="running"]::view-transition-new(root) {
     mix-blend-mode: normal;
-    filter: saturate(1.05) brightness(1.01);
+    filter: saturate(1.02) brightness(1.01);
     animation-name: theme-sweep-reveal;
     box-shadow:
-      -22px 0 34px var(--theme-sweep-glow),
-      -3px 0 0 var(--theme-sweep-line);
+      -28px 0 46px var(--theme-sweep-glow),
+      -1px 0 0 var(--theme-sweep-line);
   }
 }
 
 @keyframes theme-sweep-old {
   from {
     opacity: 1;
-    filter: saturate(1) brightness(1);
+    filter: saturate(1) brightness(1) blur(0);
+    transform: scale(1);
   }
   to {
-    opacity: 1;
-    filter: saturate(0.98) brightness(0.99);
+    opacity: 0.985;
+    filter: saturate(0.985) brightness(0.992) blur(1px);
+    transform: scale(1.004);
   }
 }
 
 @keyframes theme-sweep-reveal {
   from {
     clip-path: inset(0 100% 0 0);
+    opacity: 0.82;
+    transform: translate3d(1.2%, 0, 0) scale(1.012);
+    filter: saturate(1.03) brightness(1.015) blur(2px);
     box-shadow:
-      -32px 0 54px var(--theme-sweep-glow),
-      -4px 0 0 var(--theme-sweep-line);
+      -34px 0 52px var(--theme-sweep-glow),
+      -1px 0 0 var(--theme-sweep-line);
   }
-  70% {
+  58% {
+    opacity: 1;
+    transform: translate3d(0.2%, 0, 0) scale(1.002);
+    filter: saturate(1.015) brightness(1.008) blur(0.6px);
     box-shadow:
-      -22px 0 38px var(--theme-sweep-glow),
-      -3px 0 0 var(--theme-sweep-line);
+      -20px 0 30px var(--theme-sweep-glow),
+      -1px 0 0 var(--theme-sweep-line);
   }
   to {
-    clip-path: inset(0 -14% 0 0);
+    clip-path: inset(0 -8% 0 0);
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: saturate(1) brightness(1) blur(0);
     box-shadow:
-      -10px 0 18px rgba(0, 0, 0, 0),
+      -8px 0 16px rgba(0, 0, 0, 0),
       -1px 0 0 rgba(0, 0, 0, 0);
   }
 }

@@ -46,7 +46,13 @@ export default function Hero({
   const reduceEffects = useReducedEffects();
   const [hasMounted, setHasMounted] = useState(false);
   const rotatingTexts = reduceEffects ? [t.rotatingWords[0] ?? ""] : t.rotatingWords;
-  const rotatingWordWidth = `${Math.max(1, ...rotatingTexts.map((word) => word.length))}ch`;
+  const rotatingWordWidth = `${Math.max(1, ...rotatingTexts.map((word) => word.length + 2))}ch`;
+  const rotatingWordFontClasses = [
+    "font-hero-display font-normal",
+    "font-hero-editorial font-normal",
+    "font-hero-geometric font-normal",
+    "font-hero-display font-normal",
+  ];
   const heroTitleLabel = [t.title1, t.title2, t.title3, t.rotatingWords[0] ?? ""]
     .filter(Boolean)
     .join(" ");
@@ -167,8 +173,9 @@ export default function Hero({
                     splitBy="words"
                     auto={!reduceEffects}
                     screenReaderText={false}
-                    mainClassName={`${isLight ? "text-slate-950" : "text-white"} pb-[0.14em] -mb-[0.14em]`}
-                    splitLevelClassName="overflow-hidden pb-[0.14em] -mb-[0.14em]"
+                    mainClassName={`${isLight ? "text-slate-950" : "text-white"} pb-[0.24em] -mb-[0.24em] leading-[1.04] font-normal`}
+                    textClassNames={rotatingWordFontClasses}
+                    splitLevelClassName="overflow-hidden pb-[0.24em] -mb-[0.24em]"
                     elementLevelClassName="will-change-transform"
                     style={reduceEffects ? undefined : { minWidth: rotatingWordWidth }}
                   />

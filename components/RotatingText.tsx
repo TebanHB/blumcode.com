@@ -47,6 +47,7 @@ export interface RotatingTextProps
   splitBy?: string;
   onNext?: (index: number) => void;
   mainClassName?: string;
+  textClassNames?: string[];
   splitLevelClassName?: string;
   elementLevelClassName?: string;
   screenReaderText?: string | false;
@@ -70,6 +71,7 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
       splitBy = "characters",
       onNext,
       mainClassName,
+      textClassNames,
       splitLevelClassName,
       elementLevelClassName,
       screenReaderText,
@@ -151,6 +153,10 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
       screenReaderText === false
         ? null
         : screenReaderText ?? texts[currentTextIndex] ?? "";
+    const currentTextClassName =
+      textClassNames && textClassNames.length > 0
+        ? textClassNames[currentTextIndex % textClassNames.length]
+        : undefined;
 
     const next = useCallback(() => {
       const nextIndex =
@@ -231,6 +237,8 @@ const RotatingText = forwardRef<RotatingTextRef, RotatingTextProps>(
               splitBy === "lines"
                 ? "flex w-full flex-col"
                 : "relative inline-flex flex-nowrap whitespace-nowrap align-baseline"
+              ,
+              currentTextClassName
             )}
             layout
             aria-hidden="true"

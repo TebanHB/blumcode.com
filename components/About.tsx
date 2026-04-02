@@ -176,7 +176,7 @@ function MemberHeroMedia({
 
       <div
         className={cn(
-          "relative h-full min-h-[31rem] overflow-hidden rounded-[1.95rem]",
+          "relative h-full min-h-[29.5rem] overflow-hidden rounded-[1.95rem]",
           isLight
             ? "bg-white/88 shadow-[0_24px_50px_-28px_rgba(14,116,144,0.24)]"
             : "bg-white/[0.03] shadow-[0_24px_54px_-28px_rgba(2,6,23,0.7)]"
@@ -236,7 +236,7 @@ function MemberFrontFace({
   isSpanish,
 }: MemberCardBaseProps) {
   return (
-    <div className="relative flex h-full min-h-[34rem] flex-col p-2">
+    <div className="relative flex h-full min-h-[31.5rem] flex-col p-2">
       <div className="relative flex h-full flex-col">
         <MemberHeroMedia
           member={member}
@@ -257,7 +257,7 @@ function MemberBackFace({
   isSpanish,
 }: MemberBackFaceProps) {
   return (
-    <div className="relative flex h-full min-h-[34rem] flex-col p-4 sm:p-5">
+    <div className="relative flex h-full min-h-[31.5rem] flex-col p-4 sm:p-[1.125rem]">
       <div
         className={cn(
           "pointer-events-none absolute inset-0",
@@ -276,7 +276,7 @@ function MemberBackFace({
       />
 
       <div className="relative flex h-full flex-col">
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-3">
           <MemberPortrait
             name={member.name}
             compact
@@ -296,7 +296,7 @@ function MemberBackFace({
             </p>
             <h3
               className={cn(
-                "mt-2 text-xl font-semibold tracking-[-0.04em] sm:text-[1.65rem]",
+                "mt-1.5 pr-2 text-[1.7rem] leading-[1.02] font-semibold tracking-[-0.05em] text-balance sm:text-[1.85rem]",
                 isLight ? "text-slate-950" : "text-white"
               )}
             >
@@ -304,7 +304,7 @@ function MemberBackFace({
             </h3>
             <p
               className={cn(
-                "mt-2 text-sm font-semibold leading-6 sm:text-[15px]",
+                "mt-2 text-sm font-semibold leading-5.5 sm:text-[14px]",
                 isLight ? "text-blue-700" : "text-blue-200"
               )}
             >
@@ -314,19 +314,19 @@ function MemberBackFace({
 
           <div
             className={cn(
-              "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border",
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-[1.1rem] border",
               isLight
                 ? "border-slate-200 bg-slate-50 text-blue-600"
                 : "border-white/10 bg-white/5 text-blue-200"
             )}
           >
-            <Icon className="h-5 w-5" />
+            <Icon className="h-4 w-4" />
           </div>
         </div>
 
         <div
           className={cn(
-            "mt-5 rounded-[1.45rem] border px-3.5 py-4",
+            "mt-4 rounded-[1.35rem] border px-3.5 py-3.5",
             isLight ? "border-slate-200 bg-white/88" : "border-white/10 bg-black/10"
           )}
         >
@@ -340,7 +340,7 @@ function MemberBackFace({
           </p>
           <p
             className={cn(
-              "mt-2.5 text-sm leading-5.5 sm:text-[14px] sm:leading-6",
+              "mt-2 text-sm leading-5.5 sm:text-[13.5px] sm:leading-6",
               isLight ? "text-slate-600" : "text-slate-300"
             )}
           >
@@ -350,7 +350,7 @@ function MemberBackFace({
 
         <div
           className={cn(
-            "mt-4 rounded-[1.45rem] border px-3.5 py-4",
+            "mt-3.5 rounded-[1.35rem] border px-3.5 py-3.5",
             isLight ? "border-slate-200 bg-slate-50/90" : "border-white/10 bg-white/[0.04]"
           )}
         >
@@ -364,7 +364,7 @@ function MemberBackFace({
           </p>
           <p
             className={cn(
-              "mt-2.5 text-sm leading-5.5 sm:text-[14px] sm:leading-6",
+              "mt-2 text-sm leading-5.5 sm:text-[13.5px] sm:leading-6",
               isLight ? "text-slate-700" : "text-slate-200"
             )}
           >
@@ -522,7 +522,7 @@ export default function About({
                   borderRadius={32}
                   backgroundColor={isLight ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.06)"}
                   boxShadow="0 20px 42px -24px rgba(15,23,42,0.32)"
-                  className="min-h-[34rem] transition-all duration-500 md:hover:-translate-y-2"
+                  className="min-h-[31.5rem] transition-all duration-500 md:hover:-translate-y-2"
                 >
                   <button
                     type="button"
@@ -558,7 +558,7 @@ export default function About({
                     ) : (
                       <div
                         className={cn(
-                          "relative h-full min-h-[34rem] transition-transform duration-700 [transform-style:preserve-3d]",
+                          "relative h-full min-h-[31.5rem] transition-transform duration-700 [transform-style:preserve-3d]",
                           isFlipped && "[transform:rotateY(180deg)]"
                         )}
                       >
