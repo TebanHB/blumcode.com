@@ -304,6 +304,14 @@ const dictionary: Record<Locale, Dictionary> = {
           tag: "Comercial",
           focus: "Relaci\u00f3n cercana con clientes y crecimiento comercial.",
         },
+        {
+          name: "Favio Cuentas",
+          role: "\u00c1rea comercial y ventas.",
+          description:
+            "Apoya la gesti\u00f3n comercial, el seguimiento de oportunidades y la atenci\u00f3n a clientes para impulsar un proceso de ventas m\u00e1s cercano y ordenado.",
+          tag: "Comercial",
+          focus: "Seguimiento comercial, atenci\u00f3n a clientes y nuevas oportunidades.",
+        },
       ],
     },
     footer: {
@@ -513,6 +521,14 @@ const dictionary: Record<Locale, Dictionary> = {
             "He strengthens client relationships, identifies new opportunities, and helps drive the company's commercial growth.",
           tag: "Commercial",
           focus: "Client relationships, opportunity discovery, and growth.",
+        },
+        {
+          name: "Favio Cuentas",
+          role: "Commercial and sales area.",
+          description:
+            "He supports commercial management, opportunity follow-up, and client communication to keep the sales process close, clear, and organized.",
+          tag: "Commercial",
+          focus: "Commercial follow-up, client care, and new opportunities.",
         },
       ],
     },
